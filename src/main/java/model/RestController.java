@@ -1,16 +1,10 @@
 package model;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +15,6 @@ public class RestController {
     private ClientRepository clientRepository;
 
     private VisitRepository visitRepository;
-
 
 
     @Autowired
@@ -40,8 +33,7 @@ public class RestController {
 
     @GetMapping("/getVisitsByMasterId")
     public List<Visit> getVisitsByMasterId(@RequestParam("masterId") int masterId){
-        List<Visit> visits = masterRepository.findMasterById(masterId).get().visits;
-        return visits;
+        return masterRepository.findMasterById(masterId).get().visits;
 
     }
 
@@ -52,8 +44,8 @@ public class RestController {
     }
 
     @PostMapping("/createClient")
-    public ResponseEntity<Void> saveClient(@RequestBody Client client, @RequestParam("masterId") Integer masterId){
-        ResponseEntity<Void> result;
+    public ResponseEntity<String> saveClient(@RequestBody Client client, @RequestParam("masterId") Integer masterId){
+        ResponseEntity<String> result;
         Optional<Master> optionalMaster = masterRepository.findMasterById(masterId);
         if (optionalMaster.isPresent()){
             Master master = optionalMaster.get();
@@ -64,11 +56,11 @@ public class RestController {
             clients.add(client);
             master.setClients(clients);
             masterRepository.save(master);
-            result = ResponseEntity.status(HttpStatus.OK).build();
+            result = ResponseEntity.ok("ok");
         }
         else {
             // Отправить ответ, что такого мастера нет
-            result = ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            result = ResponseEntity.badRequest().body("badRequest");
         }
         return result;
     }
