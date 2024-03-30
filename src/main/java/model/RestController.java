@@ -1,10 +1,9 @@
 package model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -26,15 +25,22 @@ public class RestController {
 
 
 
+    @GetMapping("/hello")
+    public String hello(){
+        System.out.println("запрос hello");
+        return "hello";
+    }
+
     @GetMapping("/getClientsByMasterId")
     public List<Client> getClientsByMasterId(@RequestParam("masterId") int masterId){
+        System.out.println("запрос на клиентов");
         return masterRepository.findMasterById(masterId).get().getClients();
     }
 
     @GetMapping("/getVisitsByMasterId")
     public List<Visit> getVisitsByMasterId(@RequestParam("masterId") int masterId){
+        List<Visit> visits = masterRepository.findMasterById(masterId).get().visits;
         return masterRepository.findMasterById(masterId).get().visits;
-
     }
 
     @GetMapping("/getSchedulesByMasterId")
@@ -44,8 +50,8 @@ public class RestController {
     }
 
     @PostMapping("/createClient")
-    public ResponseEntity<String> saveClient(@RequestBody Client client, @RequestParam("masterId") Integer masterId){
-        ResponseEntity<String> result;
+    public String saveClient(@RequestBody Client client, @RequestParam("masterId") Integer masterId){
+        String result;
         Optional<Master> optionalMaster = masterRepository.findMasterById(masterId);
         if (optionalMaster.isPresent()){
             Master master = optionalMaster.get();
@@ -56,12 +62,39 @@ public class RestController {
             clients.add(client);
             master.setClients(clients);
             masterRepository.save(master);
-            result = ResponseEntity.ok("ok");
+            result = "ok";
         }
         else {
             // Отправить ответ, что такого мастера нет
-            result = ResponseEntity.badRequest().body("badRequest");
+            result = "badRequest";
         }
         return result;
     }
+
+    @PostMapping("/deleteClients")
+    @Transactional
+    public String deleteClients(@RequestBody List<Client> clients, @RequestParam("masterId") Integer masterId) {
+        System.out.println("запрос на удаление клиентов");
+        String result;
+
+        Optional<Master> optionalMaster = masterRepository.findMasterById(masterId);
+        if (optionalMaster.isPresent()) {
+            Master master = optionalMaster.get();
+
+            // Удаление клиентов из коллекции клиентов у мастера
+            master.getClients().removeAll(clients);
+
+            // Сохранение изменений
+            masterRepository.save(master);
+
+            result = "ok";
+        } else {
+            result = "badRequest";
+        }
+        return result;
+    }
+
+
+
+
 }
