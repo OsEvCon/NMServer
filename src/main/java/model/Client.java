@@ -1,10 +1,13 @@
 package model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "client")
@@ -13,17 +16,17 @@ public class Client extends User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
-
     @Column(name = "name")
     private String name;
-
+    @JsonIgnore
     @Column(name = "telegram_id")
     private String telegram_id;
-
+    @JsonIgnore
     @Column(name = "chat_id")
     private String chat_id;
 
     @ManyToMany(mappedBy = "clients", fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Master> masters;
 
     @OneToMany(fetch = FetchType.EAGER)
@@ -88,5 +91,18 @@ public class Client extends User {
 
     public void setVisits(List<Visit> visits) {
         this.visits = visits;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Client client = (Client) o;
+        return Objects.equals(id, client.id) && Objects.equals(name, client.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 }

@@ -5,8 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Master.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Master.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/MySpringBootApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/MySpringBootApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/RestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/RestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Schedule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Schedule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,11 +68,16 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;G:/Моя Java/MyClientsTelegrammBot&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/evgen/IdeaProjects/NMServer&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.3494253&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;a837a37f70a50163098d75ae6053fc62&quot;
+    &quot;spring.configuration.checksum&quot;: &quot;a837a37f70a50163098d75ae6053fc62&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
     &quot;DatabaseDriversLRU&quot;: [
@@ -121,6 +133,14 @@
       <workItem from="1710438111297" duration="1356000" />
       <workItem from="1710501901415" duration="7968000" />
       <workItem from="1710579850723" duration="7355000" />
+      <workItem from="1710613042666" duration="2001000" />
+      <workItem from="1711061676184" duration="2315000" />
+      <workItem from="1711460390290" duration="12748000" />
+      <workItem from="1711543910512" duration="4382000" />
+      <workItem from="1711643792130" duration="1238000" />
+      <workItem from="1711715895795" duration="16227000" />
+      <workItem from="1711753364606" duration="1555000" />
+      <workItem from="1711802136179" duration="4360000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>
@@ -149,5 +169,41 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository." />
     <option name="LAST_COMMIT_MESSAGE" value="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
+          <line>81</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
+          <line>84</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
+          <line>87</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
+          <line>89</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
+          <line>42</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
+          <line>41</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

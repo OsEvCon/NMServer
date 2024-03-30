@@ -20,11 +20,15 @@ public class Master extends User {
     @Column(name = "telegram_id")
     private String telegram_id;
 
-
     @Column(name = "chat_id")
     private String chat_id;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "master_client",
+            joinColumns = @JoinColumn(name = "master_id"),
+            inverseJoinColumns = @JoinColumn(name = "client_id")
+    )
     @JsonIgnoreProperties("masters")
     private List<Client> clients;
 

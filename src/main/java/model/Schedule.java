@@ -1,6 +1,7 @@
 package model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.*;
@@ -78,7 +79,7 @@ public class Schedule {
     public void setMonthAndYear(GregorianCalendar monthAndYear) {
         this.monthAndYear = monthAndYear;
     }
-
+    @JsonIgnore
     public String getMonthAndYearString(){
         return monthAndYear.get(Calendar.MONTH) + 1 + "." + monthAndYear.get(Calendar.YEAR);
     }
