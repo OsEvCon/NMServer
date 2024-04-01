@@ -25,6 +25,8 @@ public class Client extends User {
     @Column(name = "chat_id")
     private String chat_id;
 
+    @Column(name = "phone_number")
+    String phoneNumber;
     @ManyToMany(mappedBy = "clients", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Master> masters;
@@ -91,6 +93,14 @@ public class Client extends User {
 
     public void setVisits(List<Visit> visits) {
         this.visits = visits;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     @Override
