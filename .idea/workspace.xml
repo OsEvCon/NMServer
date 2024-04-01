@@ -4,16 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Добавил RestController.saveClient и RestController.deleteClients">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Master.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Master.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/MySpringBootApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/MySpringBootApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/RestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/RestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Schedule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Schedule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +133,9 @@
       <workItem from="1711643792130" duration="1238000" />
       <workItem from="1711715895795" duration="16227000" />
       <workItem from="1711753364606" duration="1555000" />
-      <workItem from="1711802136179" duration="4360000" />
+      <workItem from="1711802136179" duration="4681000" />
+      <workItem from="1711896202531" duration="2733000" />
+      <workItem from="1711979513035" duration="4598000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>
@@ -149,7 +144,14 @@
       <option name="project" value="LOCAL" />
       <updated>1710502078134</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Добавил RestController.saveClient и RestController.deleteClients">
+      <created>1711827092342</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1711827092342</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -168,7 +170,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository." />
-    <option name="LAST_COMMIT_MESSAGE" value="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository." />
+    <MESSAGE value="Добавил RestController.saveClient и RestController.deleteClients" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавил RestController.saveClient и RestController.deleteClients" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
