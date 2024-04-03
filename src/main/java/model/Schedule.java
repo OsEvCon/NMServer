@@ -27,6 +27,10 @@ public class Schedule {
     @JoinColumn(name = "schedule_id")
     private List<Visit> visits;
 
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "scheduleId")
+    private List<VisitDay> visitDays;
+
    /* public Map<String, ArrayList<String>> getDateAndTimeMap(){
         Map<String,ArrayList<String>> result = new LinkedHashMap<>();
         for (Visit visit :visits) {
@@ -39,6 +43,14 @@ public class Schedule {
         }
         return result;
     }*/
+
+    public List<VisitDay> getVisitDays() {
+        return visitDays;
+    }
+
+    public void setVisitDays(List<VisitDay> visitDays) {
+        this.visitDays = visitDays;
+    }
 
     public Integer getId() {
         return id;
