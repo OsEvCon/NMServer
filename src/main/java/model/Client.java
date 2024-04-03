@@ -36,6 +36,11 @@ public class Client extends User {
     @JoinColumn(name = "client_id")
     List<Visit> visits;
 
+    @OneToMany(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT) // Добавляем аннотацию @Fetch с указанием стратегии загрузки
+    @JoinColumn(name = "client_id")
+    List<VisitTime> visitTimes;
+
     public ArrayList<Visit> nextVisits(){
         ArrayList<Visit> nextVisits = new ArrayList<>();
         GregorianCalendar currentDate = (GregorianCalendar) GregorianCalendar.getInstance();

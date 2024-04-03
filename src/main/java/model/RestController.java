@@ -1,4 +1,5 @@
 package model;
+import org.apache.juli.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,14 +40,13 @@ public class RestController {
 
     @GetMapping("/getVisitsByMasterId")
     public List<Visit> getVisitsByMasterId(@RequestParam("masterId") int masterId){
-        List<Visit> visits = masterRepository.findMasterById(masterId).get().visits;
         return masterRepository.findMasterById(masterId).get().visits;
     }
 
     @GetMapping("/getSchedulesByMasterId")
     public List<Schedule> getSchedulesByMasterId(@RequestParam("masterId") int masterId){
-       //return ScheduleDaoImpl.init().getSchedulesByMasterId(masterId);
-        return null;
+        System.out.println("запрос расписания");
+        return masterRepository.findMasterById(masterId).get().schedules;
     }
 
     @PostMapping("/createClient")
