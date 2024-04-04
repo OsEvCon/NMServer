@@ -1,7 +1,5 @@
 package model;
-import org.apache.juli.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,13 +13,19 @@ public class RestController {
     private ClientRepository clientRepository;
 
     private VisitRepository visitRepository;
+    private ScheduleRepository scheduleRepository;
+    private VisitDayRepository visitDayRepository;
 
 
     @Autowired
-    public RestController(MasterRepository masterRepository, ClientRepository clientRepository, VisitRepository visitRepository) {
+    public RestController(MasterRepository masterRepository, ClientRepository clientRepository,
+                          VisitRepository visitRepository, ScheduleRepository scheduleRepository,
+                          VisitDayRepository visitDayRepository) {
         this.masterRepository = masterRepository;
         this.clientRepository = clientRepository;
         this.visitRepository = visitRepository;
+        this.scheduleRepository = scheduleRepository;
+        this.visitDayRepository = visitDayRepository;
     }
 
 
@@ -35,6 +39,7 @@ public class RestController {
     @GetMapping("/getClientsByMasterId")
     public List<Client> getClientsByMasterId(@RequestParam("masterId") int masterId){
         System.out.println("запрос на клиентов");
+        List<Client> clients = masterRepository.findMasterById(masterId).get().getClients();
         return masterRepository.findMasterById(masterId).get().getClients();
     }
 
@@ -94,7 +99,21 @@ public class RestController {
         return result;
     }
 
+    @PostMapping("/createSchedule")
+    public String createSchedule(@RequestBody Schedule schedule) {
+        // Сохраняем расписание
+        Schedule savedSchedule = scheduleRepository.save(schedule);
 
+        // Получаем идентификатор сохраненного расписания
+        int scheduleId = savedSchedule.getId();
 
+        // Сохраняем все даты посещения, связанные с расписанием
+        for (VisitDay visitDate : schedule.getVisitDays()) {
+            visitDate.setScheduleId(scheduleId);
+            visitDayRepository.save(visitDate);
+        }
+
+        return "ok";
+    }
 
 }
