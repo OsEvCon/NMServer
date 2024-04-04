@@ -20,6 +20,7 @@ public class Schedule {
     @Column(name = "master_id")
     private Integer masterId;
 
+    @JsonIgnore
     @Column(name = "month_and_year")
     private GregorianCalendar monthAndYear;
 
