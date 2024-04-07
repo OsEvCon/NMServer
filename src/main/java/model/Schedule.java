@@ -25,10 +25,6 @@ public class Schedule {
     private GregorianCalendar monthAndYear;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "schedule_id")
-    private List<Visit> visits;
-
-    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "scheduleId")
     private List<VisitDay> visitDays;
 
@@ -75,14 +71,7 @@ public class Schedule {
 
     public void setMasterId(Integer masterId) {
         this.masterId = masterId;
-    }
 
-    public List<Visit> getVisits() {
-        return visits;
-    }
-
-    public void setVisits(List<Visit> visits) {
-        this.visits = visits;
     }
 
     public GregorianCalendar getMonthAndYear() {

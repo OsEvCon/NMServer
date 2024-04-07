@@ -1,10 +1,11 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-
 
 import java.time.LocalDate;
 import java.util.List;
+
 
 @Entity
 @Table(name = "visit_day")
