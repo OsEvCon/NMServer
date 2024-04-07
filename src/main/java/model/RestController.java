@@ -3,6 +3,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -101,6 +102,8 @@ public class RestController {
 
     @PostMapping("/createSchedule")
     public String createSchedule(@RequestBody Schedule schedule) {
+        System.out.println("запрос на сохранение расписания");
+        List<VisitDay> visitDays = schedule.getVisitDays();
         // Сохраняем расписание
         Schedule savedSchedule = scheduleRepository.save(schedule);
 
@@ -108,12 +111,47 @@ public class RestController {
         int scheduleId = savedSchedule.getId();
 
         // Сохраняем все даты посещения, связанные с расписанием
-        for (VisitDay visitDate : schedule.getVisitDays()) {
+        for (VisitDay visitDate : visitDays) {
             visitDate.setScheduleId(scheduleId);
             visitDayRepository.save(visitDate);
         }
 
         return "ok";
+    }
+
+    @PostMapping("/deleteSchedules")
+    @Transactional
+    public String deleteSchedules(@RequestBody List<Schedule> schedules, @RequestParam("masterId") int masterId){
+        System.out.println("запрос удаления расписания");
+        String result;
+        Optional<Master> optionalMaster = masterRepository.findMasterById(masterId);
+
+        if (optionalMaster.isPresent()){
+            Master master = optionalMaster.get();
+            for (Schedule schedule : schedules){
+                visitDayRepository.deleteAll(schedule.getVisitDays());
+            }
+
+            scheduleRepository.deleteAll(schedules);
+
+            result = "ok";
+        } else {
+            result = "badRequest";
+        }
+        return result;
+    }
+
+
+
+
+    @GetMapping("/getVisitDaysByMasterId")
+    public List<VisitDay> getVisitDayByMasterId (@RequestParam ("masterId") int masterId ) {
+        List<VisitDay> result = new ArrayList<>();
+
+        for (Schedule schedule : scheduleRepository.getSchedulesByMasterId(masterId).get()) {
+            result.addAll(schedule.getVisitDays());
+        }
+        return result;
     }
 
 }

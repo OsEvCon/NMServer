@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Добавил классы VisitDay и VisitTime вместо Visit.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/VisitDayRepository.java" afterDir="false" />
+    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Реализовал обработку запроса на добавление расписания">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/RestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/RestController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Schedule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Schedule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/ScheduleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/ScheduleRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/VisitDay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/VisitDay.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -20,8 +19,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -142,7 +141,10 @@
       <workItem from="1711979513035" duration="4688000" />
       <workItem from="1712062380087" duration="4191000" />
       <workItem from="1712152320761" duration="4741000" />
-      <workItem from="1712227226651" duration="11360000" />
+      <workItem from="1712227226651" duration="12088000" />
+      <workItem from="1712321753481" duration="15093000" />
+      <workItem from="1712410402454" duration="9713000" />
+      <workItem from="1712495685109" duration="3682000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>
@@ -172,7 +174,14 @@
       <option name="project" value="LOCAL" />
       <updated>1712179114154</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Реализовал обработку запроса на добавление расписания">
+      <created>1712265593537</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1712265593537</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -194,39 +203,40 @@
     <MESSAGE value="Добавил RestController.saveClient и RestController.deleteClients" />
     <MESSAGE value="Добавил поле PhoneNumber в Client" />
     <MESSAGE value="Добавил классы VisitDay и VisitTime вместо Visit." />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавил классы VisitDay и VisitTime вместо Visit." />
+    <MESSAGE value="Реализовал обработку запроса на добавление расписания" />
+    <option name="LAST_COMMIT_MESSAGE" value="Реализовал обработку запроса на добавление расписания" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>86</line>
+          <line>87</line>
           <option name="timeStamp" value="19" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>89</line>
+          <line>90</line>
           <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>92</line>
+          <line>93</line>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>94</line>
+          <line>95</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>41</line>
+          <line>42</line>
           <option name="timeStamp" value="23" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>42</line>
+          <line>43</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
       </breakpoints>
