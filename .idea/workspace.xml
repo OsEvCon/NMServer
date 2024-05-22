@@ -4,12 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Реализовал обработку запроса на добавление расписания">
+    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/RestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/RestController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Schedule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Schedule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/VisitDay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/VisitDay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/VisitTime.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/VisitTime.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,6 +147,17 @@
       <workItem from="1712321753481" duration="15093000" />
       <workItem from="1712410402454" duration="9713000" />
       <workItem from="1712495685109" duration="3682000" />
+      <workItem from="1715500462340" duration="3846000" />
+      <workItem from="1715540862185" duration="648000" />
+      <workItem from="1715611205353" duration="4462000" />
+      <workItem from="1715689116184" duration="665000" />
+      <workItem from="1715698730813" duration="1425000" />
+      <workItem from="1715757177109" duration="4455000" />
+      <workItem from="1715859231783" duration="1308000" />
+      <workItem from="1716050637751" duration="658000" />
+      <workItem from="1716143851844" duration="654000" />
+      <workItem from="1716292753568" duration="899000" />
+      <workItem from="1716316823773" duration="1237000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>
@@ -209,26 +222,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>87</line>
-          <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>90</line>
-          <option name="timeStamp" value="20" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>93</line>
-          <option name="timeStamp" value="21" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>95</line>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
           <line>42</line>
