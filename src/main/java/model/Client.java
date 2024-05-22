@@ -31,15 +31,15 @@ public class Client extends User {
     @JsonIgnore
     private List<Master> masters;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT) // Добавляем аннотацию @Fetch с указанием стратегии загрузки
     @JoinColumn(name = "client_id")
     List<Visit> visits;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "client", orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT) // Добавляем аннотацию @Fetch с указанием стратегии загрузки
-    @JoinColumn(name = "client_id")
-    List<VisitTime> visitTimes;
+    private List<VisitTime> visitTimes;
 
     public ArrayList<Visit> nextVisits(){
         ArrayList<Visit> nextVisits = new ArrayList<>();

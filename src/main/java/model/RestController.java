@@ -92,6 +92,7 @@ public class RestController {
 
             // Сохранение изменений
             masterRepository.save(master);
+            clientRepository.deleteAll(clients);
 
             result = "ok";
         } else {
@@ -146,6 +147,7 @@ public class RestController {
 
     @GetMapping("/getVisitDaysByMasterId")
     public List<VisitDay> getVisitDayByMasterId (@RequestParam ("masterId") int masterId ) {
+        System.out.println("запрос visitDays");
         List<VisitDay> result = new ArrayList<>();
 
         for (Schedule schedule : scheduleRepository.getSchedulesByMasterId(masterId).get()) {

@@ -16,16 +16,9 @@ public class VisitTime {
     @Column
     private int visitDayId;
 
-    @Column(name = "client_id")
-    Integer clientId;
-
-    public Integer getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(Integer clientId) {
-        this.clientId = clientId;
-    }
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_id")
+    private Client client;
 
     public Integer getId() {
         return id;
@@ -45,5 +38,13 @@ public class VisitTime {
 
     public void setVisitDayId(int visitDayId) {
         this.visitDayId = visitDayId;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }

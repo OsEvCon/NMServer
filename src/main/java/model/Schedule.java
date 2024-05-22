@@ -17,6 +17,7 @@ public class Schedule {
     @Column(name = "name")
     private String name;
 
+    @JsonIgnore
     @Column(name = "master_id")
     private Integer masterId;
 
