@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/VisitTimeRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Master.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Master.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/RestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/RestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Schedule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Schedule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/VisitDay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/VisitDay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/VisitDayRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/VisitDayRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/VisitTime.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/VisitTime.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
@@ -21,12 +23,17 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="1fdbebe4d763fc6c3eb1e958ca5d4a2f631669e4" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="JpbToolWindowState">
@@ -108,6 +115,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.MySpringBootApplication" />
+        <item itemvalue="Spring Boot.MySpringBootApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -158,6 +166,11 @@
       <workItem from="1716143851844" duration="654000" />
       <workItem from="1716292753568" duration="899000" />
       <workItem from="1716316823773" duration="1237000" />
+      <workItem from="1716476436330" duration="11528000" />
+      <workItem from="1716551377374" duration="1962000" />
+      <workItem from="1716569692862" duration="3583000" />
+      <workItem from="1716892298570" duration="458000" />
+      <workItem from="1716916558232" duration="1766000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>
@@ -224,12 +237,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>42</line>
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>43</line>
+          <line>44</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
       </breakpoints>

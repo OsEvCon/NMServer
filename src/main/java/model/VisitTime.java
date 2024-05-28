@@ -3,6 +3,7 @@ package model;
 import jakarta.persistence.*;
 
 import java.time.LocalTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "visit_time")
@@ -46,5 +47,18 @@ public class VisitTime {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        VisitTime visitTime = (VisitTime) o;
+        return visitDayId == visitTime.visitDayId && Objects.equals(id, visitTime.id) && Objects.equals(time, visitTime.time);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, time, visitDayId);
     }
 }
