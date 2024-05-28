@@ -16,17 +16,19 @@ public class RestController {
     private VisitRepository visitRepository;
     private ScheduleRepository scheduleRepository;
     private VisitDayRepository visitDayRepository;
+    private VisitTimeRepository visitTimeRepository;
 
 
     @Autowired
     public RestController(MasterRepository masterRepository, ClientRepository clientRepository,
                           VisitRepository visitRepository, ScheduleRepository scheduleRepository,
-                          VisitDayRepository visitDayRepository) {
+                          VisitDayRepository visitDayRepository, VisitTimeRepository visitTimeRepository) {
         this.masterRepository = masterRepository;
         this.clientRepository = clientRepository;
         this.visitRepository = visitRepository;
         this.scheduleRepository = scheduleRepository;
         this.visitDayRepository = visitDayRepository;
+        this.visitTimeRepository = visitTimeRepository;
     }
 
 
@@ -40,7 +42,6 @@ public class RestController {
     @GetMapping("/getClientsByMasterId")
     public List<Client> getClientsByMasterId(@RequestParam("masterId") int masterId){
         System.out.println("запрос на клиентов");
-        List<Client> clients = masterRepository.findMasterById(masterId).get().getClients();
         return masterRepository.findMasterById(masterId).get().getClients();
     }
 
@@ -148,12 +149,75 @@ public class RestController {
     @GetMapping("/getVisitDaysByMasterId")
     public List<VisitDay> getVisitDayByMasterId (@RequestParam ("masterId") int masterId ) {
         System.out.println("запрос visitDays");
-        List<VisitDay> result = new ArrayList<>();
+        return visitDayRepository.getVisitDaysByMasterId(masterId);
+    }
 
-        for (Schedule schedule : scheduleRepository.getSchedulesByMasterId(masterId).get()) {
-            result.addAll(schedule.getVisitDays());
+    @PostMapping("/createVisitDay")
+    public String createVisitDay( @RequestBody VisitDay visitDay, @RequestParam("masterId") Integer masterId){
+        String result;
+        Optional<Master> optionalMaster = masterRepository.findMasterById(masterId);
+        if (optionalMaster.isPresent()){
+            Master master = optionalMaster.get();
+            master.getVisitDays().add(visitDay);
+            masterRepository.save(master);
+            visitDay.setMasterId(masterId);
+            VisitDay savedVisitDay = visitDayRepository.save(visitDay);
+
+            for (VisitTime visitTime : visitDay.getVisitTimes()) {
+                visitTime.setVisitDayId(savedVisitDay.getId());
+            }
+            visitTimeRepository.saveAll(visitDay.getVisitTimes());
+            result = "ok";
+        }
+        else {
+            // Отправить ответ, что такого мастера нет
+            result = "badRequest";
         }
         return result;
     }
 
+    @PostMapping("/createVisitTime")
+    public String createVisitTime(@RequestBody VisitTime visitTime){
+        String result;
+        Optional<VisitDay> optionalVisitDay = visitDayRepository.findById(visitTime.getVisitDayId());
+        if (optionalVisitDay.isPresent()){
+            VisitDay visitDay = optionalVisitDay.get();
+
+            visitTimeRepository.save(visitTime);
+
+            visitDay.getVisitTimes().add(visitTime);
+            visitDayRepository.save(visitDay);
+            result = "ok";
+        }
+        else {
+            result = "badRequest";
+        }
+        return result;
+    }
+
+    @GetMapping("/getVisitTimesByMasterId")
+    public List<VisitTime> getVisitTimesByMasterId(@RequestParam("masterId") int masterId){
+        System.out.println("запрос getVisitTimesByMasterId");
+        List<VisitTime> result = new ArrayList<>();
+        Optional<Master> optionalMaster = masterRepository.findMasterById(masterId);
+        if (optionalMaster.isPresent()){
+            Master master = optionalMaster.get();
+            for (VisitDay visitDay : master.getVisitDays()){
+                result.addAll(visitDay.getVisitTimes());
+            }
+        }
+        return result;
+    }
+
+    @PostMapping("/deleteVisitTimes")
+    @Transactional
+    public String deleteVisitTimes(@RequestBody List<VisitTime> visitTimes, @RequestParam("visitDayId") int visitDayId){
+        try {
+            visitTimeRepository.deleteAll(visitTimes);
+            return "ok";
+        } catch (Exception e){
+            System.out.println("delete VisitTimes Exception: " + e.getMessage());
+            return "badRequest";
+        }
+    }
 }

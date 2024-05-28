@@ -13,16 +13,12 @@ public class Master extends User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
-
     @Column(name = "name")
     private String name;
-
     @Column(name = "telegram_id")
     private String telegram_id;
-
     @Column(name = "chat_id")
     private String chat_id;
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "master_client",
@@ -41,6 +37,11 @@ public class Master extends User {
     @Fetch(FetchMode.SUBSELECT) // Добавляем аннотацию @Fetch с указанием стратегии загрузки
     @JoinColumn(name = "master_id")
     List<Visit> visits;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "master_id")
+    List<VisitDay> visitDays;
 
     public Integer getId() {
         return id;
@@ -84,7 +85,13 @@ public class Master extends User {
         this.clients = clients;
     }
 
+    public List<VisitDay> getVisitDays() {
+        return visitDays;
+    }
 
+    public void setVisitDays(List<VisitDay> visitDays) {
+        this.visitDays = visitDays;
+    }
 
     public List<Schedule> getSchedules() {
         return schedules;

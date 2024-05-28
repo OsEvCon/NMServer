@@ -1,6 +1,5 @@
 package model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -14,16 +13,24 @@ public class VisitDay {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
-
     @Column
     private LocalDate date;
-
     @Column
     private Integer scheduleId;
-
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "visitDayId")
     private List<VisitTime> visitTimes;
+
+    @Column(name = "master_id")
+    private int masterId;
+
+    public int getMasterId() {
+        return masterId;
+    }
+
+    public void setMasterId(int masterId) {
+        this.masterId = masterId;
+    }
 
     public Integer getId() {
         return id;
