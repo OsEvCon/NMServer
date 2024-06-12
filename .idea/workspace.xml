@@ -4,16 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/VisitTimeRepository.java" afterDir="false" />
+    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Добавил VIsitDay и VisitTime">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Master.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Master.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/RestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/RestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Visit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Visit.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/VisitDay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/VisitDay.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/VisitDayRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/VisitDayRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/VisitTime.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/VisitTime.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,7 +166,22 @@
       <workItem from="1716551377374" duration="1962000" />
       <workItem from="1716569692862" duration="3583000" />
       <workItem from="1716892298570" duration="458000" />
-      <workItem from="1716916558232" duration="1766000" />
+      <workItem from="1716916558232" duration="2544000" />
+      <workItem from="1716976518488" duration="5873000" />
+      <workItem from="1717063328194" duration="1762000" />
+      <workItem from="1717094449467" duration="936000" />
+      <workItem from="1717148547505" duration="1901000" />
+      <workItem from="1717172874308" duration="3513000" />
+      <workItem from="1717239607311" duration="4552000" />
+      <workItem from="1717338724021" duration="2774000" />
+      <workItem from="1717410486056" duration="780000" />
+      <workItem from="1717438135181" duration="674000" />
+      <workItem from="1717510966701" duration="792000" />
+      <workItem from="1717669844737" duration="1644000" />
+      <workItem from="1717696381535" duration="48000" />
+      <workItem from="1717756999652" duration="2588000" />
+      <workItem from="1718098022994" duration="6165000" />
+      <workItem from="1718171849634" duration="571000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>
@@ -207,7 +218,14 @@
       <option name="project" value="LOCAL" />
       <updated>1712265593537</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Добавил VIsitDay и VisitTime">
+      <created>1716920523128</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1716920523128</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -230,14 +248,15 @@
     <MESSAGE value="Добавил поле PhoneNumber в Client" />
     <MESSAGE value="Добавил классы VisitDay и VisitTime вместо Visit." />
     <MESSAGE value="Реализовал обработку запроса на добавление расписания" />
-    <option name="LAST_COMMIT_MESSAGE" value="Реализовал обработку запроса на добавление расписания" />
+    <MESSAGE value="Добавил VIsitDay и VisitTime" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавил VIsitDay и VisitTime" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>44</line>
+          <line>35</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
       </breakpoints>

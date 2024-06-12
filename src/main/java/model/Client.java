@@ -31,26 +31,19 @@ public class Client extends User {
     @JsonIgnore
     private List<Master> masters;
 
-    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT) // Добавляем аннотацию @Fetch с указанием стратегии загрузки
     @JoinColumn(name = "client_id")
     List<Visit> visits;
 
+    @OneToMany
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "client_id")
+    List<VisitDay> visitDays;
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "client", orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT) // Добавляем аннотацию @Fetch с указанием стратегии загрузки
     private List<VisitTime> visitTimes;
-
-    public ArrayList<Visit> nextVisits(){
-        ArrayList<Visit> nextVisits = new ArrayList<>();
-        GregorianCalendar currentDate = (GregorianCalendar) GregorianCalendar.getInstance();
-        for (Visit visit: visits){
-            if (visit.getVisitDate().after(currentDate)){
-                nextVisits.add(visit);
-            }
-        }
-        return nextVisits;
-    }
 
     public Integer getId() {
         return id;
