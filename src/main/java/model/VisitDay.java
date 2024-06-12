@@ -24,6 +24,21 @@ public class VisitDay {
     @Column(name = "master_id")
     private int masterId;
 
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClientId(Client client) {
+        this.client = client;
+    }
+
     public int getMasterId() {
         return masterId;
     }

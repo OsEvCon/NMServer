@@ -30,15 +30,6 @@ public class RestController {
         this.visitDayRepository = visitDayRepository;
         this.visitTimeRepository = visitTimeRepository;
     }
-
-
-
-    @GetMapping("/hello")
-    public String hello(){
-        System.out.println("запрос hello");
-        return "hello";
-    }
-
     @GetMapping("/getClientsByMasterId")
     public List<Client> getClientsByMasterId(@RequestParam("masterId") int masterId){
         System.out.println("запрос на клиентов");

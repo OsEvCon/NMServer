@@ -3,6 +3,7 @@ package model;
 import jakarta.persistence.*;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Objects;
@@ -16,24 +17,15 @@ public class Visit {
     private Integer id;
 
     @Column(name = "date")
-    private GregorianCalendar visitDate;
+    private LocalDateTime visitDateTime;
 
-    @Column(name = "schedule_id")
-    private Integer scheduleId;
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
 
-    @Column(name = "client_id")
-    Integer clientId;
-
-    @Column(name = "master_id")
-    Integer masterId;
-
-    public Integer getMasterId() {
-        return masterId;
-    }
-
-    public void setMasterId(Integer masterId) {
-        this.masterId = masterId;
-    }
+    @ManyToOne
+    @JoinColumn(name = "master_id")
+    private Master master;
 
     public Integer getId() {
         return id;
@@ -43,65 +35,27 @@ public class Visit {
         this.id = id;
     }
 
-    public GregorianCalendar getVisitDate() {
-        return visitDate;
+    public LocalDateTime getVisitDateTime() {
+        return visitDateTime;
     }
 
-    public void setVisitDate(GregorianCalendar visitDate) {
-        this.visitDate = visitDate;
+    public void setVisitDateTime(LocalDateTime visitDateTime) {
+        this.visitDateTime = visitDateTime;
     }
 
-    public Integer getScheduleId() {
-        return scheduleId;
+    public Client getClient() {
+        return client;
     }
 
-    public void setScheduleId(Integer scheduleId) {
-        this.scheduleId = scheduleId;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
-    public void setVisitDate(String year, String month, String day){
-        int iYear = Integer.parseInt(year);
-        int iMonth = Integer.parseInt(month) - 1;
-        int iDay = Integer.parseInt(day);
-        GregorianCalendar visitDate = new GregorianCalendar(iYear, iMonth, iDay);
-        setVisitDate(visitDate);
+    public Master getMaster() {
+        return master;
     }
 
-    public void setVisitTime(String hour, String minute){
-        int iHour = Integer.parseInt(hour);
-        int iMinute = Integer.parseInt(minute);
-        getVisitDate().set(Calendar.HOUR_OF_DAY, iHour);
-        getVisitDate().set(Calendar.MINUTE, iMinute);
-    }
-
-    /*public String getVisitDateAndTime(){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-        return simpleDateFormat.format(visitDate.getTime());
-    }*/
-
-    public Integer getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(Integer clientId) {
-        this.clientId = clientId;
-    }
-
-    /*@Override
-    public String toString() {
-        return getVisitDateAndTime();
-    }*/
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Visit visit = (Visit) o;
-        return id.equals(visit.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public void setMaster(Master master) {
+        this.master = master;
     }
 }
