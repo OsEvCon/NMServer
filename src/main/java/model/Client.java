@@ -1,6 +1,8 @@
 package model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -30,20 +32,10 @@ public class Client extends User {
     @ManyToMany(mappedBy = "clients", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Master> masters;
-
-    @OneToMany(fetch = FetchType.EAGER)
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "client")
     @Fetch(FetchMode.SUBSELECT) // Добавляем аннотацию @Fetch с указанием стратегии загрузки
-    @JoinColumn(name = "client_id")
     List<Visit> visits;
-
-    @OneToMany
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "client_id")
-    List<VisitDay> visitDays;
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "client", orphanRemoval = true)
-    @Fetch(FetchMode.SUBSELECT) // Добавляем аннотацию @Fetch с указанием стратегии загрузки
-    private List<VisitTime> visitTimes;
 
     public Integer getId() {
         return id;

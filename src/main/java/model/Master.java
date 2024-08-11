@@ -1,5 +1,8 @@
 package model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -27,21 +30,10 @@ public class Master extends User {
     )
     @JsonIgnoreProperties("masters")
     private List<Client> clients;
-
-    @OneToMany(fetch = FetchType.EAGER)
+    @JsonManagedReference("master-visits")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "master")
     @Fetch(FetchMode.SUBSELECT) // Добавляем аннотацию @Fetch с указанием стратегии загрузки
-    @JoinColumn(name = "master_id")
-    List<Schedule> schedules;
-
-    @OneToMany(fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT) // Добавляем аннотацию @Fetch с указанием стратегии загрузки
-    @JoinColumn(name = "master_id")
     List<Visit> visits;
-
-    @OneToMany(fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "master_id")
-    List<VisitDay> visitDays;
 
     public Integer getId() {
         return id;
@@ -85,23 +77,13 @@ public class Master extends User {
         this.clients = clients;
     }
 
-    public List<VisitDay> getVisitDays() {
-        return visitDays;
+    public List<Visit> getVisits() {
+        return visits;
     }
 
-    public void setVisitDays(List<VisitDay> visitDays) {
-        this.visitDays = visitDays;
+    public void setVisits(List<Visit> visits) {
+        this.visits = visits;
     }
-
-    public List<Schedule> getSchedules() {
-        return schedules;
-    }
-
-    public void setSchedules(List<Schedule> schedules) {
-        this.schedules = schedules;
-    }
-
-
 
     @Override
     public boolean equals(Object o) {
