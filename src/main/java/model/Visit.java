@@ -1,5 +1,7 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.text.SimpleDateFormat;
@@ -22,7 +24,7 @@ public class Visit {
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
-
+    @JsonBackReference("master-visits")
     @ManyToOne
     @JoinColumn(name = "master_id")
     private Master master;
@@ -57,5 +59,18 @@ public class Visit {
 
     public void setMaster(Master master) {
         this.master = master;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Visit visit = (Visit) o;
+        return Objects.equals(id, visit.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
