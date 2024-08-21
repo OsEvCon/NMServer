@@ -67,8 +67,18 @@ public class RestController {
             // Удаление клиентов из коллекции клиентов у мастера
             master.getClients().removeAll(clients);
 
-            // Сохранение изменений
+            //Обновление всех визитов, связанных с удаляемыми клиентами
+            for (Client client : clients){
+                List<Visit> visits = visitRepository.findVisitsByClient(client).get();
+                for (Visit visit : visits) {
+                    visit.setClient(null);
+                }
+                visitRepository.saveAll(visits); // Сохраняем изменения в визитах
+            }
+
+            // Сохранение изменений у мастера
             masterRepository.save(master);
+            //удаление клиентов
             clientRepository.deleteAll(clients);
 
             result = "ok";
@@ -92,6 +102,32 @@ public class RestController {
             Visit savedVisit = visitRepository.save(visit);
             master.getVisits().add(savedVisit);
             masterRepository.save(master);
+            result = "ok";
+        } else {
+            result = "badRequest";
+        }
+        return result;
+    }
+
+    @PostMapping ("/deleteVisit")
+    public String deleteVisits(@RequestBody List<Visit> visits, @RequestParam ("masterId") Integer masterId){
+        System.out.println("запрос на удаление visit");
+        String result;
+
+        Optional<Master> optionalMaster = masterRepository.findMasterById(masterId);
+
+        if (optionalMaster.isPresent()){
+            Master master = optionalMaster.get();
+
+            //Удаление visits из коллекции мастера
+            master.getVisits().removeAll(visits);
+            masterRepository.save(master);
+
+            //Выставление в null клиентов в удаляемых визитах
+            for (Visit visit : visits){
+                visit.setClient(null);
+            }
+            visitRepository.deleteAll(visits);
             result = "ok";
         } else {
             result = "badRequest";
