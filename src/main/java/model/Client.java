@@ -1,8 +1,5 @@
 package model;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -13,6 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "client")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Client extends User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,9 +30,8 @@ public class Client extends User {
     @ManyToMany(mappedBy = "clients", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Master> masters;
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "client")
-    @Fetch(FetchMode.SUBSELECT) // Добавляем аннотацию @Fetch с указанием стратегии загрузки
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     List<Visit> visits;
 
     public Integer getId() {

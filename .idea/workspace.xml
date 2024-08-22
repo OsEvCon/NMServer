@@ -6,8 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Удалил Schedule.java, ScheduleRepository.java и сделал необходимые изменения">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/RestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/RestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/VisitRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/VisitRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Visit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Visit.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -197,6 +198,8 @@
       <workItem from="1723835216966" duration="14000" />
       <workItem from="1724168847063" duration="3774000" />
       <workItem from="1724223763993" duration="4037000" />
+      <workItem from="1724255873057" duration="2129000" />
+      <workItem from="1724312466119" duration="11401000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>

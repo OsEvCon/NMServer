@@ -102,6 +102,16 @@ public class RestController {
             Visit savedVisit = visitRepository.save(visit);
             master.getVisits().add(savedVisit);
             masterRepository.save(master);
+
+            // Если клиент присутствует, добавляем его в базу данных
+            if (visit.getClient() != null) {
+                Optional<Client> optionalClient = clientRepository.findClientById(visit.getClient().getId());
+                if (optionalClient.isPresent()) {
+                    Client client = optionalClient.get();
+                    client.getVisits().add(savedVisit);
+                    clientRepository.save(client);
+                }
+            }
             result = "ok";
         } else {
             result = "badRequest";
