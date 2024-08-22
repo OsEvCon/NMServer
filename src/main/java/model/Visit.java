@@ -1,7 +1,9 @@
 package model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.text.SimpleDateFormat;
@@ -12,6 +14,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "visit")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Visit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +31,9 @@ public class Visit {
     @ManyToOne
     @JoinColumn(name = "master_id")
     private Master master;
+
+    public Visit() {
+    }
 
     public Integer getId() {
         return id;
