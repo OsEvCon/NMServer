@@ -4,11 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Удалил Schedule.java, ScheduleRepository.java и сделал необходимые изменения">
+    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Исправил сериализацию и десериализацию Client и Visit.I fixed the serialization and deserialization of Client and Visit.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Procedure.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/MySpringBootApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/MySpringBootApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/RestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/RestController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Visit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Visit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,8 +22,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -68,14 +72,15 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/evgen/IdeaProjects/NMServer&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.3494253&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
     &quot;spring.configuration.checksum&quot;: &quot;a837a37f70a50163098d75ae6053fc62&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
@@ -113,6 +118,10 @@
         <item itemvalue="Spring Boot.MySpringBootApplication" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SQLScriptSettings">
+    <option name="outputLayout" value="File per object by schema and database.groovy" />
+    <option name="outputPath" value="D:\" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SpringBeansView">
@@ -199,7 +208,22 @@
       <workItem from="1724168847063" duration="3774000" />
       <workItem from="1724223763993" duration="4037000" />
       <workItem from="1724255873057" duration="2129000" />
-      <workItem from="1724312466119" duration="11401000" />
+      <workItem from="1724312466119" duration="11539000" />
+      <workItem from="1724352989540" duration="1667000" />
+      <workItem from="1724407772094" duration="2444000" />
+      <workItem from="1724662198714" duration="14000" />
+      <workItem from="1724666956194" duration="2701000" />
+      <workItem from="1724673248912" duration="3225000" />
+      <workItem from="1724681742615" duration="6707000" />
+      <workItem from="1724699249326" duration="1192000" />
+      <workItem from="1724777535385" duration="5194000" />
+      <workItem from="1724826375654" duration="10259000" />
+      <workItem from="1724870922519" duration="1631000" />
+      <workItem from="1724880819972" duration="1931000" />
+      <workItem from="1724925884588" duration="3414000" />
+      <workItem from="1724953688830" duration="1703000" />
+      <workItem from="1725121437763" duration="9000" />
+      <workItem from="1725201024520" duration="3830000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>
@@ -257,7 +281,14 @@
       <option name="project" value="LOCAL" />
       <updated>1723384056207</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Исправил сериализацию и десериализацию Client и Visit.I fixed the serialization and deserialization of Client and Visit.">
+      <created>1724348840158</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1724348840158</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -283,6 +314,7 @@
     <MESSAGE value="Добавил VIsitDay и VisitTime" />
     <MESSAGE value="Добавил List&lt;VisitDay&gt; visitDays; Изменил Visit; Добавил client в VisitDay" />
     <MESSAGE value="Удалил Schedule.java, ScheduleRepository.java и сделал необходимые изменения" />
-    <option name="LAST_COMMIT_MESSAGE" value="Удалил Schedule.java, ScheduleRepository.java и сделал необходимые изменения" />
+    <MESSAGE value="Исправил сериализацию и десериализацию Client и Visit.I fixed the serialization and deserialization of Client and Visit." />
+    <option name="LAST_COMMIT_MESSAGE" value="Исправил сериализацию и десериализацию Client и Visit.I fixed the serialization and deserialization of Client and Visit." />
   </component>
 </project>
