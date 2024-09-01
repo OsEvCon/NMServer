@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -31,6 +32,14 @@ public class Visit {
     @ManyToOne
     @JoinColumn(name = "master_id")
     private Master master;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "visit_procedure",
+            joinColumns = @JoinColumn(name = "visit_id"),
+            inverseJoinColumns = @JoinColumn(name = "procedure_id")
+    )
+    private List<Procedure> procedures;
 
     public Visit() {
     }

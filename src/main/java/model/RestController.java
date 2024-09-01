@@ -20,6 +20,11 @@ public class RestController {
         this.clientRepository = clientRepository;
         this.visitRepository = visitRepository;
     }
+
+    @GetMapping("/hello")
+    public String hello(){
+        return "hello";
+    }
     @GetMapping("/getClientsByMasterId")
     public List<Client> getClientsByMasterId(@RequestParam("masterId") int masterId){
         System.out.println("запрос на клиентов");
