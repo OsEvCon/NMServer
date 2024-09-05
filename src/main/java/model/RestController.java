@@ -1,8 +1,10 @@
 package model;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -12,13 +14,15 @@ public class RestController {
     private MasterRepository masterRepository;
     private ClientRepository clientRepository;
     private VisitRepository visitRepository;
+    private ProcedureRepository procedureRepository;
 
     @Autowired
     public RestController(MasterRepository masterRepository, ClientRepository clientRepository,
-                          VisitRepository visitRepository) {
+                          VisitRepository visitRepository, ProcedureRepository procedureRepository) {
         this.masterRepository = masterRepository;
         this.clientRepository = clientRepository;
         this.visitRepository = visitRepository;
+        this.procedureRepository = procedureRepository;
     }
 
     @GetMapping("/hello")
@@ -100,7 +104,6 @@ public class RestController {
 
         Optional<Master> optionalMaster = masterRepository.findMasterById(masterId);
 
-
         if (optionalMaster.isPresent()){
             Master master = optionalMaster.get();
             visit.setMaster(master);
@@ -141,8 +144,60 @@ public class RestController {
             //Выставление в null клиентов в удаляемых визитах
             for (Visit visit : visits){
                 visit.setClient(null);
+                visit.setProcedures(null);
             }
             visitRepository.deleteAll(visits);
+            result = "ok";
+        } else {
+            result = "badRequest";
+        }
+        return result;
+    }
+
+    @GetMapping("/getProceduresByMasterId")
+    public List<Procedure> getProceduresByMasterId(@RequestParam("masterId") int masterId){
+        System.out.println("Запрос процедур");
+        Optional<Master> optionalMaster = masterRepository.findMasterById(masterId);
+        List<Procedure> result = null;
+
+        if (optionalMaster.isPresent()){
+            Master master = optionalMaster.get();
+            result = master.getProcedures();
+        }
+        return result;
+    }
+
+    @PostMapping ("/createProcedure")
+    public String createProcedure(@RequestBody Procedure procedure, @RequestParam("masterId") Integer masterId){
+        System.out.println("запрос на добавление procedure");
+        String result;
+
+        Optional<Master> optionalMaster = masterRepository.findMasterById(masterId);
+
+        if (optionalMaster.isPresent()){
+            Master master = optionalMaster.get();
+            Procedure savedProcedure = procedureRepository.save(procedure);
+            master.getProcedures().add(savedProcedure);
+            masterRepository.save(master);
+            result = "ok";
+        } else {
+            result = "badRequest";
+        }
+        return result;
+    }
+
+    @PostMapping("/deleteProcedures")
+    public String deleteProcedures(@RequestBody List<Procedure> procedures, @RequestParam ("masterId") Integer masterId ){
+        System.out.println("Запрос на удаление процедур");
+        String result;
+
+        Optional<Master> optionalMaster = masterRepository.findMasterById(masterId);
+
+        if (optionalMaster.isPresent()){
+            Master master = optionalMaster.get();
+            master.getProcedures().removeAll(procedures);
+            masterRepository.save(master);
+            procedureRepository.deleteAll(procedures);
             result = "ok";
         } else {
             result = "badRequest";
