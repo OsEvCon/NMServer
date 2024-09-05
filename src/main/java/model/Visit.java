@@ -76,6 +76,14 @@ public class Visit {
         this.master = master;
     }
 
+    public List<Procedure> getProcedures() {
+        return procedures;
+    }
+
+    public void setProcedures(List<Procedure> procedures) {
+        this.procedures = procedures;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

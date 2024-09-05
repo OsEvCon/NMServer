@@ -6,7 +6,9 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+@ComponentScan(basePackages = {"Service", "model", "Serializer"})
 public class MySpringBootApplication extends SpringBootServletInitializer {
+
     public static void main(String[] args) {
         SpringApplication.run(MySpringBootApplication.class);
     }

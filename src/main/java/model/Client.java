@@ -1,10 +1,11 @@
 package model;
+import Serializer.CustomDeserializer;
+import Serializer.CustomSerializer;
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -16,6 +17,8 @@ public class Client extends User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
+    @JsonSerialize(using = CustomSerializer.class)
+    @JsonDeserialize(using = CustomDeserializer.class)
     @Column(name = "name")
     private String name;
     @JsonIgnore
@@ -24,7 +27,8 @@ public class Client extends User {
     @JsonIgnore
     @Column(name = "chat_id")
     private String chat_id;
-
+    @JsonSerialize(using = CustomSerializer.class)
+    @JsonDeserialize(using = CustomDeserializer.class)
     @Column(name = "phone_number")
     String phoneNumber;
     @ManyToMany(mappedBy = "clients", fetch = FetchType.EAGER)
@@ -32,7 +36,7 @@ public class Client extends User {
     private List<Master> masters;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
-    List<Visit> visits;
+    private List<Visit> visits;
 
     public Integer getId() {
         return id;

@@ -4,11 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Исправил сериализацию и десериализацию Client и Visit.I fixed the serialization and deserialization of Client and Visit.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Procedure.java" afterDir="false" />
+    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Доюавил Procedure. Add Procedure">
+      <change afterPath="$PROJECT_DIR$/src/main/java/Serializer/CustomDeserializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Serializer/CustomSerializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Serializer/JacksonConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Service/CryptoService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/ProcedureRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Master.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Master.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/MasterRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/MasterRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/MySpringBootApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/MySpringBootApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Procedure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Procedure.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/RestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/RestController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Visit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Visit.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
@@ -22,8 +29,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -93,6 +100,10 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="G:\Моя Java\TestServer\src\main\java\dao" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="Service" />
+      <recent name="Test" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="model" />
@@ -223,7 +234,14 @@
       <workItem from="1724925884588" duration="3414000" />
       <workItem from="1724953688830" duration="1703000" />
       <workItem from="1725121437763" duration="9000" />
-      <workItem from="1725201024520" duration="3830000" />
+      <workItem from="1725201024520" duration="4036000" />
+      <workItem from="1725270235669" duration="1849000" />
+      <workItem from="1725279643252" duration="11290000" />
+      <workItem from="1725298877021" duration="5971000" />
+      <workItem from="1725351162893" duration="2639000" />
+      <workItem from="1725353815471" duration="8976000" />
+      <workItem from="1725472734980" duration="1798000" />
+      <workItem from="1725520553821" duration="9741000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>
@@ -288,7 +306,14 @@
       <option name="project" value="LOCAL" />
       <updated>1724348840158</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Доюавил Procedure. Add Procedure">
+      <created>1725207525558</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1725207525558</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -315,6 +340,73 @@
     <MESSAGE value="Добавил List&lt;VisitDay&gt; visitDays; Изменил Visit; Добавил client в VisitDay" />
     <MESSAGE value="Удалил Schedule.java, ScheduleRepository.java и сделал необходимые изменения" />
     <MESSAGE value="Исправил сериализацию и десериализацию Client и Visit.I fixed the serialization and deserialization of Client and Visit." />
-    <option name="LAST_COMMIT_MESSAGE" value="Исправил сериализацию и десериализацию Client и Visit.I fixed the serialization and deserialization of Client and Visit." />
+    <MESSAGE value="Доюавил Procedure. Add Procedure" />
+    <option name="LAST_COMMIT_MESSAGE" value="Доюавил Procedure. Add Procedure" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
+          <line>191</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
+          <line>193</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
+          <line>195</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
+          <line>196</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
+          <line>197</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
+          <line>198</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
+          <line>199</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
+          <line>200</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
+          <line>202</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
+          <line>204</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="model.Master" memberName="chat_id" />
+      </pinned-members>
+    </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="SpringBootApplicationConfigurationType">
+        <watch expression="master.procedures" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
