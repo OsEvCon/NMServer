@@ -1,4 +1,5 @@
 package model;
+import DAO.VisitDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
@@ -124,6 +125,27 @@ public class RestController {
         } else {
             result = "badRequest";
         }
+        return result;
+    }
+
+    @PutMapping("/updateVisit")
+    public String updateVisit(@RequestBody VisitDao visitDao, @RequestParam ("masterId") Integer masterId){
+        System.out.println("Запрос на обновление Visit");
+        String result = "badRequest";
+        Optional<Visit> optionalVisit = visitRepository.findById(visitDao.getVisitId());
+        if (optionalVisit.isPresent()){
+            Visit visit = optionalVisit.get();
+            visit.setClient(clientRepository.findClientById(visitDao.getClientId()).get());
+            visit.setVisitDateTime(visitDao.getLocalDateTime());
+            visit.getProcedures().clear();
+            for (Integer i : visitDao.getProceduresId()){
+                Procedure procedure = procedureRepository.findById(i).get();
+                visit.getProcedures().add(procedure);
+            }
+            visitRepository.save(visit);
+            result = "ok";
+        }
+
         return result;
     }
 

@@ -4,22 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Доюавил Procedure. Add Procedure">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Serializer/CustomDeserializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Serializer/CustomSerializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Serializer/JacksonConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Service/CryptoService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/ProcedureRepository.java" afterDir="false" />
+    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Добавил VisitDao для корректного обновления Visit (были проблемы с @JsonIdentityInfo)">
+      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/VisitDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Master.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Master.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/MasterRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/MasterRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/MySpringBootApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/MySpringBootApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Procedure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Procedure.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/RestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/RestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Visit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Visit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,15 +17,15 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="1fdbebe4d763fc6c3eb1e958ca5d4a2f631669e4" />
+        <entry key="$PROJECT_DIR$" value="f58ac5c5b27037d66db92d226cb893b8cf2c605b" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -69,36 +57,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.3494253&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;a837a37f70a50163098d75ae6053fc62&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/evgen/IdeaProjects/NMServer/src/main/java/DAO",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.3494253",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "spring.configuration.checksum": "a837a37f70a50163098d75ae6053fc62",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\evgen\IdeaProjects\NMServer\src\main\java\DAO" />
       <recent name="G:\Моя Java\TestServer\src\main\java\dao" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -125,6 +114,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.MySpringBootApplication" />
+        <item itemvalue="Spring Boot.MySpringBootApplication" />
+        <item itemvalue="Spring Boot.MySpringBootApplication" />
         <item itemvalue="Spring Boot.MySpringBootApplication" />
         <item itemvalue="Spring Boot.MySpringBootApplication" />
       </list>
@@ -341,59 +333,60 @@
     <MESSAGE value="Удалил Schedule.java, ScheduleRepository.java и сделал необходимые изменения" />
     <MESSAGE value="Исправил сериализацию и десериализацию Client и Visit.I fixed the serialization and deserialization of Client and Visit." />
     <MESSAGE value="Доюавил Procedure. Add Procedure" />
-    <option name="LAST_COMMIT_MESSAGE" value="Доюавил Procedure. Add Procedure" />
+    <MESSAGE value="Добавил VisitDao для корректного обновления Visit (были проблемы с @JsonIdentityInfo)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавил VisitDao для корректного обновления Visit (были проблемы с @JsonIdentityInfo)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>191</line>
+          <line>213</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>193</line>
+          <line>215</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>195</line>
+          <line>217</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>196</line>
+          <line>218</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>197</line>
+          <line>219</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>198</line>
+          <line>220</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>199</line>
+          <line>221</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>200</line>
+          <line>222</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>202</line>
+          <line>224</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>204</line>
+          <line>226</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
