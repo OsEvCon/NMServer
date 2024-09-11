@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Добавил VisitDao для корректного обновления Visit (были проблемы с @JsonIdentityInfo)">
-      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/VisitDao.java" afterDir="false" />
+    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Перенес шифрование данных с сервера на клиент.&#10;I moved the data encryption from the server to the client.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/VisitDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/VisitDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/RestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/RestController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -72,6 +73,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.3494253",
@@ -234,6 +236,9 @@
       <workItem from="1725353815471" duration="8976000" />
       <workItem from="1725472734980" duration="1798000" />
       <workItem from="1725520553821" duration="9741000" />
+      <workItem from="1725954111231" duration="219000" />
+      <workItem from="1725989916813" duration="5689000" />
+      <workItem from="1726060635766" duration="5362000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>
@@ -305,7 +310,14 @@
       <option name="project" value="LOCAL" />
       <updated>1725207525558</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Добавил VisitDao для корректного обновления Visit (были проблемы с @JsonIdentityInfo).&#10;I added VisitDao for proper updating of Visit (there were issues with @JsonIdentityInfo).">
+      <created>1725916356156</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1725916356156</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -316,7 +328,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -334,60 +358,80 @@
     <MESSAGE value="Исправил сериализацию и десериализацию Client и Visit.I fixed the serialization and deserialization of Client and Visit." />
     <MESSAGE value="Доюавил Procedure. Add Procedure" />
     <MESSAGE value="Добавил VisitDao для корректного обновления Visit (были проблемы с @JsonIdentityInfo)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавил VisitDao для корректного обновления Visit (были проблемы с @JsonIdentityInfo)" />
+    <MESSAGE value="Добавил VisitDao для корректного обновления Visit (были проблемы с @JsonIdentityInfo).&#10;I added VisitDao for proper updating of Visit (there were issues with @JsonIdentityInfo)." />
+    <MESSAGE value="Перенес шифрование данных с сервера на клиент.&#10;I moved the data encryption from the server to the client." />
+    <option name="LAST_COMMIT_MESSAGE" value="Перенес шифрование данных с сервера на клиент.&#10;I moved the data encryption from the server to the client." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>213</line>
+          <line>217</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>215</line>
+          <line>219</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>217</line>
+          <line>221</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>218</line>
+          <line>222</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>219</line>
+          <line>223</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>220</line>
+          <line>224</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>221</line>
+          <line>225</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>222</line>
+          <line>226</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>224</line>
+          <line>228</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
-          <line>226</line>
+          <line>230</line>
           <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
+          <line>135</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
+          <line>136</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/model/RestController.java</url>
+          <line>132</line>
+          <properties class="model.RestController" method="updateVisit">
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

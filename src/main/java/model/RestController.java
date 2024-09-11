@@ -44,6 +44,7 @@ public class RestController {
 
     @PostMapping("/createClient")
     public String saveClient(@RequestBody Client client, @RequestParam("masterId") Integer masterId){
+        System.out.println("запрос на добавление клиента");
         String result;
         Optional<Master> optionalMaster = masterRepository.findMasterById(masterId);
         if (optionalMaster.isPresent()){
@@ -135,7 +136,11 @@ public class RestController {
         Optional<Visit> optionalVisit = visitRepository.findById(visitDao.getVisitId());
         if (optionalVisit.isPresent()){
             Visit visit = optionalVisit.get();
-            visit.setClient(clientRepository.findClientById(visitDao.getClientId()).get());
+            if (visitDao.getClientId() == null){
+                visit.setClient(null);
+            } else {
+                visit.setClient(clientRepository.findClientById(visitDao.getClientId()).get());
+            }
             visit.setVisitDateTime(visitDao.getLocalDateTime());
             visit.getProcedures().clear();
             for (Integer i : visitDao.getProceduresId()){
@@ -145,7 +150,6 @@ public class RestController {
             visitRepository.save(visit);
             result = "ok";
         }
-
         return result;
     }
 

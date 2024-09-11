@@ -17,8 +17,7 @@ public class Client extends User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
-    @JsonSerialize(using = CustomSerializer.class)
-    @JsonDeserialize(using = CustomDeserializer.class)
+
     @Column(name = "name")
     private String name;
     @JsonIgnore
@@ -27,8 +26,7 @@ public class Client extends User {
     @JsonIgnore
     @Column(name = "chat_id")
     private String chat_id;
-    @JsonSerialize(using = CustomSerializer.class)
-    @JsonDeserialize(using = CustomDeserializer.class)
+
     @Column(name = "phone_number")
     String phoneNumber;
     @ManyToMany(mappedBy = "clients", fetch = FetchType.EAGER)

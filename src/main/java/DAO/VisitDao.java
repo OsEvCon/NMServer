@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class VisitDao {
-    private int visitId;
-    private int clientId;
+    private Integer visitId;
+    private Integer clientId;
     private List<Integer> proceduresId = new ArrayList<>();
     private LocalDateTime localDateTime;
 
@@ -31,11 +31,11 @@ public class VisitDao {
         this.visitId = visitId;
     }
 
-    public int getClientId() {
+    public Integer getClientId() {
         return clientId;
     }
 
-    public void setClientId(int clientId) {
+    public void setClientId(Integer clientId) {
         this.clientId = clientId;
     }
 
