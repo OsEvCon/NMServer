@@ -2,6 +2,7 @@ package model;
 import Serializer.CustomDeserializer;
 import Serializer.CustomSerializer;
 import Service.CryptoService;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -9,8 +10,14 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "master")
@@ -27,6 +34,13 @@ public class Master extends User {
     private String telegram_id;
     @Column(name = "chat_id")
     private String chat_id;
+    @JsonIgnore
+    @Column(name = "email")
+    private String email;
+
+    @JsonIgnore
+    @Column
+    private String password;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "master_client",
@@ -47,6 +61,20 @@ public class Master extends User {
             inverseJoinColumns = @JoinColumn(name = "procedure_id")
     )
     private List<Procedure> procedures;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "master-roles",
+            joinColumns = @JoinColumn(name = "master_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private List<Role> roles = new ArrayList<>();
+
+    public Collection<? extends GrantedAuthority> getAuthorities(){
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .collect(Collectors.toList());
+    }
     public Integer getId() {
         return id;
     }
@@ -103,6 +131,30 @@ public class Master extends User {
 
     public void setProcedures(List<Procedure> procedures) {
         this.procedures = procedures;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     @Override

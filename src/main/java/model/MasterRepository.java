@@ -12,4 +12,6 @@ public interface MasterRepository extends CrudRepository<Master, Integer> {
 
     Optional<Master> findByName(String name);
 
+    Optional<Master> findByEmail(String email);
+
 }
