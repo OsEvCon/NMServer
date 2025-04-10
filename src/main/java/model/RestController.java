@@ -98,6 +98,23 @@ public class RestController {
         return result;
     }
 
+    @PostMapping("/updateClient")
+    public String updateClient(@RequestBody Client client){
+        System.out.println("Запрос на обновление Client");
+        String result = "badRequest";
+
+        Optional<Client> optionalClient = clientRepository.findClientById(client.getId());
+
+        if (optionalClient.isPresent()){
+            Client clientForUpdate = optionalClient.get();
+            clientForUpdate.setName(client.getName());
+            clientForUpdate.setPhoneNumber(client.getPhoneNumber());
+            clientRepository.save(clientForUpdate);
+            result = "ok";
+        }
+        return result;
+    }
+
     @PostMapping("/createVisit")
     public String createVisit(@RequestBody Visit visit){
         System.out.println("запрос на добавление visit");
@@ -219,6 +236,22 @@ public class RestController {
             result = "ok";
         } else {
             result = "badRequest";
+        }
+        return result;
+    }
+
+    @PostMapping("/updateProcedure")
+    public String updateProcedure(@RequestBody Procedure procedure) {
+        System.out.println("Запрос на обновление/изменение процедуры");
+        String result = "badRequest";
+
+        Optional<Procedure> optionalProcedure = procedureRepository.findById(procedure.getId());
+        if (optionalProcedure.isPresent()){
+            Procedure procedureForUpdate = optionalProcedure.get();
+            procedureForUpdate.setName(procedure.getName());
+            procedureForUpdate.setPrice(procedure.getPrice());
+            procedureRepository.save(procedureForUpdate);
+            result = "ok";
         }
         return result;
     }

@@ -1,12 +1,7 @@
 package model;
-import Serializer.CustomDeserializer;
-import Serializer.CustomSerializer;
-import Service.CryptoService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -26,8 +21,6 @@ public class Master extends User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
-    @JsonSerialize(using = CustomSerializer.class)
-    @JsonDeserialize(using = CustomDeserializer.class)
     @Column(name = "name")
     private String name;
     @Column(name = "telegram_id")

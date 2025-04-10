@@ -39,6 +39,14 @@
             <version>6.4.4.Final</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.jasypt/jasypt-hibernate5 -->
+        <dependency>
+            <groupId>org.jasypt</groupId>
+            <artifactId>jasypt-hibernate5</artifactId>
+            <version>1.9.3</version>
+        </dependency>
+
+
 
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
         <dependency>
