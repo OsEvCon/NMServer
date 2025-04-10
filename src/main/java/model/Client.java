@@ -1,9 +1,5 @@
 package model;
-import Serializer.CustomDeserializer;
-import Serializer.CustomSerializer;
 import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 
 import java.util.List;

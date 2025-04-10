@@ -4,24 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Перенес шифрование данных с сервера на клиент.&#10;I moved the data encryption from the server to the client.">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/TestServer_javaEEApplication_exploded.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/META-INF/application.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Service/CustomUserDetailsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Service/DataInitializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Service/JwtRequestFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Service/JwtUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/AuthController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Role.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/RoleRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/SecurityConfig.java" afterDir="false" />
+    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Добавил SpringSecurity. Реализовал регистрацию и вход в систему. Реализовал обработку запросов с помощью JWT токенов.&#10;Added Spring Security. Implemented registration and login functionality. Implemented request handling using JWT tokens.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/ClientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/ClientRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Serializer/CustomDeserializer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Serializer/CustomSerializer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Serializer/JacksonConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Service/CryptoService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Master.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Master.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/MasterRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/MasterRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/RestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/RestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/VisitRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/VisitRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -72,36 +64,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/evgen/IdeaProjects/NMServer/src/main/java/DAO&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.3494253&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;a837a37f70a50163098d75ae6053fc62&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/evgen/IdeaProjects/Learning",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.3494253",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler",
+    "spring.configuration.checksum": "a837a37f70a50163098d75ae6053fc62",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\evgen\IdeaProjects\NMServer\src\main\java\DAO" />
@@ -267,7 +259,29 @@
       <workItem from="1732184473384" duration="8394000" />
       <workItem from="1732213635599" duration="1798000" />
       <workItem from="1732269858402" duration="5571000" />
-      <workItem from="1732370088521" duration="1232000" />
+      <workItem from="1732370088521" duration="2180000" />
+      <workItem from="1732525459665" duration="5356000" />
+      <workItem from="1732606909661" duration="1256000" />
+      <workItem from="1732704587382" duration="1414000" />
+      <workItem from="1732874848133" duration="1241000" />
+      <workItem from="1733036859405" duration="600000" />
+      <workItem from="1733134302839" duration="621000" />
+      <workItem from="1739613115756" duration="2314000" />
+      <workItem from="1739795478599" duration="206000" />
+      <workItem from="1740052278037" duration="602000" />
+      <workItem from="1740137854659" duration="702000" />
+      <workItem from="1740234355820" duration="649000" />
+      <workItem from="1740307730692" duration="633000" />
+      <workItem from="1740419960907" duration="659000" />
+      <workItem from="1740426666686" duration="1791000" />
+      <workItem from="1740490736461" duration="1656000" />
+      <workItem from="1740500809451" duration="1255000" />
+      <workItem from="1741023414432" duration="11000" />
+      <workItem from="1743965779557" duration="604000" />
+      <workItem from="1744028598840" duration="5167000" />
+      <workItem from="1744112042755" duration="6161000" />
+      <workItem from="1744215059933" duration="772000" />
+      <workItem from="1744285723606" duration="2048000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>
@@ -346,7 +360,14 @@
       <option name="project" value="LOCAL" />
       <updated>1725916356156</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Добавил SpringSecurity. Реализовал регистрацию и вход в систему. Реализовал обработку запросов с помощью JWT токенов.&#10;Added Spring Security. Implemented registration and login functionality. Implemented request handling using JWT tokens.">
+      <created>1732382832953</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1732382832953</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -389,7 +410,8 @@
     <MESSAGE value="Добавил VisitDao для корректного обновления Visit (были проблемы с @JsonIdentityInfo)" />
     <MESSAGE value="Добавил VisitDao для корректного обновления Visit (были проблемы с @JsonIdentityInfo).&#10;I added VisitDao for proper updating of Visit (there were issues with @JsonIdentityInfo)." />
     <MESSAGE value="Перенес шифрование данных с сервера на клиент.&#10;I moved the data encryption from the server to the client." />
-    <option name="LAST_COMMIT_MESSAGE" value="Перенес шифрование данных с сервера на клиент.&#10;I moved the data encryption from the server to the client." />
+    <MESSAGE value="Добавил SpringSecurity. Реализовал регистрацию и вход в систему. Реализовал обработку запросов с помощью JWT токенов.&#10;Added Spring Security. Implemented registration and login functionality. Implemented request handling using JWT tokens." />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавил SpringSecurity. Реализовал регистрацию и вход в систему. Реализовал обработку запросов с помощью JWT токенов.&#10;Added Spring Security. Implemented registration and login functionality. Implemented request handling using JWT tokens." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
