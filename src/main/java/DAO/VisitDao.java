@@ -59,4 +59,5 @@ public class VisitDao {
     public void setLocalDateTime(LocalDateTime localDateTime) {
         this.localDateTime = localDateTime;
     }
+
 }

@@ -1,7 +1,9 @@
 package model;
 
-public class User {
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+public class User {
+@JsonIgnore
     private Integer id;
     private String name;
 
