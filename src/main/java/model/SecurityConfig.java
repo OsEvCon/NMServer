@@ -27,22 +27,24 @@ public class SecurityConfig {
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/auth/login").permitAll() // Разрешить доступ к логину
-                        .requestMatchers("/auth/registerUser").permitAll() // Разрешить доступ к регистрации
-                        .anyRequest().authenticated()
-                )
-                .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
-                .csrf(AbstractHttpConfigurer::disable); // Отключаем CSRF
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+            http
+                    .authorizeHttpRequests(authorize -> authorize
+                            .requestMatchers("/auth/login").permitAll() // Разрешить доступ к логину
+                            .requestMatchers("/auth/registerUser").permitAll() // Разрешить доступ к регистрации
+                            .requestMatchers("/hello").permitAll()
+                            .requestMatchers("/ws-updates/**").permitAll()//authenticated() // Требуем аутентификации для WebSocket
+                            .anyRequest().authenticated()
+                    )
+                    .sessionManagement(session ->
+                            session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    )
+                    .csrf(AbstractHttpConfigurer::disable); // Отключаем CSRF
 
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-        return http.build();
-    }
+            http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+            return http.build();
+        }
 
     @Bean
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {

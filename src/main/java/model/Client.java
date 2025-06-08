@@ -12,6 +12,7 @@ public class Client extends User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
+    @JsonProperty("id")
     private Integer id;
 
     @Column(name = "name")
