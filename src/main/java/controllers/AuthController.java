@@ -1,9 +1,14 @@
-package model;
+package controllers;
 
 import Service.CustomUserDetailsService;
 import Service.JwtUtil;
 import jakarta.annotation.security.PermitAll;
+import model.Master;
+import model.MasterRepository;
+import model.RoleRepository;
+import model.UpdateResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,10 +38,17 @@ public class AuthController {
     @Autowired
     private MasterRepository masterRepository;
 
-    @Autowired RoleRepository roleRepository;
+    @Autowired
+    RoleRepository roleRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Value("${app.current.version}")
+    private String currentVersion;
+
+    @Value("${app.download.url}")
+    private String downloadUrl;
 
     @PermitAll
     @PostMapping("/login")
@@ -114,5 +126,37 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .build();
         }
+    }
+
+    @PostMapping("/checkUpdate")
+    public ResponseEntity<UpdateResponse> checkUpdate(@RequestParam("version") String clientVersion){
+
+        boolean updateNeeded = compareVersions(clientVersion, currentVersion);
+
+        UpdateResponse response = new UpdateResponse();
+        response.setUpdateNeeded(updateNeeded);
+
+        if (updateNeeded){
+            response.setLatestVersion(currentVersion);
+            response.setDownloadUrl(downloadUrl);
+            response.setForceUpdate(true);
+        }
+        System.out.println("Запрос обновления. Ответ: " + response.isUpdateNeeded());
+        return ResponseEntity.ok(response);
+    }
+
+    private boolean compareVersions(String clientVersion, String serverVersion) {
+        // Простая реализация сравнения версий (формат X.Y.Z)
+        String[] clientParts = clientVersion.split("\\.");
+        String[] serverParts = serverVersion.split("\\.");
+
+        for (int i = 0; i < Math.max(clientParts.length, serverParts.length); i++) {
+            int clientPart = i < clientParts.length ? Integer.parseInt(clientParts[i]) : 0;
+            int serverPart = i < serverParts.length ? Integer.parseInt(serverParts[i]) : 0;
+
+            if (clientPart < serverPart) return true;
+            if (clientPart > serverPart) return false;
+        }
+        return false;
     }
 }
