@@ -20,10 +20,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import javax.crypto.SecretKey;
 import java.util.Map;
 import java.util.Optional;
 
-@RestController
+@RestController()
 @RequestMapping("/auth")
 public class AuthController {
     @Autowired
@@ -77,28 +78,10 @@ public class AuthController {
         }
     }
 
-   /* @PermitAll
-    @PostMapping("/registerUser")
-    public String registerUser(@RequestBody Map<String, String> user){
-        System.out.println("запрос registerUser");
-        String name = user.get("name");
-        String email = user.get("email");
-        String password = passwordEncoder.encode(user.get("password"));
-
-        Optional<Master> optionalMaster = masterRepository.findByEmail(email);
-
-        if (optionalMaster.isPresent()){
-            return "mailError";
-        } else {
-            Master master = new Master();
-            master.setName(name);
-            master.setEmail(email);
-            master.setPassword(password);
-            master.getRoles().add(roleRepository.findByName("ROLE_USER").get());
-            masterRepository.save(master);
-            return "ok";
-        }
-    }*/
+    @GetMapping("/pingServer")
+    public ResponseEntity<Void> healthCheck() {
+        return ResponseEntity.ok().build();
+    }
 
     @PostMapping("/registerUser")
     public ResponseEntity<ResponseBody> registerUser(@RequestBody Map<String, String> user) {
@@ -159,4 +142,9 @@ public class AuthController {
         }
         return false;
     }
+
+    /*@PostMapping("/secretKey")
+    private String saveSecretKey(@RequestBody SecretKey secretKey){
+
+    }*/
 }

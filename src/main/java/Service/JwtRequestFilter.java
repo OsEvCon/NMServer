@@ -41,7 +41,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         // Пропускаем публичные эндпоинты
         String requestURI = request.getRequestURI();
-        if (requestURI.equals("/auth/login") || requestURI.equals("/auth/registerUser")) {
+        if (requestURI.equals("/auth/login") || requestURI.equals("/auth/registerUser")
+                || requestURI.equals("auth/checkUpdate") || requestURI.equals("auth/pingServer")) {
             filterChain.doFilter(request, response);
             return;
         }

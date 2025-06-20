@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="- Добавлен WebSocket для отправки сообщений клиенту. &#10;- Добавлены контроллеры для каждой сущности">
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/UpdateResponse.java" afterDir="false" />
+    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="feat: реализована проверка доступности обновлений&#10;&#10;Добавлен полный цикл проверки обновлений приложения:&#10;- Реализован API-эндпоинт для сравнения версий&#10;- Создана модель данных UpdateResponse&#10;&#10;Функционал скачивания APK пока не реализован.&#10;Будет добавлен в последующих коммитах.&#10;&#10;Примечания:&#10;- Сервер возвращает результат сравнения версий&#10;- Клиент показывает диалог обновления при необходимости&#10;- Кнопка скачивания пока не активна&#10;&#10;feat: implement update availability check mechanism&#10;&#10;Added full workflow for checking application updates:&#10;- Implemented API endpoint for version comparison&#10;- Created UpdateResponse data model&#10;&#10;The actual APK download functionality is not implemented yet.&#10;Will be added in subsequent commits.&#10;&#10;Notes:&#10;- Server returns version comparison result&#10;- Client shows update dialog when needed&#10;- Download button currently does nothing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Service/JwtRequestFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Service/JwtRequestFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Master.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Master.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/RestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/RestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -59,36 +61,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/evgen/IdeaProjects/NMServer/src/main/java/model",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.3494253",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "spring.configuration.checksum": "a837a37f70a50163098d75ae6053fc62",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/evgen/IdeaProjects/NMServer/src/main/java/model&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.3494253&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;a837a37f70a50163098d75ae6053fc62&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\evgen\IdeaProjects\NMServer\src\main\java\model" />
@@ -97,6 +99,7 @@
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="controllers" />
+      <recent name="model" />
       <recent name="Service" />
       <recent name="Test" />
     </key>
@@ -300,7 +303,10 @@
       <workItem from="1748534527520" duration="2878000" />
       <workItem from="1748608127374" duration="3270000" />
       <workItem from="1748799014455" duration="119000" />
-      <workItem from="1749298684956" duration="18794000" />
+      <workItem from="1749298684956" duration="32966000" />
+      <workItem from="1749750852142" duration="6000" />
+      <workItem from="1750418035296" duration="2575000" />
+      <workItem from="1750425120140" duration="2466000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>
@@ -400,7 +406,14 @@
       <option name="project" value="LOCAL" />
       <updated>1749393294977</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="feat: реализована проверка доступности обновлений&#10;&#10;Добавлен полный цикл проверки обновлений приложения:&#10;- Реализован API-эндпоинт для сравнения версий&#10;- Создана модель данных UpdateResponse&#10;&#10;Функционал скачивания APK пока не реализован.&#10;Будет добавлен в последующих коммитах.&#10;&#10;Примечания:&#10;- Сервер возвращает результат сравнения версий&#10;- Клиент показывает диалог обновления при необходимости&#10;- Кнопка скачивания пока не активна&#10;&#10;feat: implement update availability check mechanism&#10;&#10;Added full workflow for checking application updates:&#10;- Implemented API endpoint for version comparison&#10;- Created UpdateResponse data model&#10;&#10;The actual APK download functionality is not implemented yet.&#10;Will be added in subsequent commits.&#10;&#10;Notes:&#10;- Server returns version comparison result&#10;- Client shows update dialog when needed&#10;- Download button currently does nothing">
+      <created>1749576541979</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1749576541979</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -446,39 +459,33 @@
     <MESSAGE value="Добавил SpringSecurity. Реализовал регистрацию и вход в систему. Реализовал обработку запросов с помощью JWT токенов.&#10;Added Spring Security. Implemented registration and login functionality. Implemented request handling using JWT tokens." />
     <MESSAGE value="Добавил обновление клиента и процедуры.&#10;Added update Client and Procedure." />
     <MESSAGE value="- Добавлен WebSocket для отправки сообщений клиенту. &#10;- Добавлены контроллеры для каждой сущности" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Добавлен WebSocket для отправки сообщений клиенту. &#10;- Добавлены контроллеры для каждой сущности" />
+    <MESSAGE value="feat: реализована проверка доступности обновлений&#10;&#10;Добавлен полный цикл проверки обновлений приложения:&#10;- Реализован API-эндпоинт для сравнения версий&#10;- Создана модель данных UpdateResponse&#10;&#10;Функционал скачивания APK пока не реализован.&#10;Будет добавлен в последующих коммитах.&#10;&#10;Примечания:&#10;- Сервер возвращает результат сравнения версий&#10;- Клиент показывает диалог обновления при необходимости&#10;- Кнопка скачивания пока не активна&#10;&#10;feat: implement update availability check mechanism&#10;&#10;Added full workflow for checking application updates:&#10;- Implemented API endpoint for version comparison&#10;- Created UpdateResponse data model&#10;&#10;The actual APK download functionality is not implemented yet.&#10;Will be added in subsequent commits.&#10;&#10;Notes:&#10;- Server returns version comparison result&#10;- Client shows update dialog when needed&#10;- Download button currently does nothing" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: реализована проверка доступности обновлений&#10;&#10;Добавлен полный цикл проверки обновлений приложения:&#10;- Реализован API-эндпоинт для сравнения версий&#10;- Создана модель данных UpdateResponse&#10;&#10;Функционал скачивания APK пока не реализован.&#10;Будет добавлен в последующих коммитах.&#10;&#10;Примечания:&#10;- Сервер возвращает результат сравнения версий&#10;- Клиент показывает диалог обновления при необходимости&#10;- Кнопка скачивания пока не активна&#10;&#10;feat: implement update availability check mechanism&#10;&#10;Added full workflow for checking application updates:&#10;- Implemented API endpoint for version comparison&#10;- Created UpdateResponse data model&#10;&#10;The actual APK download functionality is not implemented yet.&#10;Will be added in subsequent commits.&#10;&#10;Notes:&#10;- Server returns version comparison result&#10;- Client shows update dialog when needed&#10;- Download button currently does nothing" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Service/JwtRequestFilter.java</url>
-          <line>42</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Service/JwtRequestFilter.java</url>
-          <line>43</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Service/JwtRequestFilter.java</url>
-          <line>44</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/controllers/AuthController.java</url>
-          <line>132</line>
+          <line>115</line>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/controllers/AuthController.java</url>
-          <line>131</line>
+          <line>114</line>
           <properties class="controllers.AuthController" method="checkUpdate">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/controllers/VisitController.java</url>
+          <line>42</line>
+          <properties class="controllers.VisitController" method="createVisit">
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="15" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
