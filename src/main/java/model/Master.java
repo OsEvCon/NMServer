@@ -9,6 +9,7 @@ import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import javax.crypto.SecretKey;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

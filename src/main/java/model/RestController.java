@@ -32,10 +32,7 @@ public class RestController {
         return "hello";
     }
 
-    @GetMapping("/pingServer")
-    public ResponseEntity<Void> healthCheck() {
-        return ResponseEntity.ok().build();
-    }
+
 
     // Метод для получения email текущего аутентифицированного пользователя
     private Master getCurrentMaster() {
