@@ -9,7 +9,6 @@ import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import javax.crypto.SecretKey;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -37,6 +36,11 @@ public class Master extends User {
     @JsonIgnore
     @Column
     private String password;
+
+    @JsonIgnore
+    @Column
+    private String secretKey;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "master_client",
@@ -151,6 +155,14 @@ public class Master extends User {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getSecretKey() {
+        return secretKey;
+    }
+
+    public void setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
     }
 
     @Override
