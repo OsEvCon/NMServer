@@ -2,6 +2,8 @@ package controllers;
 
 import Service.CustomUserDetailsService;
 import Service.JwtUtil;
+import Service.SecretKeyGenerator;
+import com.mysql.cj.util.StringUtils;
 import jakarta.annotation.security.PermitAll;
 import model.Master;
 import model.MasterRepository;
@@ -51,6 +53,9 @@ public class AuthController {
     @Value("${app.download.url}")
     private String downloadUrl;
 
+    @Value("${app.secretKeySalt}")
+    private String salt;
+
     @PermitAll
     @PostMapping("/login")
     public String login(@RequestBody Map<String, String> user){
@@ -69,8 +74,11 @@ public class AuthController {
             System.out.println("After setting: " + SecurityContextHolder.getContext().getAuthentication());
 
             final UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
+            Master master = masterRepository.findByEmail(userEmail).get();
             System.out.println("успешный вход " + userDetails.getUsername());
-            return "ok " + jwtUtil.generateToken(userDetails.getUsername());
+            String result = "ok " + jwtUtil.generateToken(userDetails.getUsername()) + " " + master.getSecretKey();
+            System.out.println("Ответ: " + result);
+            return result;
         } catch (Exception e) {
             System.out.println("login error " + e.getMessage());
             e.printStackTrace();
@@ -84,7 +92,7 @@ public class AuthController {
     }
 
     @PostMapping("/registerUser")
-    public ResponseEntity<ResponseBody> registerUser(@RequestBody Map<String, String> user) {
+    public ResponseEntity<String> registerUser(@RequestBody Map<String, String> user) {
         try {
             System.out.println("запрос registerUser");
             String name = user.get("name");
@@ -92,22 +100,27 @@ public class AuthController {
             String password = passwordEncoder.encode(user.get("password"));
 
             Optional<Master> optionalMaster = masterRepository.findByEmail(email);
-            if (optionalMaster.isPresent()){
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            if (optionalMaster.isPresent()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email already exists");
             } else {
+                SecretKey secretKey = SecretKeyGenerator.generateKeyFromEmail(email, salt);
+                String stringKey = SecretKeyGenerator.keyToString(secretKey);
                 Master master = new Master();
                 master.setName(name);
                 master.setEmail(email);
                 master.setPassword(password);
+                master.setSecretKey(stringKey);
                 master.getRoles().add(roleRepository.findByName("ROLE_USER").get());
                 masterRepository.save(master);
-                return ResponseEntity.status(HttpStatus.CREATED).build();
+
+                // Возвращаем stringKey в теле ответа
+                return ResponseEntity.status(HttpStatus.CREATED).body(stringKey);
             }
 
         } catch (Exception e) {
             // Обработка других исключений
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .build();
+                    .body("Registration failed: " + e.getMessage());
         }
     }
 
@@ -143,8 +156,4 @@ public class AuthController {
         return false;
     }
 
-    /*@PostMapping("/secretKey")
-    private String saveSecretKey(@RequestBody SecretKey secretKey){
-
-    }*/
 }
