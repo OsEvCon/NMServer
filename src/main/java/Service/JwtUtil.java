@@ -12,6 +12,7 @@ import java.util.Map;
 //Генерация и проверка jwt токенов
 @Component
 public class JwtUtil {
+    //!
     @Value("$(app.jwtSecretKey)")
     private String secretKey;
     private long validityInMilliseconds = 3600000; // 1 час
