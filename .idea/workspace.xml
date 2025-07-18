@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="feat: Изменена процедура регистрации и аутентификации&#10;&#10;Примечания:&#10;- secretKey генерируется при регистрации и отправляется клиенту&#10;- jwt генерируется при аутентификации и отправляется клиенту.&#10;&#10;feat: Updated registration and authentication procedure&#10;&#10;Notes:&#10;- secretKey is generated during registration and sent to the client&#10;- jwt is generated during authentication and sent to the client">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/HibernateSessionFactoryUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -305,7 +305,7 @@
       <workItem from="1752347272693" duration="1258000" />
       <workItem from="1752720160863" duration="409000" />
       <workItem from="1752773750492" duration="1032000" />
-      <workItem from="1752859181237" duration="4805000" />
+      <workItem from="1752859181237" duration="5419000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>
@@ -433,7 +433,14 @@
       <option name="project" value="LOCAL" />
       <updated>1752865783829</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="feat: Изменена процедура регистрации и аутентификации&#10;&#10;Примечания:&#10;- secretKey генерируется при регистрации и отправляется клиенту&#10;- jwt генерируется при аутентификации и отправляется клиенту.&#10;&#10;feat: Updated registration and authentication procedure&#10;&#10;Notes:&#10;- secretKey is generated during registration and sent to the client&#10;- jwt is generated during authentication and sent to the client">
+      <created>1752866676170</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1752866676170</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
