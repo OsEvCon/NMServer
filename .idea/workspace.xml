@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="feat: реализована проверка доступности обновлений&#10;&#10;Добавлен полный цикл проверки обновлений приложения:&#10;- Реализован API-эндпоинт для сравнения версий&#10;- Создана модель данных UpdateResponse&#10;&#10;Функционал скачивания APK пока не реализован.&#10;Будет добавлен в последующих коммитах.&#10;&#10;Примечания:&#10;- Сервер возвращает результат сравнения версий&#10;- Клиент показывает диалог обновления при необходимости&#10;- Кнопка скачивания пока не активна&#10;&#10;feat: implement update availability check mechanism&#10;&#10;Added full workflow for checking application updates:&#10;- Implemented API endpoint for version comparison&#10;- Created UpdateResponse data model&#10;&#10;The actual APK download functionality is not implemented yet.&#10;Will be added in subsequent commits.&#10;&#10;Notes:&#10;- Server returns version comparison result&#10;- Client shows update dialog when needed&#10;- Download button currently does nothing">
+    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="feat: Изменена процедура регистрации и аутентификации&#10;&#10;Примечания:&#10;- secretKey генерируется при регистрации и отправляется клиенту&#10;- jwt генерируется при аутентификации и отправляется клиенту.&#10;&#10;feat: Updated registration and authentication procedure&#10;&#10;Notes:&#10;- secretKey is generated during registration and sent to the client&#10;- jwt is generated during authentication and sent to the client">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Service/JwtRequestFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Service/JwtRequestFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/VisitController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/VisitController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Master.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Master.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +20,7 @@
       <list>
         <option value="Interface" />
         <option value="Class" />
+        <option value="spring-beans.schema" />
       </list>
     </option>
   </component>
@@ -70,7 +69,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/evgen/IdeaProjects/NMServer/src/main/java/model&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/evgen/IdeaProjects/NMServer&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -303,7 +302,12 @@
       <workItem from="1750418035296" duration="2575000" />
       <workItem from="1750425120140" duration="2466000" />
       <workItem from="1751532362390" duration="305000" />
-      <workItem from="1751532681924" duration="30253000" />
+      <workItem from="1751532681924" duration="42256000" />
+      <workItem from="1752238187966" duration="13000" />
+      <workItem from="1752347272693" duration="1258000" />
+      <workItem from="1752720160863" duration="409000" />
+      <workItem from="1752773750492" duration="1032000" />
+      <workItem from="1752859181237" duration="3801000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>
@@ -410,7 +414,21 @@
       <option name="project" value="LOCAL" />
       <updated>1749576541979</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="feat: Изменена процедура регистрации и аутентификации&#10;&#10;Примечания:&#10;- secretKey генерируется при регистрации и отправляется клиенту&#10;- jwt генерируется при аутентификации и отправляется клиенту.&#10;&#10;feat: Updated registration and authentication procedure&#10;&#10;Notes:&#10;- secretKey is generated during registration and sent to the client&#10;- jwt is generated during authentication and sent to the client">
+      <created>1751889457030</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1751889457030</updated>
+    </task>
+    <task id="LOCAL-00017" summary="feat: Изменена процедура регистрации и аутентификации&#10;&#10;Примечания:&#10;- secretKey генерируется при регистрации и отправляется клиенту&#10;- jwt генерируется при аутентификации и отправляется клиенту.&#10;&#10;feat: Updated registration and authentication procedure&#10;&#10;Notes:&#10;- secretKey is generated during registration and sent to the client&#10;- jwt is generated during authentication and sent to the client">
+      <created>1751889712853</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1751889712853</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -457,7 +475,8 @@
     <MESSAGE value="Добавил обновление клиента и процедуры.&#10;Added update Client and Procedure." />
     <MESSAGE value="- Добавлен WebSocket для отправки сообщений клиенту. &#10;- Добавлены контроллеры для каждой сущности" />
     <MESSAGE value="feat: реализована проверка доступности обновлений&#10;&#10;Добавлен полный цикл проверки обновлений приложения:&#10;- Реализован API-эндпоинт для сравнения версий&#10;- Создана модель данных UpdateResponse&#10;&#10;Функционал скачивания APK пока не реализован.&#10;Будет добавлен в последующих коммитах.&#10;&#10;Примечания:&#10;- Сервер возвращает результат сравнения версий&#10;- Клиент показывает диалог обновления при необходимости&#10;- Кнопка скачивания пока не активна&#10;&#10;feat: implement update availability check mechanism&#10;&#10;Added full workflow for checking application updates:&#10;- Implemented API endpoint for version comparison&#10;- Created UpdateResponse data model&#10;&#10;The actual APK download functionality is not implemented yet.&#10;Will be added in subsequent commits.&#10;&#10;Notes:&#10;- Server returns version comparison result&#10;- Client shows update dialog when needed&#10;- Download button currently does nothing" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: реализована проверка доступности обновлений&#10;&#10;Добавлен полный цикл проверки обновлений приложения:&#10;- Реализован API-эндпоинт для сравнения версий&#10;- Создана модель данных UpdateResponse&#10;&#10;Функционал скачивания APK пока не реализован.&#10;Будет добавлен в последующих коммитах.&#10;&#10;Примечания:&#10;- Сервер возвращает результат сравнения версий&#10;- Клиент показывает диалог обновления при необходимости&#10;- Кнопка скачивания пока не активна&#10;&#10;feat: implement update availability check mechanism&#10;&#10;Added full workflow for checking application updates:&#10;- Implemented API endpoint for version comparison&#10;- Created UpdateResponse data model&#10;&#10;The actual APK download functionality is not implemented yet.&#10;Will be added in subsequent commits.&#10;&#10;Notes:&#10;- Server returns version comparison result&#10;- Client shows update dialog when needed&#10;- Download button currently does nothing" />
+    <MESSAGE value="feat: Изменена процедура регистрации и аутентификации&#10;&#10;Примечания:&#10;- secretKey генерируется при регистрации и отправляется клиенту&#10;- jwt генерируется при аутентификации и отправляется клиенту.&#10;&#10;feat: Updated registration and authentication procedure&#10;&#10;Notes:&#10;- secretKey is generated during registration and sent to the client&#10;- jwt is generated during authentication and sent to the client" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Изменена процедура регистрации и аутентификации&#10;&#10;Примечания:&#10;- secretKey генерируется при регистрации и отправляется клиенту&#10;- jwt генерируется при аутентификации и отправляется клиенту.&#10;&#10;feat: Updated registration and authentication procedure&#10;&#10;Notes:&#10;- secretKey is generated during registration and sent to the client&#10;- jwt is generated during authentication and sent to the client" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
