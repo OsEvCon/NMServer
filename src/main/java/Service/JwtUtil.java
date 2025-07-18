@@ -2,6 +2,7 @@ package Service;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -11,7 +12,8 @@ import java.util.Map;
 //Генерация и проверка jwt токенов
 @Component
 public class JwtUtil {
-    @Value("${app.jwtSecretKey}") private String secretKey;
+    @Value("$(app.jwtSecretKey)")
+    private String secretKey;
     private long validityInMilliseconds = 3600000; // 1 час
 
     public String generateToken(String userEmail) {
