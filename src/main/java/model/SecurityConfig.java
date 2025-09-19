@@ -37,6 +37,7 @@ public class SecurityConfig {
                             .requestMatchers("/ws-updates/**").permitAll()//authenticated() // Требуем аутентификации для WebSocket
                             .requestMatchers("auth/checkUpdate").permitAll()
                             .requestMatchers("auth/pingServer").permitAll()
+                            .requestMatchers("auth/refresh").permitAll()
                             .anyRequest().authenticated()
                     )
                     .sessionManagement(session ->

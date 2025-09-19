@@ -42,7 +42,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         // Пропускаем публичные эндпоинты
         String requestURI = request.getRequestURI();
         if (requestURI.equals("/auth/login") || requestURI.equals("/auth/registerUser")
-                || requestURI.equals("/auth/checkUpdate") || requestURI.equals("/auth/pingServer")) {
+                || requestURI.equals("/auth/checkUpdate") || requestURI.equals("/auth/pingServer")
+                || requestURI.equals("/auth/refresh")) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -93,7 +94,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String userEmail = jwtUtil.extractUserEmail(token);
         if (userEmail != null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
-            if (jwtUtil.validateToken(token, userDetails.getUsername())) {
+            if (jwtUtil.validateToken(token)) {
                 System.out.println("Токен WebSocket запроса принят");
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
@@ -117,7 +118,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String userEmail = jwtUtil.extractUserEmail(jwt);
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
-            if (jwtUtil.validateToken(jwt, userDetails.getUsername())) {
+            if (jwtUtil.validateToken(jwt)) {
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

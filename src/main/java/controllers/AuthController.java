@@ -1,5 +1,6 @@
 package controllers;
 
+import DTO.RefreshRequest;
 import Service.CustomUserDetailsService;
 import Service.JwtUtil;
 import Service.SecretKeyGenerator;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.crypto.SecretKey;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -58,7 +60,7 @@ public class AuthController {
 
     @PermitAll
     @PostMapping("/login")
-    public String login(@RequestBody Map<String, String> user){
+    public ResponseEntity<?> login(@RequestBody Map<String, String> user){
         System.out.println("запрос login");
         String userEmail = user.get("email");
         String password = user.get("password");
@@ -76,13 +78,38 @@ public class AuthController {
             final UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
             Master master = masterRepository.findByEmail(userEmail).get();
             System.out.println("успешный вход " + userDetails.getUsername());
-            String result = "ok " + jwtUtil.generateToken(userDetails.getUsername()) + " " + master.getSecretKey();
-            System.out.println("Ответ: " + result);
-            return result;
+
+            String accessToken = jwtUtil.generateAccessToken(userDetails.getUsername());
+            String refreshToken = jwtUtil.generateRefreshToken(userDetails.getUsername());
+
+            Map<String, String> tokensAndSK = new HashMap<>();
+            tokensAndSK.put("accessToken", accessToken);
+            tokensAndSK.put("refreshToken", refreshToken);
+            tokensAndSK.put("secretKey", master.getSecretKey());
+
+            return ResponseEntity.ok(tokensAndSK);
         } catch (Exception e) {
             System.out.println("login error " + e.getMessage());
             e.printStackTrace();
-            return "AuthError";
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("AuthError");
+        }
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<?> refresh(@RequestBody RefreshRequest request) {
+        String refreshToken = request.getRefreshToken();
+        System.out.println("Запрос на refreshToken ");
+        if (jwtUtil.validateToken(refreshToken)) {
+            String username = jwtUtil.extractUserEmail(refreshToken);
+            String newAccessToken = jwtUtil.generateAccessToken(username);
+
+            Map<String, String> response = new HashMap<>();
+            response.put("accessToken", newAccessToken);
+
+            return ResponseEntity.ok(response);
+        } else {
+            System.out.println("Запрос на refreshToken не прошел");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid refresh token");
         }
     }
 
