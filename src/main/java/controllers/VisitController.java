@@ -1,6 +1,6 @@
 package controllers;
 
-import DAO.VisitDao;
+import DTO.VisitDTO;
 import Service.SecurityUtils;
 import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,20 +72,20 @@ public class VisitController {
             timeout = 5 // Максимальное время выполнения
     )
     @PutMapping("/updateVisitTest")
-    public ResponseEntity<Visit> updateVisit(@RequestBody VisitDao visitDao){
+    public ResponseEntity<Visit> updateVisit(@RequestBody VisitDTO visitDTO){
         System.out.println("Запрос на обновление Visit");
 
-        Optional<Visit> optionalVisit = visitRepository.findById(visitDao.getVisitId());
+        Optional<Visit> optionalVisit = visitRepository.findById(visitDTO.getVisitId());
         if (optionalVisit.isPresent()){
             Visit visit = optionalVisit.get();
-            if (visitDao.getClientId() == null){
+            if (visitDTO.getClientId() == null){
                 visit.setClient(null);
             } else {
-                visit.setClient(clientRepository.findClientById(visitDao.getClientId()).get());
+                visit.setClient(clientRepository.findClientById(visitDTO.getClientId()).get());
             }
-            visit.setVisitDateTime(visitDao.getLocalDateTime());
+            visit.setVisitDateTime(visitDTO.getLocalDateTime());
             visit.getProcedures().clear();
-            for (Integer i : visitDao.getProceduresId()){
+            for (Integer i : visitDTO.getProceduresId()){
                 Procedure procedure = procedureRepository.findById(i).get();
                 visit.getProcedures().add(procedure);
             }
@@ -97,7 +97,7 @@ public class VisitController {
                     ));
             return ResponseEntity.ok(visit);
         } else {
-            return ResponseEntity.badRequest().body(visitRepository.findById(visitDao.getVisitId()).get());
+            return ResponseEntity.badRequest().body(visitRepository.findById(visitDTO.getVisitId()).get());
         }
     }
 

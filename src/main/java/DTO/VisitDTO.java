@@ -1,4 +1,4 @@
-package DAO;
+package DTO;
 
 import model.Procedure;
 import model.Visit;
@@ -8,20 +8,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class VisitDao {
+public class VisitDTO {
     private Integer visitId;
     private Integer clientId;
     private List<Integer> proceduresId = new ArrayList<>();
     private LocalDateTime localDateTime;
 
-    public VisitDao(Visit visit){
+    public VisitDTO(Visit visit){
         this.visitId = visit.getId();
         this.clientId = visit.getClient().getId();
         addProceduresId(visit.getProcedures());
         this.localDateTime = visit.getVisitDateTime();
     }
 
-    public VisitDao(){}
+    public VisitDTO(){}
 
     public int getVisitId() {
         return visitId;
@@ -48,7 +48,8 @@ public class VisitDao {
     }
 
     public void addProceduresId(List<Procedure> procedures){
-        proceduresId.addAll(procedures.stream().map(procedure -> procedure.getId())
+        proceduresId.addAll(procedures.stream()
+                .map(procedure -> procedure.getId())
                 .collect(Collectors.toList()));
     }
 

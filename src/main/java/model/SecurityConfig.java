@@ -34,7 +34,7 @@ public class SecurityConfig {
                             .requestMatchers("/auth/login").permitAll() // Разрешить доступ к логину
                             .requestMatchers("/auth/registerUser").permitAll() // Разрешить доступ к регистрации
                             .requestMatchers("/hello").permitAll()
-                            .requestMatchers("/ws-updates/**").permitAll()//authenticated() // Требуем аутентификации для WebSocket
+                            .requestMatchers("/ws-updates/**").authenticated() // Требуем аутентификации для WebSocket
                             .requestMatchers("auth/checkUpdate").permitAll()
                             .requestMatchers("auth/pingServer").permitAll()
                             .requestMatchers("auth/refresh").permitAll()

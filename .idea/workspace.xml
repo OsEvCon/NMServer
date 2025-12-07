@@ -4,13 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/DTO/RefreshRequest.java" afterDir="false" />
+    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Refactored authentication flow: replaced single timeless JWT with separate Access and Refresh tokens, both with expiration support. Updated TokenManager, AuthInterceptor, and repository logic to handle token refresh and re-login when tokens expire.&#10;&#10;Рефакторинг процесса аутентификации: заменён один бессрочный JWT на отдельные Access и Refresh токены, оба со сроком действия. Обновлены TokenManager, AuthInterceptor и логика репозиториев для обработки обновления токенов и повторной авторизации при их истечении.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/DTO/ClientDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DTO/request/CreateClientRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DTO/request/UpdateClientRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Service/ClientService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/mapper/ClientMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Service/JwtRequestFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Service/JwtRequestFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Service/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Service/JwtUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/VisitDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/VisitDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/ClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/VisitController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/VisitController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/RestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/RestController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
@@ -31,11 +36,23 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="f58ac5c5b27037d66db92d226cb893b8cf2c605b" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;OsEvCon&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/OsEvCon/NMServer.git&quot;,
+    &quot;accountId&quot;: &quot;ad7b590f-f465-40dc-8cc6-9cbac17c7b0a&quot;
+  }
+}</component>
   <component name="JpbToolWindowState">
     <option name="myId2FirstActivated">
       <map>
@@ -55,44 +72,49 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2daECaLGsDzvj2RF4S1aiZuGKsS" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="autoscrollToSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/evgen/IdeaProjects/NMServer&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.3494253&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;a837a37f70a50163098d75ae6053fc62&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "refactoring",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/evgen/IdeaProjects/NMServer",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.3494253",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "spring.configuration.checksum": "a837a37f70a50163098d75ae6053fc62",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\evgen\IdeaProjects\NMServer\src\main\java\model" />
@@ -100,6 +122,7 @@
       <recent name="G:\Моя Java\TestServer\src\main\java\dao" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="DTO" />
       <recent name="controllers" />
       <recent name="model" />
       <recent name="Service" />
@@ -132,6 +155,14 @@
   <component name="SQLScriptSettings">
     <option name="outputLayout" value="File per object by schema and database.groovy" />
     <option name="outputPath" value="D:\" />
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.27397.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.27397.103" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SpringBeansView">
@@ -317,7 +348,13 @@
       <workItem from="1758149990035" duration="3581000" />
       <workItem from="1758156862790" duration="173000" />
       <workItem from="1758218390435" duration="6952000" />
-      <workItem from="1758304012877" duration="4010000" />
+      <workItem from="1758304012877" duration="4545000" />
+      <workItem from="1758478589127" duration="2707000" />
+      <workItem from="1760707229838" duration="1046000" />
+      <workItem from="1761748308932" duration="59000" />
+      <workItem from="1761752702723" duration="14000" />
+      <workItem from="1763047553223" duration="1334000" />
+      <workItem from="1765107785018" duration="11633000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>
@@ -459,7 +496,14 @@
       <option name="project" value="LOCAL" />
       <updated>1752867340965</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Refactored authentication flow: replaced single timeless JWT with separate Access and Refresh tokens, both with expiration support. Updated TokenManager, AuthInterceptor, and repository logic to handle token refresh and re-login when tokens expire.&#10;&#10;Рефакторинг процесса аутентификации: заменён один бессрочный JWT на отдельные Access и Refresh токены, оба со сроком действия. Обновлены TokenManager, AuthInterceptor и логика репозиториев для обработки обновления токенов и повторной авторизации при их истечении.">
+      <created>1758318154443</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1758318154443</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -476,7 +520,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="HEAD" />
+                        <option value="refactoring" />
                       </list>
                     </value>
                   </entry>
@@ -508,7 +552,8 @@
     <MESSAGE value="feat: реализована проверка доступности обновлений&#10;&#10;Добавлен полный цикл проверки обновлений приложения:&#10;- Реализован API-эндпоинт для сравнения версий&#10;- Создана модель данных UpdateResponse&#10;&#10;Функционал скачивания APK пока не реализован.&#10;Будет добавлен в последующих коммитах.&#10;&#10;Примечания:&#10;- Сервер возвращает результат сравнения версий&#10;- Клиент показывает диалог обновления при необходимости&#10;- Кнопка скачивания пока не активна&#10;&#10;feat: implement update availability check mechanism&#10;&#10;Added full workflow for checking application updates:&#10;- Implemented API endpoint for version comparison&#10;- Created UpdateResponse data model&#10;&#10;The actual APK download functionality is not implemented yet.&#10;Will be added in subsequent commits.&#10;&#10;Notes:&#10;- Server returns version comparison result&#10;- Client shows update dialog when needed&#10;- Download button currently does nothing" />
     <MESSAGE value="feat: Изменена процедура регистрации и аутентификации&#10;&#10;Примечания:&#10;- secretKey генерируется при регистрации и отправляется клиенту&#10;- jwt генерируется при аутентификации и отправляется клиенту.&#10;&#10;feat: Updated registration and authentication procedure&#10;&#10;Notes:&#10;- secretKey is generated during registration and sent to the client&#10;- jwt is generated during authentication and sent to the client" />
     <MESSAGE value="feat: удален из кода и репозитория файл hibernate.cfg.xml и класс HibernateSessionFactoryUtil." />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: удален из кода и репозитория файл hibernate.cfg.xml и класс HibernateSessionFactoryUtil." />
+    <MESSAGE value="Refactored authentication flow: replaced single timeless JWT with separate Access and Refresh tokens, both with expiration support. Updated TokenManager, AuthInterceptor, and repository logic to handle token refresh and re-login when tokens expire.&#10;&#10;Рефакторинг процесса аутентификации: заменён один бессрочный JWT на отдельные Access и Refresh токены, оба со сроком действия. Обновлены TokenManager, AuthInterceptor и логика репозиториев для обработки обновления токенов и повторной авторизации при их истечении." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactored authentication flow: replaced single timeless JWT with separate Access and Refresh tokens, both with expiration support. Updated TokenManager, AuthInterceptor, and repository logic to handle token refresh and re-login when tokens expire.&#10;&#10;Рефакторинг процесса аутентификации: заменён один бессрочный JWT на отдельные Access и Refresh токены, оба со сроком действия. Обновлены TokenManager, AuthInterceptor и логика репозиториев для обработки обновления токенов и повторной авторизации при их истечении." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -516,7 +561,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/controllers/VisitController.java</url>
           <line>39</line>
-          <properties class="controllers.VisitController" method="createVisit">
+          <properties class="controllers.VisitController">
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="15" />
@@ -525,66 +570,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/Service/JwtRequestFilter.java</url>
           <line>64</line>
           <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Service/JwtRequestFilter.java</url>
-          <line>117</line>
-          <option name="timeStamp" value="20" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Service/JwtRequestFilter.java</url>
-          <line>119</line>
-          <option name="timeStamp" value="21" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Service/JwtRequestFilter.java</url>
-          <line>118</line>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Service/JwtRequestFilter.java</url>
-          <line>120</line>
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Service/JwtRequestFilter.java</url>
-          <line>122</line>
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Service/JwtRequestFilter.java</url>
-          <line>121</line>
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Service/JwtRequestFilter.java</url>
-          <line>123</line>
-          <option name="timeStamp" value="26" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Service/JwtRequestFilter.java</url>
-          <line>124</line>
-          <option name="timeStamp" value="27" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Service/JwtRequestFilter.java</url>
-          <line>46</line>
-          <option name="timeStamp" value="28" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Service/JwtRequestFilter.java</url>
-          <line>44</line>
-          <option name="timeStamp" value="29" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Service/JwtRequestFilter.java</url>
-          <line>43</line>
-          <option name="timeStamp" value="30" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Service/JwtRequestFilter.java</url>
-          <line>42</line>
-          <option name="timeStamp" value="31" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

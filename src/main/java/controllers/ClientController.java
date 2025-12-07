@@ -5,9 +5,7 @@ import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -15,6 +13,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/api/clients")
 public class ClientController {
 
     private final MasterRepository masterRepository;
@@ -23,20 +22,20 @@ public class ClientController {
     private final SimpMessagingTemplate messagingTemplate;
 @Autowired
     public ClientController(MasterRepository masterRepository, ClientRepository clientRepository, VisitRepository visitRepository, SimpMessagingTemplate messagingTemplate) {
-        this.masterRepository = masterRepository;
+    this.masterRepository = masterRepository;
     this.clientRepository = clientRepository;
     this.visitRepository = visitRepository;
     this.messagingTemplate = messagingTemplate;
 }
 
-    @GetMapping("/getClients")
+    @GetMapping()
     public List<Client> getClients(){
         System.out.println("запрос на клиентов");
         return getCurrentMaster().getClients();
     }
 
-    @PostMapping("/createClient")
-    public String saveClient(@RequestBody Client client){
+    @PostMapping()
+    public String createClient(@RequestBody Client client){
         System.out.println("запрос на добавление клиента");
         String result;
         Master master = getCurrentMaster();
@@ -61,7 +60,7 @@ public class ClientController {
         return result;
     }
 
-    @PostMapping("/deleteClients")
+    @DeleteMapping
     @Transactional
     public String deleteClients(@RequestBody List<Client> clients) {
         System.out.println("запрос на удаление клиентов");
@@ -97,7 +96,7 @@ public class ClientController {
         return result;
     }
 
-    @PostMapping("/updateClient")
+    @PutMapping
     public String updateClient(@RequestBody Client client){
         System.out.println("Запрос на обновление Client");
         String result = "badRequest";
