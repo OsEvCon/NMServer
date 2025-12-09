@@ -4,20 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Refactored authentication flow: replaced single timeless JWT with separate Access and Refresh tokens, both with expiration support. Updated TokenManager, AuthInterceptor, and repository logic to handle token refresh and re-login when tokens expire.&#10;&#10;Рефакторинг процесса аутентификации: заменён один бессрочный JWT на отдельные Access и Refresh токены, оба со сроком действия. Обновлены TokenManager, AuthInterceptor и логика репозиториев для обработки обновления токенов и повторной авторизации при их истечении.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/DTO/ClientDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/DTO/request/CreateClientRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/DTO/request/UpdateClientRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Service/ClientService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mapper/ClientMapper.java" afterDir="false" />
+    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Добавлены классы ClientDTO, ClientMapper, ClientService, CreateClientRequest, UpdateClientRequest для дальнейшей реализации Rest api. &#10;&#10;Изменены эндпоинты в ClientController">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/VisitDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/VisitDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/ClientController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/VisitController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/VisitController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/RestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/RestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Service/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Service/ClientService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/ClientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/ClientRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Master.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Master.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/MySpringBootApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/MySpringBootApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/User.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,39 +77,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "refactoring",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/evgen/IdeaProjects/NMServer",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.3494253",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "spring.configuration.checksum": "a837a37f70a50163098d75ae6053fc62",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.MySpringBootApplication.executor&quot;: &quot;Run&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;refactoring&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/evgen/IdeaProjects/NMServer&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.3494253&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;a837a37f70a50163098d75ae6053fc62&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\evgen\IdeaProjects\NMServer\src\main\java\model" />
@@ -354,7 +350,9 @@
       <workItem from="1761748308932" duration="59000" />
       <workItem from="1761752702723" duration="14000" />
       <workItem from="1763047553223" duration="1334000" />
-      <workItem from="1765107785018" duration="11633000" />
+      <workItem from="1765107785018" duration="11828000" />
+      <workItem from="1765279603046" duration="2923000" />
+      <workItem from="1765284948717" duration="2318000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>
@@ -503,7 +501,15 @@
       <option name="project" value="LOCAL" />
       <updated>1758318154443</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Добавлены классы ClientDTO, ClientMapper, ClientService, CreateClientRequest, UpdateClientRequest для дальнейшей реализации Rest api. &#10;&#10;Изменены эндпоинты в ClientController">
+      <option name="closed" value="true" />
+      <created>1765126812084</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1765126812084</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -553,7 +559,8 @@
     <MESSAGE value="feat: Изменена процедура регистрации и аутентификации&#10;&#10;Примечания:&#10;- secretKey генерируется при регистрации и отправляется клиенту&#10;- jwt генерируется при аутентификации и отправляется клиенту.&#10;&#10;feat: Updated registration and authentication procedure&#10;&#10;Notes:&#10;- secretKey is generated during registration and sent to the client&#10;- jwt is generated during authentication and sent to the client" />
     <MESSAGE value="feat: удален из кода и репозитория файл hibernate.cfg.xml и класс HibernateSessionFactoryUtil." />
     <MESSAGE value="Refactored authentication flow: replaced single timeless JWT with separate Access and Refresh tokens, both with expiration support. Updated TokenManager, AuthInterceptor, and repository logic to handle token refresh and re-login when tokens expire.&#10;&#10;Рефакторинг процесса аутентификации: заменён один бессрочный JWT на отдельные Access и Refresh токены, оба со сроком действия. Обновлены TokenManager, AuthInterceptor и логика репозиториев для обработки обновления токенов и повторной авторизации при их истечении." />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactored authentication flow: replaced single timeless JWT with separate Access and Refresh tokens, both with expiration support. Updated TokenManager, AuthInterceptor, and repository logic to handle token refresh and re-login when tokens expire.&#10;&#10;Рефакторинг процесса аутентификации: заменён один бессрочный JWT на отдельные Access и Refresh токены, оба со сроком действия. Обновлены TokenManager, AuthInterceptor и логика репозиториев для обработки обновления токенов и повторной авторизации при их истечении." />
+    <MESSAGE value="Добавлены классы ClientDTO, ClientMapper, ClientService, CreateClientRequest, UpdateClientRequest для дальнейшей реализации Rest api. &#10;&#10;Изменены эндпоинты в ClientController" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавлены классы ClientDTO, ClientMapper, ClientService, CreateClientRequest, UpdateClientRequest для дальнейшей реализации Rest api. &#10;&#10;Изменены эндпоинты в ClientController" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -1,5 +1,9 @@
 package Service;
 
+import DTO.ClientDTO;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import mapper.ClientMapper;
 import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -12,18 +16,29 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor  // ← Lombok создает конструктор для final полей
+@Slf4j   // Lombok создает объект log для логирования
 public class ClientService {
     private final MasterRepository masterRepository;
     private final ClientRepository clientRepository;
     private final VisitRepository visitRepository;
     private final SimpMessagingTemplate messagingTemplate;
+    private final ClientMapper clientMapper;
 
-    @Autowired
-    public ClientService(MasterRepository masterRepository, ClientRepository clientRepository, VisitRepository visitRepository, SimpMessagingTemplate messagingTemplate) {
-        this.masterRepository = masterRepository;
-        this.clientRepository = clientRepository;
-        this.visitRepository = visitRepository;
-        this.messagingTemplate = messagingTemplate;
+    public List<ClientDTO> getClientsForCurrentMaster() {
+        log.info("Получение списка клиентов для текущего мастера");
+
+        try {
+            Master master = getCurrentMaster();
+            List<Client> clients = clientRepository.findByMastersContaining(master);
+            log.debug("Найдено {} клиентов для мастера {}",
+                    clients.size(), master.getId());
+            return clientMapper.toDTO(clients);
+        } catch (Exception e) {
+            log.error("Ошибка получения клиентов", e);
+            throw new RuntimeException(e);
+        }
+
     }
 
     public void deleteMultipleClients(List<Integer> clientIds) {

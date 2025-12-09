@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"Service", "model", "Serializer", "controllers"})
+@ComponentScan(basePackages = {"Service", "model", "Serializer", "controllers", "mapper"})
 public class MySpringBootApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
