@@ -1,125 +1,71 @@
 package controllers;
 
-import Service.SecurityUtils;
+import DTO.ClientDTO;
+import DTO.request.CreateClientRequest;
+import DTO.request.DeleteClientsRequest;
+import DTO.request.UpdateClientRequest;
+import Service.ClientService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import model.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/clients")
+@Slf4j
+@RequiredArgsConstructor
 public class ClientController {
 
-    private final MasterRepository masterRepository;
-    private final ClientRepository clientRepository;
-    private final VisitRepository visitRepository;
-    private final SimpMessagingTemplate messagingTemplate;
-@Autowired
-    public ClientController(MasterRepository masterRepository, ClientRepository clientRepository, VisitRepository visitRepository, SimpMessagingTemplate messagingTemplate) {
-    this.masterRepository = masterRepository;
-    this.clientRepository = clientRepository;
-    this.visitRepository = visitRepository;
-    this.messagingTemplate = messagingTemplate;
-}
+    private final ClientService clientService;
+
 
     @GetMapping()
-    public List<Client> getClients(){
-        System.out.println("запрос на клиентов");
-        return getCurrentMaster().getClients();
+    public ResponseEntity<List<ClientDTO>> getClients() {
+        log.info("GET /api/clients - запрос списка клиентов");
+
+        List<ClientDTO> clients = clientService.getClientsForCurrentMaster();
+
+        return ResponseEntity.ok(clients);
     }
 
     @PostMapping()
-    public String createClient(@RequestBody Client client){
-        System.out.println("запрос на добавление клиента");
-        String result;
-        Master master = getCurrentMaster();
-        if (master == null){
-            // Отправить ответ, что такого мастера нет
-            result = "badRequest";
-        } else {
-            clientRepository.save(client);
+    public ResponseEntity<ClientDTO> createClient(@Valid @RequestBody CreateClientRequest request){
+    log.info("Создание нового клиента {}", request.getName());
 
-            List<Client> clients = master.getClients();
-            clients.add(client);
-            master.setClients(clients);
-            masterRepository.save(master);
-            result = "ok";
+    ClientDTO createdClient = clientService.createClient(request);
 
-            messagingTemplate.convertAndSend("/topic/clients.update",
-                    Map.of(
-                            "type", "CREATED",
-                            "client", client
-                    ));
-        }
-        return result;
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(createdClient.getId())
+                .toUri();
+
+    return ResponseEntity.created(location).body(createdClient);
     }
 
     @DeleteMapping
-    @Transactional
-    public String deleteClients(@RequestBody List<Client> clients) {
-        System.out.println("запрос на удаление клиентов");
-        String result;
-        Master master = getCurrentMaster();
-        if (master == null){
-            result = "badRequest";
-        } else {
-            // Удаление клиентов из коллекции клиентов у мастера
-            master.getClients().removeAll(clients);
+    public ResponseEntity<Void> deleteClients(@Valid @RequestBody DeleteClientsRequest request) {
+        log.info("Удаление клиентов: {}", request.getClientIds());
 
-            //Обновление всех визитов, связанных с удаляемыми клиентами
-            for (Client client : clients){
-                List<Visit> visits = visitRepository.findVisitsByClient(client).get();
-                for (Visit visit : visits) {
-                    visit.setClient(null);
-                }
-                visitRepository.saveAll(visits); // Сохраняем изменения в визитах
-            }
-            // Сохранение изменений у мастера
-            masterRepository.save(master);
-            //удаление клиентов
-            clientRepository.deleteAll(clients);
+        clientService.deleteMultipleClients(request.getClientIds());
 
-            result = "ok";
-
-            messagingTemplate.convertAndSend("/topic/clients.update",
-                    Map.of(
-                            "type", "DELETED",
-                            "clients", clients
-                    ));
-        }
-        return result;
+        return ResponseEntity.noContent().build();
     }
 
-    @PutMapping
-    public String updateClient(@RequestBody Client client){
-        System.out.println("Запрос на обновление Client");
-        String result = "badRequest";
+    @PutMapping("/{id}")
+    public ResponseEntity<ClientDTO> updateClient(@PathVariable Integer id, @Valid @RequestBody UpdateClientRequest request){
+        log.info("PUT /api/clients/{} - обновление клиента", id);
 
-        Optional<Client> optionalClient = clientRepository.findClientById(client.getId());
+        ClientDTO updatedClient = clientService.updateClient(id,request);
 
-        if (optionalClient.isPresent()){
-            Client clientForUpdate = optionalClient.get();
-            clientForUpdate.setName(client.getName());
-            clientForUpdate.setPhoneNumber(client.getPhoneNumber());
-            clientRepository.save(clientForUpdate);
-            result = "ok";
-
-            messagingTemplate.convertAndSend("/topic/clients.update",
-                    Map.of(
-                            "type", "UPDATED",
-                            "client", client
-                    ));
-        }
-        return result;
+        return ResponseEntity.ok(updatedClient);
     }
 
-    private Master getCurrentMaster() {
-        return SecurityUtils.getCurrentMaster();
-    }
 }

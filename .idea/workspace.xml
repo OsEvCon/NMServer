@@ -4,15 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Добавлены классы ClientDTO, ClientMapper, ClientService, CreateClientRequest, UpdateClientRequest для дальнейшей реализации Rest api. &#10;&#10;Изменены эндпоинты в ClientController">
+    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Добавлен lombok в проект.&#10;&#10;Исправлены классы Master и Client. Из них удалены ненужные поля. &#10;&#10;В ClientService добавлен метод getClientsForCurrentMaster">
+      <change afterPath="$PROJECT_DIR$/src/main/java/DTO/request/DeleteClientsRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/exception/BusinessException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/exception/ResourceNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/service/ClientServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/request/CreateClientRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/request/CreateClientRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/request/UpdateClientRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/request/UpdateClientRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Service/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Service/ClientService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/ClientController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/ClientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/ClientRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Master.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Master.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/MySpringBootApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/MySpringBootApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/User.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -352,7 +356,8 @@
       <workItem from="1763047553223" duration="1334000" />
       <workItem from="1765107785018" duration="11828000" />
       <workItem from="1765279603046" duration="2923000" />
-      <workItem from="1765284948717" duration="2318000" />
+      <workItem from="1765284948717" duration="2468000" />
+      <workItem from="1765356211927" duration="11188000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>
@@ -509,7 +514,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765126812084</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Добавлен lombok в проект.&#10;&#10;Исправлены классы Master и Client. Из них удалены ненужные поля. &#10;&#10;В ClientService добавлен метод getClientsForCurrentMaster">
+      <option name="closed" value="true" />
+      <created>1765297761433</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1765297761433</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -560,7 +573,8 @@
     <MESSAGE value="feat: удален из кода и репозитория файл hibernate.cfg.xml и класс HibernateSessionFactoryUtil." />
     <MESSAGE value="Refactored authentication flow: replaced single timeless JWT with separate Access and Refresh tokens, both with expiration support. Updated TokenManager, AuthInterceptor, and repository logic to handle token refresh and re-login when tokens expire.&#10;&#10;Рефакторинг процесса аутентификации: заменён один бессрочный JWT на отдельные Access и Refresh токены, оба со сроком действия. Обновлены TokenManager, AuthInterceptor и логика репозиториев для обработки обновления токенов и повторной авторизации при их истечении." />
     <MESSAGE value="Добавлены классы ClientDTO, ClientMapper, ClientService, CreateClientRequest, UpdateClientRequest для дальнейшей реализации Rest api. &#10;&#10;Изменены эндпоинты в ClientController" />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавлены классы ClientDTO, ClientMapper, ClientService, CreateClientRequest, UpdateClientRequest для дальнейшей реализации Rest api. &#10;&#10;Изменены эндпоинты в ClientController" />
+    <MESSAGE value="Добавлен lombok в проект.&#10;&#10;Исправлены классы Master и Client. Из них удалены ненужные поля. &#10;&#10;В ClientService добавлен метод getClientsForCurrentMaster" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавлен lombok в проект.&#10;&#10;Исправлены классы Master и Client. Из них удалены ненужные поля. &#10;&#10;В ClientService добавлен метод getClientsForCurrentMaster" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -568,7 +582,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/controllers/VisitController.java</url>
           <line>39</line>
-          <properties class="controllers.VisitController">
+          <properties class="controllers.VisitController" method="createVisit">
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="15" />

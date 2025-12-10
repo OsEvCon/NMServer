@@ -16,4 +16,7 @@ public interface ClientRepository extends CrudRepository<Client, Integer> {
 
     // Найти клиентов, у которых В СПИСКЕ masters есть конкретный мастер
     List<Client> findByMastersContaining(Master master);
+
+    Optional<Client> findByIdAndMastersContaining(Integer id, Master master);
+
 }

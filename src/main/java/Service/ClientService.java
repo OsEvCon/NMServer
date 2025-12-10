@@ -1,25 +1,27 @@
 package Service;
 
 import DTO.ClientDTO;
+import DTO.request.CreateClientRequest;
+import DTO.request.UpdateClientRequest;
+import exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import mapper.ClientMapper;
 import model.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
 @RequiredArgsConstructor  // ← Lombok создает конструктор для final полей
 @Slf4j   // Lombok создает объект log для логирования
 public class ClientService {
-    private final MasterRepository masterRepository;
+
     private final ClientRepository clientRepository;
     private final VisitRepository visitRepository;
     private final SimpMessagingTemplate messagingTemplate;
@@ -41,26 +43,96 @@ public class ClientService {
 
     }
 
+    public ClientDTO createClient(CreateClientRequest request) {
+        log.debug("Создание клиента из запроса: {}", request);
+
+        Master master = getCurrentMaster();
+
+        Client client = clientMapper.toClient(request, master);
+        Client savedClient = clientRepository.save(client);
+
+        messagingTemplate.convertAndSend("/topic/clients.update",
+                Map.of(
+                        "type", "CREATED",
+                        "client", clientMapper.toDTO(savedClient)
+                ));
+
+        return clientMapper.toDTO(savedClient);
+    }
+
     public void deleteMultipleClients(List<Integer> clientIds) {
         Master master = getCurrentMaster();
 
-        List<Client> clientsToDelete = (List<Client>) clientRepository.findAllById(clientIds);
+        Iterable<Client> clientsIterable = clientRepository.findAllById(clientIds);
+        List<Client> clientsToDelete = new ArrayList<>();
+        clientsIterable.forEach(clientsToDelete::add);
+
         clientsToDelete = clientsToDelete.stream()
                 .filter(client -> client.getMasters().contains(master))
                 .toList();
 
+        if (clientsToDelete.isEmpty()) {
+            log.warn("Попытка удалить клиентов, не принадлежащих мастеру: {}", clientIds);
+            return; // или бросить исключение
+        }
+
+        log.info("Удаление {} клиентов мастера ID: {}",
+                clientsToDelete.size(), master.getId());
+
         detachClientsFromVisits(clientsToDelete);
 
-        master.getClients().removeAll(clientsToDelete);
-        masterRepository.save(master);
+        for (Client client : clientsToDelete) {
+            client.getMasters().remove(master);
 
-        clientRepository.deleteAll(clientsToDelete);
+            if (client.getMasters().isEmpty()) {
+                clientRepository.delete(client);
+                log.debug("Клиент ID: {} удален полностью", client.getId());
+            } else {
+                clientRepository.save(client);
+                log.debug("Клиент ID: {} отвязан от мастера", client.getId());
+            }
+        }
 
+        List<ClientDTO> deletedDTOs = clientMapper.toDTO(clientsToDelete);
         messagingTemplate.convertAndSend("/topic/clients.update",
                 Map.of(
                         "type", "DELETED",
-                        "clients", clientsToDelete
+                        "clients", deletedDTOs
                 ));
+    }
+
+    public ClientDTO updateClient(Integer clientId, UpdateClientRequest request) {
+        log.info("Обновление клиента ID: {} c данными {}", clientId, request);
+
+        Master master = getCurrentMaster();
+        Client client = clientRepository.findByIdAndMastersContaining(clientId, master)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Клиент с ID " + clientId + " не найден или не принадлежит вам"));
+
+        updateClientFields(client, request);
+
+        Client updatedClient = clientRepository.save(client);
+        log.info("Клиент ID: {} успешно обновлен", clientId);
+
+        ClientDTO newData = clientMapper.toDTO(updatedClient);
+
+        messagingTemplate.convertAndSend("/topic/clients.update",
+                Map.of(
+                        "type", "UPDATED",
+                        "client", newData
+                ));
+
+        return newData;
+    }
+
+    private void updateClientFields(Client client, UpdateClientRequest request) {
+        if (request.getName() != null) {
+            client.setName(request.getName());
+        }
+
+        if (request.getPhoneNumber() != null) {
+            client.setPhoneNumber(request.getPhoneNumber());
+        }
     }
 
     private void detachClientsFromVisits(List<Client> clientsToDelete) {

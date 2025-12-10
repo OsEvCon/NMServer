@@ -1,9 +1,12 @@
 package DTO.request;
 
+import lombok.Data;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+@Data
 public class CreateClientRequest {
     @NotBlank(message = "Имя обязательно")
     @Size(min = 1, max = 100, message = "Имя должно быть от 2 до 100 символов")
@@ -14,19 +17,4 @@ public class CreateClientRequest {
             message = "Неверный формат телефона")
     private String phoneNumber;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
 }

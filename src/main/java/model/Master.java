@@ -80,4 +80,11 @@ public class Master {
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
     }
+
+    public void addClient(Client client) {
+        clients.add(client);
+    }
+    public void addVisit(Visit visit) {
+        visits.add(visit);
+    }
 }
