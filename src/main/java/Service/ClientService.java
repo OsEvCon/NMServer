@@ -33,9 +33,9 @@ public class ClientService {
         try {
             Master master = getCurrentMaster();
             List<Client> clients = clientRepository.findByMastersContaining(master);
-            log.debug("Найдено {} клиентов для мастера {}",
+            log.debug("Найдено {} клиентов для мастера с ID:{}",
                     clients.size(), master.getId());
-            return clientMapper.toDTO(clients);
+            return clientMapper.toDTOList(clients);
         } catch (Exception e) {
             log.error("Ошибка получения клиентов", e);
             throw new RuntimeException(e);
@@ -54,10 +54,10 @@ public class ClientService {
         messagingTemplate.convertAndSend("/topic/clients.update",
                 Map.of(
                         "type", "CREATED",
-                        "client", clientMapper.toDTO(savedClient)
+                        "client", clientMapper.toDTOList(savedClient)
                 ));
 
-        return clientMapper.toDTO(savedClient);
+        return clientMapper.toDTOList(savedClient);
     }
 
     public void deleteMultipleClients(List<Integer> clientIds) {
@@ -93,7 +93,7 @@ public class ClientService {
             }
         }
 
-        List<ClientDTO> deletedDTOs = clientMapper.toDTO(clientsToDelete);
+        List<ClientDTO> deletedDTOs = clientMapper.toDTOList(clientsToDelete);
         messagingTemplate.convertAndSend("/topic/clients.update",
                 Map.of(
                         "type", "DELETED",
@@ -114,7 +114,7 @@ public class ClientService {
         Client updatedClient = clientRepository.save(client);
         log.info("Клиент ID: {} успешно обновлен", clientId);
 
-        ClientDTO newData = clientMapper.toDTO(updatedClient);
+        ClientDTO newData = clientMapper.toDTOList(updatedClient);
 
         messagingTemplate.convertAndSend("/topic/clients.update",
                 Map.of(

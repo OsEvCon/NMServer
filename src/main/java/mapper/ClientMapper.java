@@ -15,7 +15,7 @@ public class ClientMapper {
     /**
      * Преобразование Client -> DTO
      */
-    public ClientDTO toDTO(Client client) {
+    public ClientDTO toDTOList(Client client) {
         if (client == null) {return null;}
 
         ClientDTO dto = new ClientDTO();
@@ -54,9 +54,9 @@ public class ClientMapper {
         }
     }
 
-    public List<ClientDTO> toDTO(List<Client> clients) {
+    public List<ClientDTO> toDTOList(List<Client> clients) {
         return clients.stream()
-                .map(this::toDTO)
+                .map(this::toDTOList)
                 .toList();
     }
 }
