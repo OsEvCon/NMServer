@@ -3,6 +3,8 @@ package Service;
 import DTO.ClientDTO;
 import DTO.request.CreateClientRequest;
 import DTO.request.UpdateClientRequest;
+import exception.BusinessException;
+import exception.ClientDataAccessException;
 import exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,10 +37,10 @@ public class ClientService {
             List<Client> clients = clientRepository.findByMastersContaining(master);
             log.debug("Найдено {} клиентов для мастера с ID:{}",
                     clients.size(), master.getId());
-            return clientMapper.toDTOList(clients);
+            return clientMapper.toDTO(clients);
         } catch (Exception e) {
             log.error("Ошибка получения клиентов", e);
-            throw new RuntimeException(e);
+            throw new ClientDataAccessException(e);
         }
 
     }
@@ -48,16 +50,24 @@ public class ClientService {
 
         Master master = getCurrentMaster();
 
+        boolean phoneExists = clientRepository.existsByMastersContainingAndPhoneNumber(
+                master, request.getPhoneNumber()
+        );
+
+        if (phoneExists) {
+            throw new BusinessException("У вас уже есть клиент с телефоном " + request.getPhoneNumber());
+        }
+
         Client client = clientMapper.toClient(request, master);
         Client savedClient = clientRepository.save(client);
 
         messagingTemplate.convertAndSend("/topic/clients.update",
                 Map.of(
                         "type", "CREATED",
-                        "client", clientMapper.toDTOList(savedClient)
+                        "client", clientMapper.toDTO(savedClient)
                 ));
 
-        return clientMapper.toDTOList(savedClient);
+        return clientMapper.toDTO(savedClient);
     }
 
     public void deleteMultipleClients(List<Integer> clientIds) {
@@ -93,7 +103,7 @@ public class ClientService {
             }
         }
 
-        List<ClientDTO> deletedDTOs = clientMapper.toDTOList(clientsToDelete);
+        List<ClientDTO> deletedDTOs = clientMapper.toDTO(clientsToDelete);
         messagingTemplate.convertAndSend("/topic/clients.update",
                 Map.of(
                         "type", "DELETED",
@@ -109,12 +119,12 @@ public class ClientService {
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Клиент с ID " + clientId + " не найден или не принадлежит вам"));
 
-        updateClientFields(client, request);
+        updateClientFields(master, client, request);
 
         Client updatedClient = clientRepository.save(client);
         log.info("Клиент ID: {} успешно обновлен", clientId);
 
-        ClientDTO newData = clientMapper.toDTOList(updatedClient);
+        ClientDTO newData = clientMapper.toDTO(updatedClient);
 
         messagingTemplate.convertAndSend("/topic/clients.update",
                 Map.of(
@@ -125,13 +135,25 @@ public class ClientService {
         return newData;
     }
 
-    private void updateClientFields(Client client, UpdateClientRequest request) {
+    private void updateClientFields(Master master, Client client, UpdateClientRequest request) {
         if (request.getName() != null) {
             client.setName(request.getName());
         }
 
-        if (request.getPhoneNumber() != null) {
+        if (request.getPhoneNumber() != null && !request.getPhoneNumber().equals(client.getPhoneNumber())) {
+
+            boolean phoneExists = clientRepository.existsByMastersAndPhoneNumberExcludingId(master, request.getPhoneNumber(), client.getId());
+
+            if (phoneExists) {
+                throw new BusinessException(
+                        "У вас уже есть клиент с телефоном: " + request.getPhoneNumber());
+            }
+
             client.setPhoneNumber(request.getPhoneNumber());
+        }
+
+        if (request.getEmail() != null && !request.getEmail().equals(client.getEmail())) {
+            client.setEmail(request.getEmail());
         }
     }
 

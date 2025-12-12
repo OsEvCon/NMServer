@@ -3,6 +3,7 @@ package service;
 import DTO.ClientDTO;
 import Service.ClientService;
 import Service.SecurityUtils;
+import exception.ClientDataAccessException;
 import mapper.ClientMapper;
 import model.Client;
 import model.ClientRepository;
@@ -17,14 +18,18 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.Level;
 
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -58,87 +63,102 @@ public class ClientServiceTest {
     @Test
     void getClientsTestWithEmptyClientList() {
         //Получение текущего мастера через mock SecurityUtils
-        try (MockedStatic<SecurityUtils> securityUtilsMockedStatic = Mockito.mockStatic(SecurityUtils.class)) {
-            Master testMaster = new Master();
-            testMaster.setId(1);
-            testMaster.setName("getClientsTestMaster");
-            securityUtilsMockedStatic.when(SecurityUtils::getCurrentMaster).thenReturn(testMaster);
-
-
+        withSecurityUtilsMock(testMaster -> {
             when(clientRepository.findByMastersContaining(any()))
                     .thenReturn(List.of());
 
             List<ClientDTO> result = clientService.getClientsForCurrentMaster();
 
             assertThat(result.isEmpty());
-        }
+        });
     }
 
     //Тест на список с одним клиентом
     @Test
     void getClientsTestWithOneClient() {
-        try (MockedStatic<SecurityUtils> securityUtilsMockedStatic = Mockito.mockStatic(SecurityUtils.class)) {
-            Master testMaster = new Master();
-            testMaster.setId(1);
-            testMaster.setName("getClientsTestMaster");
-
-            Client client1 = new Client();
-            client1.setId(1);
-            client1.setName("testClient1");
-
+        withSecurityUtilsMock(testMaster -> {
             ClientDTO clientDTO1 = ClientDTO.builder().id(1).name("testClient1").build();
 
-            securityUtilsMockedStatic.when(SecurityUtils::getCurrentMaster).thenReturn(testMaster);
-
             when(clientRepository.findByMastersContaining(testMaster))
-                    .thenReturn(List.of(client1));
+                    .thenReturn(getClients(1));
 
-            when(clientMapper.toDTOList(List.of(client1)))
+            when(clientMapper.toDTO(getClients(1)))
                     .thenReturn(List.of(clientDTO1));
 
             List<ClientDTO> result = clientService.getClientsForCurrentMaster();
 
             verify(clientRepository).findByMastersContaining(testMaster);
-            verify(clientMapper).toDTOList(List.of(client1));
+            verify(clientMapper).toDTO(getClients(1));
 
             assertThat(result.size()).isEqualTo(1);
             assertThat(result).containsExactly(clientDTO1);
-        }
+        });
     }
 
     //Тест на список с несколькими клиентами. Должен возвращать заданных клиентов в правильном количестве
     @Test
     void getClientsTestWithClients() {
-        try (MockedStatic<SecurityUtils> securityUtilsMockedStatic = Mockito.mockStatic(SecurityUtils.class)) {
+
+            withSecurityUtilsMock(testMaster -> {
+                ClientDTO clientDTO1 = ClientDTO.builder().id(1).name("testClient1").build();
+                ClientDTO clientDTO2 = ClientDTO.builder().id(2).name("testClient2").build();
+
+                when(clientRepository.findByMastersContaining(testMaster))
+                        .thenReturn(getClients(2));
+
+                when(clientMapper.toDTO(getClients(2)))
+                        .thenReturn(List.of(clientDTO1, clientDTO2));
+
+                List<ClientDTO> result = clientService.getClientsForCurrentMaster();
+
+                verify(clientRepository).findByMastersContaining(testMaster);
+                verify(clientMapper).toDTO(getClients(2));
+
+                assertThat(result.size()).isEqualTo(2);
+                assertThat(result).containsExactly(clientDTO1, clientDTO2);
+            });
+    }
+
+    //Тест на обработку исключения при ошибке БД
+    @Test
+    void getClientsTestWithRepositoryError() {
+        withSecurityUtilsMock(testMaster -> {
+            when(clientRepository.findByMastersContaining(any()))
+                    .thenThrow(new DataAccessException("Database connection lost") {});
+
+            assertThatThrownBy(() -> clientService.getClientsForCurrentMaster())
+                    .isInstanceOf(ClientDataAccessException.class) // ← сервис должен бросить это
+                    .hasMessageContaining("Не удалось получить данные клиентов") // ← сообщение кастомного исключения
+                    .hasCauseInstanceOf(DataAccessException.class) // ← причина сохраняется
+                    .hasRootCauseMessage("Database connection lost"); // ← оригинальное сообщение
+
+            verify(clientRepository).findByMastersContaining(testMaster);
+        });
+    }
+
+    List<Client> getClients(int count){
+        List<Client> result = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            Client client = new Client();
+            client.setId(i);
+            client.setName("testClient" + i);
+            result.add(client);
+        }
+        return result;
+    }
+
+    /**
+     * Метод для тестов с SecurityUtils
+     */
+    private void withSecurityUtilsMock(Consumer<Master> testLogic){
+        try(MockedStatic<SecurityUtils> securityUtilsMockedStatic = Mockito.mockStatic(SecurityUtils.class)) {
             Master testMaster = new Master();
             testMaster.setId(1);
-            testMaster.setName("getClientsTestMaster");
-
-            Client client1 = new Client();
-            Client client2 = new Client();
-            client1.setId(1);
-            client2.setId(2);
-            client1.setName("testClient1");
-            client2.setName("testClient2");
-
-            ClientDTO clientDTO1 = ClientDTO.builder().id(1).name("testClient1").build();
-            ClientDTO clientDTO2 = ClientDTO.builder().id(2).name("testClient2").build();
+            testMaster.setName("testMaster");
 
             securityUtilsMockedStatic.when(SecurityUtils::getCurrentMaster).thenReturn(testMaster);
 
-            when(clientRepository.findByMastersContaining(testMaster))
-                    .thenReturn(List.of(client1, client2));
-
-            when(clientMapper.toDTOList(List.of(client1, client2)))
-                    .thenReturn(List.of(clientDTO1, clientDTO2));
-
-            List<ClientDTO> result = clientService.getClientsForCurrentMaster();
-
-            verify(clientRepository).findByMastersContaining(testMaster);
-            verify(clientMapper).toDTOList(List.of(client1, client2));
-
-            assertThat(result.size()).isEqualTo(2);
-            assertThat(result).containsExactly(clientDTO1, clientDTO2);
+            testLogic.accept(testMaster);
         }
     }
 }

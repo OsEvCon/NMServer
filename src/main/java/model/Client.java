@@ -26,6 +26,9 @@ public class Client {
     @Column(name = "phone_number")
     String phoneNumber;
 
+    @Column(name = "email")
+    private String email;
+
     @ManyToMany(mappedBy = "clients", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Master> masters;

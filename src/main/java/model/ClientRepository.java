@@ -1,7 +1,8 @@
 package model;
 
-import model.Client;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,4 +20,17 @@ public interface ClientRepository extends CrudRepository<Client, Integer> {
 
     Optional<Client> findByIdAndMastersContaining(Integer id, Master master);
 
+    //Метод для проверки есть ли у данного мастера(master) клиент с данным номером телефона(phoneNumber)
+    boolean existsByMastersContainingAndPhoneNumber(Master master, String phoneNumber);
+
+    /**
+     * Метод для проверки есть ли у данного master клиента с phoneNumber исключая клиента с excludeId
+     */
+    @Query("SELECT COUNT(c) > 0 FROM Client c " +
+            "JOIN c.masters m " +
+            "WHERE m = :master AND c.phoneNumber = :phoneNumber AND c.id != :excludeId")
+    boolean existsByMastersAndPhoneNumberExcludingId(
+            @Param("master") Master master,
+            @Param("phoneNumber") String phoneNumber,
+            @Param("excludeId") Integer excludeId);
 }
