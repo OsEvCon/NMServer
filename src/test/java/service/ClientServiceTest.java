@@ -1,6 +1,7 @@
 package service;
 
 import DTO.ClientDTO;
+import DTO.request.CreateClientRequest;
 import Service.ClientService;
 import Service.SecurityUtils;
 import exception.ClientDataAccessException;
@@ -26,13 +27,13 @@ import ch.qos.logback.classic.Level;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ClientServiceTest {
@@ -133,6 +134,56 @@ public class ClientServiceTest {
                     .hasRootCauseMessage("Database connection lost"); // ← оригинальное сообщение
 
             verify(clientRepository).findByMastersContaining(testMaster);
+        });
+    }
+
+    /**
+     * Тест на создание и сохранение клиента
+     */
+    @Test
+    void createClientTest() {
+        withSecurityUtilsMock(testMaster -> {
+            CreateClientRequest request = CreateClientRequest.builder()
+                    .name("testClient")
+                    .phoneNumber("+71234567890")
+                    .build();
+
+            Client testClient = new Client();
+            testClient.setId(1);
+            testClient.setName(request.getName());
+            testClient.setPhoneNumber(request.getPhoneNumber());
+            testClient.setMasters(List.of(testMaster));
+
+            when(clientRepository.existsByMastersContainingAndPhoneNumber(testMaster, request.getPhoneNumber()))
+                    .thenReturn(false);
+
+            when(clientMapper.toClient(request,  testMaster))
+                    .thenReturn(testClient);
+
+            when(clientRepository.save(testClient)).thenReturn(testClient);
+
+            when(clientMapper.toDTO(testClient)).thenReturn(ClientDTO.builder().id(1).name("testClient").phoneNumber("+71234567890").build());
+
+            ClientDTO savedClientDto = clientService.createClient(request);
+
+            verify(clientRepository, times(1))
+                    .existsByMastersContainingAndPhoneNumber(testMaster, request.getPhoneNumber());
+
+            verify(clientMapper).toClient(request, testMaster);
+
+            verify(clientRepository, times(1)).save(testClient);
+
+            verify(simpMessagingTemplate).convertAndSend(
+                    eq("/topic/clients.update"),
+                    any(Map.class)
+            );
+
+            verify(clientMapper).toDTO(testClient);
+
+            assertThat(savedClientDto.getId()).isEqualTo(1);
+            assertThat(savedClientDto.getPhoneNumber()).isEqualTo(request.getPhoneNumber());
+            assertThat(savedClientDto.getName()).isEqualTo(request.getName());
+
         });
     }
 

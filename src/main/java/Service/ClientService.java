@@ -61,13 +61,15 @@ public class ClientService {
         Client client = clientMapper.toClient(request, master);
         Client savedClient = clientRepository.save(client);
 
+        ClientDTO result = clientMapper.toDTO(savedClient);
+
         messagingTemplate.convertAndSend("/topic/clients.update",
                 Map.of(
                         "type", "CREATED",
-                        "client", clientMapper.toDTO(savedClient)
+                        "client", result
                 ));
 
-        return clientMapper.toDTO(savedClient);
+        return result;
     }
 
     public void deleteMultipleClients(List<Integer> clientIds) {

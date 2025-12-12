@@ -4,15 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="Добавлены CRUD методы для Client в ClientController и ClientService. &#10;&#10;Добавлены кастомные исключения BusinessException и ResourceNotFoundException.&#10;&#10;Добавлена библиотека spring-boot-starter-test для реализации тестов.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/exception/ClientDataAccessException.java" afterDir="false" />
+    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="- Добавлено поле email в Client&#10;&#10;- Добавлено кастомное исключение ClientDataAccessException&#10;&#10;- Добавлен тест getClientsTestWithRepositoryError() в ClientServiceTest&#10;&#10;- Добавлены методы existsByMastersContainingAndPhoneNumber и existsByMastersAndPhoneNumberExcludingId в ClientRepository">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/ClientDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/ClientDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DTO/request/CreateClientRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/request/CreateClientRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/request/UpdateClientRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/request/UpdateClientRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Service/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Service/ClientService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mapper/ClientMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mapper/ClientMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/ClientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/ClientRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/service/ClientServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/service/ClientServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -80,6 +76,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "JUnit.ClientServiceTest.createClientTest.executor": "Run",
     "JUnit.ClientServiceTest.executor": "Run",
     "JUnit.ClientServiceTest.getClientsTest.executor": "Run",
     "JUnit.ClientServiceTest.getClientsTestWithClients.executor": "Run",
@@ -135,7 +132,7 @@
       <recent name="model" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ClientServiceTest.getClientsTestWithRepositoryError">
+  <component name="RunManager" selected="JUnit.ClientServiceTest.createClientTest">
     <configuration name="ClientServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TestServer" />
       <extension name="coverage">
@@ -151,6 +148,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ClientServiceTest.createClientTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TestServer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="service" />
+      <option name="MAIN_CLASS_NAME" value="service.ClientServiceTest" />
+      <option name="METHOD_NAME" value="createClientTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ClientServiceTest.getClientsTestWithClients" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TestServer" />
       <extension name="coverage">
@@ -162,22 +175,6 @@
       <option name="PACKAGE_NAME" value="service" />
       <option name="MAIN_CLASS_NAME" value="service.ClientServiceTest" />
       <option name="METHOD_NAME" value="getClientsTestWithClients" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ClientServiceTest.getClientsTestWithEmptyClientList" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="TestServer" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.ClientServiceTest" />
-      <option name="METHOD_NAME" value="getClientsTestWithEmptyClientList" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -217,11 +214,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ClientServiceTest.createClientTest" />
         <item itemvalue="JUnit.ClientServiceTest.getClientsTestWithRepositoryError" />
         <item itemvalue="JUnit.ClientServiceTest.getClientsTestWithOneClient" />
         <item itemvalue="JUnit.ClientServiceTest" />
         <item itemvalue="JUnit.ClientServiceTest.getClientsTestWithClients" />
-        <item itemvalue="JUnit.ClientServiceTest.getClientsTestWithEmptyClientList" />
       </list>
     </recent_temporary>
   </component>
@@ -432,7 +429,7 @@
       <workItem from="1765284948717" duration="2468000" />
       <workItem from="1765356211927" duration="11372000" />
       <workItem from="1765435887188" duration="8243000" />
-      <workItem from="1765516199576" duration="7936000" />
+      <workItem from="1765516199576" duration="13362000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>
@@ -605,7 +602,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765371525850</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="- Добавлено поле email в Client&#10;&#10;- Добавлено кастомное исключение ClientDataAccessException&#10;&#10;- Добавлен тест getClientsTestWithRepositoryError() в ClientServiceTest&#10;&#10;- Добавлены методы existsByMastersContainingAndPhoneNumber и existsByMastersAndPhoneNumberExcludingId в ClientRepository">
+      <option name="closed" value="true" />
+      <created>1765526000268</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1765526000268</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -658,7 +663,8 @@
     <MESSAGE value="Добавлены классы ClientDTO, ClientMapper, ClientService, CreateClientRequest, UpdateClientRequest для дальнейшей реализации Rest api. &#10;&#10;Изменены эндпоинты в ClientController" />
     <MESSAGE value="Добавлен lombok в проект.&#10;&#10;Исправлены классы Master и Client. Из них удалены ненужные поля. &#10;&#10;В ClientService добавлен метод getClientsForCurrentMaster" />
     <MESSAGE value="Добавлены CRUD методы для Client в ClientController и ClientService. &#10;&#10;Добавлены кастомные исключения BusinessException и ResourceNotFoundException.&#10;&#10;Добавлена библиотека spring-boot-starter-test для реализации тестов." />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавлены CRUD методы для Client в ClientController и ClientService. &#10;&#10;Добавлены кастомные исключения BusinessException и ResourceNotFoundException.&#10;&#10;Добавлена библиотека spring-boot-starter-test для реализации тестов." />
+    <MESSAGE value="- Добавлено поле email в Client&#10;&#10;- Добавлено кастомное исключение ClientDataAccessException&#10;&#10;- Добавлен тест getClientsTestWithRepositoryError() в ClientServiceTest&#10;&#10;- Добавлены методы existsByMastersContainingAndPhoneNumber и existsByMastersAndPhoneNumberExcludingId в ClientRepository" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Добавлено поле email в Client&#10;&#10;- Добавлено кастомное исключение ClientDataAccessException&#10;&#10;- Добавлен тест getClientsTestWithRepositoryError() в ClientServiceTest&#10;&#10;- Добавлены методы existsByMastersContainingAndPhoneNumber и existsByMastersAndPhoneNumberExcludingId в ClientRepository" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
