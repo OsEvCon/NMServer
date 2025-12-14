@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="- Добавлено поле email в Client&#10;&#10;- Добавлено кастомное исключение ClientDataAccessException&#10;&#10;- Добавлен тест getClientsTestWithRepositoryError() в ClientServiceTest&#10;&#10;- Добавлены методы existsByMastersContainingAndPhoneNumber и existsByMastersAndPhoneNumberExcludingId в ClientRepository">
+    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="- Добавлен тест на создание и сохранение клиента createClientTest() в ClientServiceTest">
+      <change afterPath="$PROJECT_DIR$/src/main/java/exception/ClientSaveException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/ClientDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/ClientDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/request/CreateClientRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/request/CreateClientRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Service/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Service/ClientService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mapper/ClientMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mapper/ClientMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/service/ClientServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/service/ClientServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -77,6 +77,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "JUnit.ClientServiceTest.createClientTest.executor": "Run",
+    "JUnit.ClientServiceTest.createClientWithDuplicatePhoneNumberTest.executor": "Run",
+    "JUnit.ClientServiceTest.createClientWithRepositoryError.executor": "Run",
     "JUnit.ClientServiceTest.executor": "Run",
     "JUnit.ClientServiceTest.getClientsTest.executor": "Run",
     "JUnit.ClientServiceTest.getClientsTestWithClients.executor": "Run",
@@ -132,22 +134,7 @@
       <recent name="model" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ClientServiceTest.createClientTest">
-    <configuration name="ClientServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="TestServer" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.ClientServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.ClientServiceTest.createClientWithRepositoryError">
     <configuration name="ClientServiceTest.createClientTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TestServer" />
       <extension name="coverage">
@@ -164,7 +151,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ClientServiceTest.getClientsTestWithClients" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ClientServiceTest.createClientWithDuplicatePhoneNumberTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TestServer" />
       <extension name="coverage">
         <pattern>
@@ -174,7 +161,23 @@
       </extension>
       <option name="PACKAGE_NAME" value="service" />
       <option name="MAIN_CLASS_NAME" value="service.ClientServiceTest" />
-      <option name="METHOD_NAME" value="getClientsTestWithClients" />
+      <option name="METHOD_NAME" value="createClientWithDuplicatePhoneNumberTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ClientServiceTest.createClientWithRepositoryError" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TestServer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="service" />
+      <option name="MAIN_CLASS_NAME" value="service.ClientServiceTest" />
+      <option name="METHOD_NAME" value="createClientWithRepositoryError" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -214,11 +217,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ClientServiceTest.createClientWithRepositoryError" />
         <item itemvalue="JUnit.ClientServiceTest.createClientTest" />
+        <item itemvalue="JUnit.ClientServiceTest.createClientWithDuplicatePhoneNumberTest" />
         <item itemvalue="JUnit.ClientServiceTest.getClientsTestWithRepositoryError" />
         <item itemvalue="JUnit.ClientServiceTest.getClientsTestWithOneClient" />
-        <item itemvalue="JUnit.ClientServiceTest" />
-        <item itemvalue="JUnit.ClientServiceTest.getClientsTestWithClients" />
       </list>
     </recent_temporary>
   </component>
@@ -429,7 +432,8 @@
       <workItem from="1765284948717" duration="2468000" />
       <workItem from="1765356211927" duration="11372000" />
       <workItem from="1765435887188" duration="8243000" />
-      <workItem from="1765516199576" duration="13362000" />
+      <workItem from="1765516199576" duration="13423000" />
+      <workItem from="1765711690580" duration="4884000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>
@@ -610,7 +614,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765526000268</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="- Добавлен тест на создание и сохранение клиента createClientTest() в ClientServiceTest">
+      <option name="closed" value="true" />
+      <created>1765543313164</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1765543313164</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -664,7 +676,8 @@
     <MESSAGE value="Добавлен lombok в проект.&#10;&#10;Исправлены классы Master и Client. Из них удалены ненужные поля. &#10;&#10;В ClientService добавлен метод getClientsForCurrentMaster" />
     <MESSAGE value="Добавлены CRUD методы для Client в ClientController и ClientService. &#10;&#10;Добавлены кастомные исключения BusinessException и ResourceNotFoundException.&#10;&#10;Добавлена библиотека spring-boot-starter-test для реализации тестов." />
     <MESSAGE value="- Добавлено поле email в Client&#10;&#10;- Добавлено кастомное исключение ClientDataAccessException&#10;&#10;- Добавлен тест getClientsTestWithRepositoryError() в ClientServiceTest&#10;&#10;- Добавлены методы existsByMastersContainingAndPhoneNumber и existsByMastersAndPhoneNumberExcludingId в ClientRepository" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Добавлено поле email в Client&#10;&#10;- Добавлено кастомное исключение ClientDataAccessException&#10;&#10;- Добавлен тест getClientsTestWithRepositoryError() в ClientServiceTest&#10;&#10;- Добавлены методы existsByMastersContainingAndPhoneNumber и existsByMastersAndPhoneNumberExcludingId в ClientRepository" />
+    <MESSAGE value="- Добавлен тест на создание и сохранение клиента createClientTest() в ClientServiceTest" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Добавлен тест на создание и сохранение клиента createClientTest() в ClientServiceTest" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -681,6 +694,21 @@
           <url>file://$PROJECT_DIR$/src/main/java/Service/JwtRequestFilter.java</url>
           <line>64</line>
           <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Service/ClientService.java</url>
+          <line>62</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Service/ClientService.java</url>
+          <line>63</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Service/ClientService.java</url>
+          <line>65</line>
+          <option name="timeStamp" value="22" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -4,7 +4,9 @@ import DTO.ClientDTO;
 import DTO.request.CreateClientRequest;
 import Service.ClientService;
 import Service.SecurityUtils;
+import exception.BusinessException;
 import exception.ClientDataAccessException;
+import exception.ClientSaveException;
 import mapper.ClientMapper;
 import model.Client;
 import model.ClientRepository;
@@ -146,12 +148,14 @@ public class ClientServiceTest {
             CreateClientRequest request = CreateClientRequest.builder()
                     .name("testClient")
                     .phoneNumber("+71234567890")
+                    .email("testClient@testMail.com")
                     .build();
 
             Client testClient = new Client();
             testClient.setId(1);
             testClient.setName(request.getName());
             testClient.setPhoneNumber(request.getPhoneNumber());
+            testClient.setEmail(request.getEmail());
             testClient.setMasters(List.of(testMaster));
 
             when(clientRepository.existsByMastersContainingAndPhoneNumber(testMaster, request.getPhoneNumber()))
@@ -162,7 +166,8 @@ public class ClientServiceTest {
 
             when(clientRepository.save(testClient)).thenReturn(testClient);
 
-            when(clientMapper.toDTO(testClient)).thenReturn(ClientDTO.builder().id(1).name("testClient").phoneNumber("+71234567890").build());
+            when(clientMapper.toDTO(testClient)).thenReturn(ClientDTO.builder().id(1).name("testClient")
+                    .phoneNumber("+71234567890").email("testClient@testMail.com").build());
 
             ClientDTO savedClientDto = clientService.createClient(request);
 
@@ -183,7 +188,56 @@ public class ClientServiceTest {
             assertThat(savedClientDto.getId()).isEqualTo(1);
             assertThat(savedClientDto.getPhoneNumber()).isEqualTo(request.getPhoneNumber());
             assertThat(savedClientDto.getName()).isEqualTo(request.getName());
+            assertThat(savedClientDto.getEmail()).isEqualTo(request.getEmail());
+        });
+    }
 
+    /**
+     * Тест на создание клиента с уже существующим номером телефона. Должно быть исключение
+     */
+    @Test
+    void createClientWithDuplicatePhoneNumberTest() {
+        withSecurityUtilsMock(testMaster -> {
+            CreateClientRequest request = CreateClientRequest.builder()
+                    .name("testClient")
+                    .phoneNumber("+71234567890")
+                    .build();
+
+            when(clientRepository.existsByMastersContainingAndPhoneNumber(testMaster, request.getPhoneNumber()))
+                    .thenReturn(true);
+
+            assertThatThrownBy(() -> clientService.createClient(request))
+                    .isInstanceOf(BusinessException.class)
+                    .hasMessageContaining("У вас уже есть клиент с телефоном ");
+        });
+    }
+
+    /**
+     * Тест на обработку ошибки БД при сохранении клиента
+     */
+    @Test
+    void createClientWithRepositoryError() {
+        withSecurityUtilsMock(testMaster -> {
+            CreateClientRequest request = CreateClientRequest.builder()
+                    .name("testClient")
+                    .phoneNumber("+71234567890")
+                    .build();
+
+            Client testClient = new Client();
+            testClient.setName(request.getName());
+            testClient.setPhoneNumber(request.getPhoneNumber());
+
+            when(clientRepository.save(any(Client.class)))
+                    .thenThrow(new DataAccessException("Database connection lost") {});
+
+            when(clientMapper.toClient(request,  testMaster))
+                    .thenReturn(testClient);
+
+            assertThatThrownBy(() -> clientService.createClient(request))
+                    .isInstanceOf(ClientSaveException.class)
+                    .hasMessageContaining("Не удалось сохранить клиента")
+                    .hasCauseInstanceOf(DataAccessException.class) // ← причина сохраняется
+                    .hasRootCauseMessage("Database connection lost"); // ← оригинальное сообщение
         });
     }
 

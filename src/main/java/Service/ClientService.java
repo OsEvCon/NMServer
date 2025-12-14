@@ -6,6 +6,7 @@ import DTO.request.UpdateClientRequest;
 import exception.BusinessException;
 import exception.ClientDataAccessException;
 import exception.ResourceNotFoundException;
+import exception.ClientSaveException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import mapper.ClientMapper;
@@ -48,28 +49,34 @@ public class ClientService {
     public ClientDTO createClient(CreateClientRequest request) {
         log.debug("Создание клиента из запроса: {}", request);
 
-        Master master = getCurrentMaster();
+        try {
+            Master master = getCurrentMaster();
 
-        boolean phoneExists = clientRepository.existsByMastersContainingAndPhoneNumber(
-                master, request.getPhoneNumber()
-        );
+            boolean phoneExists = clientRepository.existsByMastersContainingAndPhoneNumber(
+                    master, request.getPhoneNumber()
+            );
 
-        if (phoneExists) {
-            throw new BusinessException("У вас уже есть клиент с телефоном " + request.getPhoneNumber());
+            if (phoneExists) {
+                throw new BusinessException("У вас уже есть клиент с телефоном " + request.getPhoneNumber());
+            }
+
+            Client client = clientMapper.toClient(request, master);
+            Client savedClient = clientRepository.save(client);
+
+            ClientDTO result = clientMapper.toDTO(savedClient);
+
+            messagingTemplate.convertAndSend("/topic/clients.update",
+                    Map.of(
+                            "type", "CREATED",
+                            "client", result
+                    ));
+
+            return result;
+
+        }catch (Exception e) {
+            log.error("Ошибка сохранения клиента", e);
+            throw new ClientSaveException(e);
         }
-
-        Client client = clientMapper.toClient(request, master);
-        Client savedClient = clientRepository.save(client);
-
-        ClientDTO result = clientMapper.toDTO(savedClient);
-
-        messagingTemplate.convertAndSend("/topic/clients.update",
-                Map.of(
-                        "type", "CREATED",
-                        "client", result
-                ));
-
-        return result;
     }
 
     public void deleteMultipleClients(List<Integer> clientIds) {

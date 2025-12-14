@@ -22,6 +22,7 @@ public class ClientMapper {
         dto.setId(client.getId());
         dto.setName(client.getName());
         dto.setPhoneNumber(client.getPhoneNumber());
+        dto.setEmail(client.getEmail());
 
         return dto;
     }
@@ -33,6 +34,7 @@ public class ClientMapper {
         Client client = new Client();
         client.setName(request.getName());
         client.setPhoneNumber(request.getPhoneNumber());
+        client.setEmail(request.getEmail());
 
         if (currentMaster != null){
             client.setMasters(List.of(currentMaster));
