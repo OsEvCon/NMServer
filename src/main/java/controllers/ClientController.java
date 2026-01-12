@@ -54,7 +54,7 @@ public class ClientController {
     public ResponseEntity<Void> deleteClients(@Valid @RequestBody DeleteClientsRequest request) {
         log.info("Удаление клиентов: {}", request.getClientIds());
 
-        clientService.deleteMultipleClients(request.getClientIds());
+        clientService.deleteMultipleClients(request);
 
         return ResponseEntity.noContent().build();
     }

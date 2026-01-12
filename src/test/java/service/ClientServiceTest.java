@@ -2,16 +2,14 @@ package service;
 
 import DTO.ClientDTO;
 import DTO.request.CreateClientRequest;
+import DTO.request.DeleteClientsRequest;
 import Service.ClientService;
 import Service.SecurityUtils;
 import exception.BusinessException;
 import exception.ClientDataAccessException;
 import exception.ClientSaveException;
 import mapper.ClientMapper;
-import model.Client;
-import model.ClientRepository;
-import model.Master;
-import model.VisitRepository;
+import model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,9 +25,7 @@ import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.Level;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -216,7 +212,7 @@ public class ClientServiceTest {
      * Тест на обработку ошибки БД при сохранении клиента
      */
     @Test
-    void createClientWithRepositoryError() {
+    void createClientWithRepositoryErrorTest() {
         withSecurityUtilsMock(testMaster -> {
             CreateClientRequest request = CreateClientRequest.builder()
                     .name("testClient")
@@ -241,12 +237,77 @@ public class ClientServiceTest {
         });
     }
 
+    /**
+     * Тест на удаление клиентов
+     */
+    @Test
+    void deleteMultipleClientsTest() {
+        withSecurityUtilsMock(testMaster -> {
+            DeleteClientsRequest deleteClientsRequest = new DeleteClientsRequest();
+            deleteClientsRequest.setClientIds(List.of(0, 1, 2, 3, 4));
+
+            List<Client> clientsForRemove = getClients(5);
+
+            Map<Client, List<Visit>> clientToVisitsMap = new HashMap<>();
+            for(int i = 0; i < 4; i++) {
+                Client client = clientsForRemove.get(i);
+                client.setMasters(new ArrayList<>(List.of(testMaster)));
+                testMaster.addClient(client);
+
+                List<Visit> visits = client.getVisits();
+                clientToVisitsMap.put(client, visits);
+
+                when(visitRepository.findVisitsByClient(client))
+                        .thenReturn(Optional.of(visits));
+            }
+
+            when(clientRepository.findAllById(deleteClientsRequest.getClientIds()))
+                    .thenReturn(clientsForRemove);
+
+            clientService.deleteMultipleClients(deleteClientsRequest);
+
+            // Проверка, что клиенты удалены из коллекции мастера
+            assertThat(testMaster.getClients()).isEmpty();
+
+            // Проверка, что clientRepository.delete вызывался 4 раза и что 5-го клиента не удаляли
+            verify(clientRepository, times(4)).delete(any(Client.class));
+            verify(clientRepository, never()).delete(clientsForRemove.get(4));
+
+            // Проверка, что messagingTemplate вызывался
+            verify(simpMessagingTemplate).convertAndSend(eq("/topic/clients.update"), any(Map.class));
+
+            // Проверка, что визиты отвязаны у 4‑х клиентов
+            for (int i = 0; i < 4; i++){
+                Client client = clientsForRemove.get(i);
+                List<Visit> visits = client.getVisits();
+
+                // У всех визитов клиент должен быть Null
+                visits.forEach(visit -> assertThat(visit.getClient()).isNull());
+            }
+
+            //Проверка, что у 5-го клиента визит не отвязан
+            Client client5 =  clientsForRemove.get(4);
+            client5.getVisits().forEach(visit -> assertThat(visit.getClient()).isEqualTo(client5));
+
+            // Проверка вызова saveAll для 4х клиентов
+            verify(visitRepository, times(4)).saveAll(anyList());
+
+            // Проверка, что clientRepository.save() не вызывался т.к. клиенты удаляются полностью
+            verify(clientRepository, never()).save(any(Client.class));
+        });
+    }
+
+
     List<Client> getClients(int count){
         List<Client> result = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             Client client = new Client();
             client.setId(i);
             client.setName("testClient" + i);
+            Visit visit = new Visit();
+            visit.setId(i);
+            visit.setClient(client);
+            client.getVisits().add(visit);
             result.add(client);
         }
         return result;

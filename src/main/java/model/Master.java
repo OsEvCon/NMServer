@@ -53,11 +53,12 @@ public class Master {
             inverseJoinColumns = @JoinColumn(name = "client_id")
     )
     @JsonIgnoreProperties("masters")
-    private List<Client> clients;
+    private List<Client> clients = new ArrayList<>();
+
     @JsonManagedReference("master-visits")
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "master")
     @Fetch(FetchMode.SUBSELECT) // Добавляем аннотацию @Fetch с указанием стратегии загрузки
-    List<Visit> visits;
+    List<Visit> visits = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -65,7 +66,7 @@ public class Master {
             joinColumns = @JoinColumn(name = "master_id"),
             inverseJoinColumns = @JoinColumn(name = "procedure_id")
     )
-    private List<Procedure> procedures;
+    private List<Procedure> procedures = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

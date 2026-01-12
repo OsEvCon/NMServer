@@ -3,6 +3,7 @@ import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 @Getter // Геттеры для всех полей
@@ -31,8 +32,9 @@ public class Client {
 
     @ManyToMany(mappedBy = "clients", fetch = FetchType.EAGER)
     @JsonIgnore
-    private List<Master> masters;
+    private List<Master> masters = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
-    private List<Visit> visits;
+    private List<Visit> visits = new ArrayList<>();
+
 }

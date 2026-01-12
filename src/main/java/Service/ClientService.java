@@ -2,6 +2,7 @@ package Service;
 
 import DTO.ClientDTO;
 import DTO.request.CreateClientRequest;
+import DTO.request.DeleteClientsRequest;
 import DTO.request.UpdateClientRequest;
 import exception.BusinessException;
 import exception.ClientDataAccessException;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -73,14 +75,18 @@ public class ClientService {
 
             return result;
 
-        }catch (Exception e) {
+        } catch (BusinessException e) {
+            throw e;
+        } catch (Exception e) {
             log.error("Ошибка сохранения клиента", e);
             throw new ClientSaveException(e);
         }
     }
 
-    public void deleteMultipleClients(List<Integer> clientIds) {
+    public void deleteMultipleClients(DeleteClientsRequest  request) {
         Master master = getCurrentMaster();
+
+        List<Integer> clientIds = request.getClientIds();
 
         Iterable<Client> clientsIterable = clientRepository.findAllById(clientIds);
         List<Client> clientsToDelete = new ArrayList<>();
@@ -101,6 +107,7 @@ public class ClientService {
         detachClientsFromVisits(clientsToDelete);
 
         for (Client client : clientsToDelete) {
+            master.getClients().remove(client);
             client.getMasters().remove(master);
 
             if (client.getMasters().isEmpty()) {
@@ -168,7 +175,9 @@ public class ClientService {
 
     private void detachClientsFromVisits(List<Client> clientsToDelete) {
         for (Client client : clientsToDelete) {
-            List<Visit> clientVisits = visitRepository.findVisitsByClient(client).get();
+            List<Visit> clientVisits = visitRepository.findVisitsByClient(client)
+                            .orElse(Collections.emptyList());
+
             clientVisits.forEach(visit -> visit.setClient(null));
             visitRepository.saveAll(clientVisits);
         }
