@@ -19,6 +19,8 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.test.system.CapturedOutput;
+import org.springframework.boot.test.system.OutputCaptureExtension;
 import org.springframework.dao.DataAccessException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import ch.qos.logback.classic.Logger;
@@ -28,12 +30,12 @@ import ch.qos.logback.classic.Level;
 import java.util.*;
 import java.util.function.Consumer;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@ExtendWith(OutputCaptureExtension.class)
 public class ClientServiceTest {
 
     @Mock
@@ -238,7 +240,7 @@ public class ClientServiceTest {
     }
 
     /**
-     * Тест на удаление клиентов
+     * Тест на удаление нескольких клиентов
      */
     @Test
     void deleteMultipleClientsTest() {
@@ -298,6 +300,151 @@ public class ClientServiceTest {
     }
 
 
+
+    /**
+     * Тест на удаление нескольких клиентов не принадлежащих текущему мастеру.
+     *     Метод должен завершиться без ошибок.
+     *     В логе должно быть сообщение "Попытка удалить клиентов, не принадлежащих мастеру".
+     *     Клиенты не должны удаляться
+     */
+    @Test
+    void deleteMultipleClientsTest_NoClientsBelongToMaster(CapturedOutput capturedOutput) {
+        // Не добавлять клиентов мастеру
+        DeleteClientsRequest deleteClientsRequest = new DeleteClientsRequest();
+        deleteClientsRequest.setClientIds(List.of(0, 1, 2, 3, 4));
+
+        List<Client> clientsForRemove = getClients(5);
+
+        when(clientRepository.findAllById(deleteClientsRequest.getClientIds()))
+                .thenReturn(clientsForRemove);
+
+        clientService.deleteMultipleClients(deleteClientsRequest);
+
+        // Проверить warning log
+        assertThat(capturedOutput)
+                .contains("Попытка удалить клиентов, не принадлежащих мастеру")
+                .contains("WARN");
+
+        // Проверить что delete не вызывался
+        verify(clientRepository, never()).delete(any(Client.class));
+
+        // Проверить что методы в detachClientsFromVisits() не вызывались
+        verify(visitRepository, never()).findVisitsByClient(any(Client.class));
+        verify(visitRepository, never()).saveAll(anyList());
+
+        // Проверить что визиты привязаны к клиентам и наоборот.
+        clientsForRemove.forEach(client -> {
+            assertThat(client.getVisits())
+                    .isNotEmpty();
+
+            client.getVisits().forEach(visit -> {
+                assertThat(visit.getClient()).isEqualTo(client);
+            });
+        });
+    }
+
+    /**
+     * Тест на удаление нескольких клиентов, которые принадлежат нескольким мастерам, у текущего мастера.
+     * Клиент не должен удаляться полностью, а только у текущего мастера.
+     */
+    @Test
+    void deleteMultipleClientsTest_ClientHasMultipleMasters() {
+        withSecurityUtilsMock(testMaster -> {
+            DeleteClientsRequest deleteClientsRequest = new DeleteClientsRequest();
+            deleteClientsRequest.setClientIds(List.of(0, 1, 2, 3, 4));
+
+            List<Client> clientsForRemove = getClients(5);
+
+            // Создать второго мастера
+            Master testMaster2 = new Master();
+            testMaster2.setId(2);
+            testMaster2.setName("testMaster2");
+
+            // Добавить клиентам обоих мастеров и обоим мастерам всех клиентов
+            for (Client client : clientsForRemove) {
+                client.addMasters(testMaster, testMaster2);
+                testMaster.addClient(client);
+                testMaster2.addClient(client);
+            }
+
+            when(clientRepository.findAllById(deleteClientsRequest.getClientIds()))
+                    .thenReturn(clientsForRemove);
+
+            // Удалить клиентов у testMaster
+            clientService.deleteMultipleClients(deleteClientsRequest);
+
+            // Проверить что clientRepository.save() вызывался, а не delete()
+            verify(clientRepository, times(5)).save(any(Client.class));
+            verify(clientRepository, never()).delete(any(Client.class));
+
+            // Проверка, что messagingTemplate вызывался
+            verify(simpMessagingTemplate).convertAndSend(eq("/topic/clients.update"), any(Map.class));
+
+            // Проверить что клиенты остались у второго мастера и мастер у клиентов
+            clientsForRemove.forEach(client -> {
+                assertThat(testMaster2.getClients()).contains(client);
+                assertThat(client.getMasters()).contains(testMaster2);
+            });
+
+            //Проверить что клиенты удалены у текущего мастера
+            assertThat(testMaster.getClients()).isEmpty();
+
+            //Проверить что у клиентов нет текущего мастера
+            clientsForRemove.forEach(client -> {
+                assertThat(client.getMasters()).doesNotContain(testMaster);
+            });
+        });
+    }
+
+    /**
+     * Тест на удаление несуществующих клиентов
+     * Метод должен завершаться без ошибок
+     * В логе должно быть сообщение "Клиенты с указанными ID не найдены"
+     * Методы clientRepository.delete() и clientRepository.save() не должны вызываться
+     */
+    @Test
+    void deleteMultipleClientsTest_NonExistentIds(CapturedOutput capturedOutput) {
+        DeleteClientsRequest deleteClientsRequest = new DeleteClientsRequest();
+        deleteClientsRequest.setClientIds(List.of(0, 1, 2, 3, 4));
+
+        // findAllById вернет пустой список
+        when(clientRepository.findAllById(deleteClientsRequest.getClientIds()))
+                .thenReturn(Collections.emptyList());
+
+        clientService.deleteMultipleClients(deleteClientsRequest);
+
+        // Проверить warning log
+        assertThat(capturedOutput)
+                .contains("Клиенты с указанными ID не найдены")
+                .contains("WARN");
+
+        // Проверить что delete и save не вызывались
+        verify(clientRepository, never()).delete(any(Client.class));
+        verify(clientRepository, never()).save(any(Client.class));
+    }
+
+    // Тест на удаление клиентов с пустым списком ID
+    @Test
+    void deleteMultipleClientsTest_EmptyIdList() {
+        withSecurityUtilsMock(testMaster -> {
+            // Передать пустой список ID
+            DeleteClientsRequest deleteClientsRequest = new DeleteClientsRequest();
+            deleteClientsRequest.setClientIds(Collections.emptyList());
+
+            clientService.deleteMultipleClients(deleteClientsRequest);
+
+            // Проверить что метод завершается без ошибок
+            assertThatNoException();
+
+            // Проверить что в репозитории не было изменений
+            verify(clientRepository, never()).save(any());
+            verify(clientRepository, never()).delete(any());
+        });
+
+    }
+
+
+
     List<Client> getClients(int count){
         List<Client> result = new ArrayList<>();
         for (int i = 0; i < count; i++) {
@@ -318,13 +465,13 @@ public class ClientServiceTest {
      */
     private void withSecurityUtilsMock(Consumer<Master> testLogic){
         try(MockedStatic<SecurityUtils> securityUtilsMockedStatic = Mockito.mockStatic(SecurityUtils.class)) {
-            Master testMaster = new Master();
-            testMaster.setId(1);
-            testMaster.setName("testMaster");
+            Master testMaster1 = new Master();
+            testMaster1.setId(1);
+            testMaster1.setName("testMaster1");
 
-            securityUtilsMockedStatic.when(SecurityUtils::getCurrentMaster).thenReturn(testMaster);
+            securityUtilsMockedStatic.when(SecurityUtils::getCurrentMaster).thenReturn(testMaster1);
 
-            testLogic.accept(testMaster);
+            testLogic.accept(testMaster1);
         }
     }
 }

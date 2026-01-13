@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 @Getter // Геттеры для всех полей
@@ -37,4 +38,7 @@ public class Client {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     private List<Visit> visits = new ArrayList<>();
 
+    public void addMasters(Master... mastersToAdd) {
+        Collections.addAll(this.masters, mastersToAdd);
+    }
 }

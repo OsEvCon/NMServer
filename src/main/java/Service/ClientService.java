@@ -92,12 +92,17 @@ public class ClientService {
         List<Client> clientsToDelete = new ArrayList<>();
         clientsIterable.forEach(clientsToDelete::add);
 
+        if (clientsToDelete.isEmpty()) {
+            log.warn("Клиенты с указанными ID не найдены {}", clientIds);
+            return;
+        }
+
         clientsToDelete = clientsToDelete.stream()
                 .filter(client -> client.getMasters().contains(master))
                 .toList();
 
         if (clientsToDelete.isEmpty()) {
-            log.warn("Попытка удалить клиентов, не принадлежащих мастеру: {}", clientIds);
+            log.warn("Попытка удалить клиентов, не принадлежащих мастеру! IDs: {}", clientIds);
             return; // или бросить исключение
         }
 
