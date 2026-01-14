@@ -132,6 +132,7 @@ public class ClientService {
                 ));
     }
 
+    @Transactional
     public ClientDTO updateClient(Integer clientId, UpdateClientRequest request) {
         log.info("Обновление клиента ID: {} c данными {}", clientId, request);
 

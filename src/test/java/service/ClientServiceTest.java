@@ -3,11 +3,13 @@ package service;
 import DTO.ClientDTO;
 import DTO.request.CreateClientRequest;
 import DTO.request.DeleteClientsRequest;
+import DTO.request.UpdateClientRequest;
 import Service.ClientService;
 import Service.SecurityUtils;
 import exception.BusinessException;
 import exception.ClientDataAccessException;
 import exception.ClientSaveException;
+import exception.ResourceNotFoundException;
 import mapper.ClientMapper;
 import model.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -320,19 +322,19 @@ public class ClientServiceTest {
 
         clientService.deleteMultipleClients(deleteClientsRequest);
 
-        // Проверить warning log
+        // Проверка warning log
         assertThat(capturedOutput)
                 .contains("Попытка удалить клиентов, не принадлежащих мастеру")
                 .contains("WARN");
 
-        // Проверить что delete не вызывался
+        // Проверка, что delete не вызывался
         verify(clientRepository, never()).delete(any(Client.class));
 
-        // Проверить что методы в detachClientsFromVisits() не вызывались
+        // Проверка, что методы в detachClientsFromVisits() не вызывались
         verify(visitRepository, never()).findVisitsByClient(any(Client.class));
         verify(visitRepository, never()).saveAll(anyList());
 
-        // Проверить что визиты привязаны к клиентам и наоборот.
+        // Проверка, что визиты привязаны к клиентам и наоборот.
         clientsForRemove.forEach(client -> {
             assertThat(client.getVisits())
                     .isNotEmpty();
@@ -373,23 +375,23 @@ public class ClientServiceTest {
             // Удалить клиентов у testMaster
             clientService.deleteMultipleClients(deleteClientsRequest);
 
-            // Проверить что clientRepository.save() вызывался, а не delete()
+            // Проверка, что clientRepository.save() вызывался, а не delete()
             verify(clientRepository, times(5)).save(any(Client.class));
             verify(clientRepository, never()).delete(any(Client.class));
 
             // Проверка, что messagingTemplate вызывался
             verify(simpMessagingTemplate).convertAndSend(eq("/topic/clients.update"), any(Map.class));
 
-            // Проверить что клиенты остались у второго мастера и мастер у клиентов
+            // Проверка, что клиенты остались у второго мастера и мастер у клиентов
             clientsForRemove.forEach(client -> {
                 assertThat(testMaster2.getClients()).contains(client);
                 assertThat(client.getMasters()).contains(testMaster2);
             });
 
-            //Проверить что клиенты удалены у текущего мастера
+            //Проверка, что клиенты удалены у текущего мастера
             assertThat(testMaster.getClients()).isEmpty();
 
-            //Проверить что у клиентов нет текущего мастера
+            //Проверка, что у клиентов нет текущего мастера
             clientsForRemove.forEach(client -> {
                 assertThat(client.getMasters()).doesNotContain(testMaster);
             });
@@ -413,17 +415,21 @@ public class ClientServiceTest {
 
         clientService.deleteMultipleClients(deleteClientsRequest);
 
-        // Проверить warning log
+        // Проверка warning log
         assertThat(capturedOutput)
                 .contains("Клиенты с указанными ID не найдены")
                 .contains("WARN");
 
-        // Проверить что delete и save не вызывались
+        // Проверка, что delete и save не вызывались
         verify(clientRepository, never()).delete(any(Client.class));
         verify(clientRepository, never()).save(any(Client.class));
     }
 
-    // Тест на удаление клиентов с пустым списком ID
+    /**
+     * Тест на удаление клиентов с пустым списком ID
+     * Метод должен завершаться без ошибок
+     * В репозитории не должно происходить изменений
+     */
     @Test
     void deleteMultipleClientsTest_EmptyIdList() {
         withSecurityUtilsMock(testMaster -> {
@@ -433,18 +439,138 @@ public class ClientServiceTest {
 
             clientService.deleteMultipleClients(deleteClientsRequest);
 
-            // Проверить что метод завершается без ошибок
+            // Проверка, что метод завершается без ошибок
             assertThatNoException();
 
-            // Проверить что в репозитории не было изменений
+            // Проверка, что в репозитории не было изменений
             verify(clientRepository, never()).save(any());
             verify(clientRepository, never()).delete(any());
         });
 
     }
 
+    /**
+     * Тест на обновление клиента с корректными данными (happy path)
+     * Все поля должны обновляться корректно
+     * Метод должен возвращать DTO с новыми данными
+     * Должно отправляться корректное сообщение через websocket
+     */
+    @Test
+    void updateClientTest_HappyPath() {
+        withSecurityUtilsMock(testMaster -> {
+            //Создать клиента для обновления
+            Client clientForUpdate = getClients(1).get(0);
+            clientForUpdate.setMasters(new ArrayList<>(List.of(testMaster)));
 
+            //Создать запрос на обновление клиента
+            UpdateClientRequest updateClientRequest = new UpdateClientRequest();
+            updateClientRequest.setName("UpdatedTestClient0");
+            updateClientRequest.setPhoneNumber("+71234567890");
+            updateClientRequest.setEmail("testClient0@mail.ru");
+            Integer clientId = 0;
 
+            //Создать обновленного клиента
+            Client updatedClientFromRepo = Client.builder()
+                    .id(0)
+                    .name("UpdatedTestClient0")
+                    .phoneNumber("+71234567890")
+                    .email("testClient0@mail.ru")
+                    .masters(new  ArrayList<>(List.of(testMaster)))
+                    .build();
+
+            when(clientRepository.findByIdAndMastersContaining(0, testMaster))
+                    .thenReturn(Optional.of(clientForUpdate));
+
+            when(clientRepository.save(clientForUpdate))
+                    .thenReturn(updatedClientFromRepo);
+
+            when(clientMapper.toDTO(updatedClientFromRepo))
+                    .thenReturn(ClientDTO.builder()
+                            .id(updatedClientFromRepo.getId())
+                            .name(updatedClientFromRepo.getName())
+                            .phoneNumber(updatedClientFromRepo.getPhoneNumber())
+                            .email(updatedClientFromRepo.getEmail())
+                            .build());
+
+            ClientDTO updatedClientDTO = clientService.updateClient(clientId, updateClientRequest);
+
+            // Проверка, что messagingTemplate вызывался
+            verify(simpMessagingTemplate).convertAndSend(eq("/topic/clients.update"), any(Map.class));
+
+            // Проверка возвращаемого DTO
+            assertThat(updatedClientDTO.getName()).isEqualTo("UpdatedTestClient0");
+            assertThat(updatedClientDTO.getPhoneNumber()).isEqualTo("+71234567890");
+            assertThat(updatedClientDTO.getEmail()).isEqualTo("testClient0@mail.ru");
+        });
+    }
+
+    /**
+     * Тест на обновление клиента который не существует в БД
+     * Метод должен завершаться с ошибкой ResourceNotFoundException и сообщением.
+     */
+    @Test
+    void updateClientTest_CLientNotFound() {
+        withSecurityUtilsMock(testMaster -> {
+            //Создать запрос на обновление клиента
+            UpdateClientRequest updateClientRequest = new UpdateClientRequest();
+            Integer clientId = 1234;
+
+            when(clientRepository.findByIdAndMastersContaining(clientId, testMaster))
+                    .thenReturn(Optional.empty());
+
+            //Проверка, что метод падает с ошибкой и правильным сообщением
+            assertThatThrownBy(() -> clientService.updateClient(clientId, updateClientRequest))
+                    .isInstanceOf(ResourceNotFoundException.class)
+                    .hasMessageContaining(" не найден или не принадлежит вам");
+
+            //Проверка, что save() не вызывался
+            verify(clientRepository, never()).save(any(Client.class));
+
+            //Проверка, что сообщение не отправляется
+            verify(simpMessagingTemplate, never()).convertAndSend(anyString(), any(Map.class));
+        });
+    }
+
+    /**
+     * Тест на обновление клиента с номером телефона, который уже существует у другого клиента
+     * Метод должен завершаться с ошибкой BusinessException и сообщением
+     * Метод clientRepository.save() не должен вызываться
+     * Сообщение не должно отправляться
+     */
+    @Test
+    void updateClientTest_DublicatePhoneNumber() {
+        withSecurityUtilsMock(testMaster -> {
+            //Создать запрос на обновление клиента
+            UpdateClientRequest updateClientRequest = new UpdateClientRequest();
+            updateClientRequest.setPhoneNumber("+71234567890");
+            Integer clientId = 1234;
+
+            when(clientRepository.findByIdAndMastersContaining(clientId, testMaster))
+                    .thenReturn(Optional.of(Client.builder()
+                            .id(1234)
+                            .phoneNumber("+71234567891")
+                            .build()));
+
+            when(clientRepository.existsByMastersAndPhoneNumberExcludingId(testMaster, updateClientRequest.getPhoneNumber(), clientId))
+                    .thenReturn(true);
+
+            //Проверка, что метод завершается с BusinessException и сообщением
+            assertThatThrownBy(() -> clientService.updateClient(clientId, updateClientRequest))
+                    .isInstanceOf(BusinessException.class)
+                    .hasMessageContaining("У вас уже есть клиент с телефоном: ");
+
+            //Проверка, что save() не вызывался
+            verify(clientRepository, never()).save(any(Client.class));
+
+            //Проверка, что сообщение не отправляется
+            verify(simpMessagingTemplate, never()).convertAndSend(anyString(), any(Map.class));
+        });
+    }
+
+    /**
+     * Метод для создания тестовых клиентов
+     * @param count - количество клиентов
+     */
     List<Client> getClients(int count){
         List<Client> result = new ArrayList<>();
         for (int i = 0; i < count; i++) {

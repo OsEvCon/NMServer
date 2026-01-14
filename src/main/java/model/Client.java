@@ -10,9 +10,13 @@ import java.util.Objects;
 @Getter // Геттеры для всех полей
 @Setter // Сеттеры для всех не-final полей
 @EqualsAndHashCode(onlyExplicitlyIncluded = true) // equals/hashCode ТОЛЬКО для включенных полей
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "client")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

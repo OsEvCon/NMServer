@@ -24,7 +24,7 @@ public interface ClientRepository extends CrudRepository<Client, Integer> {
     boolean existsByMastersContainingAndPhoneNumber(Master master, String phoneNumber);
 
     /**
-     * Метод для проверки есть ли у данного master клиента с phoneNumber исключая клиента с excludeId
+     * Метод для проверки есть ли у данного master клиент с phoneNumber исключая клиента с excludeId
      */
     @Query("SELECT COUNT(c) > 0 FROM Client c " +
             "JOIN c.masters m " +

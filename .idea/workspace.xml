@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="- Добавлен тест на удаление нескольких клиентов">
+    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="- Добавлены тесты для метода ClientService.deleteMultipleClients">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Service/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Service/ClientService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/ClientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/ClientRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/service/ClientServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/service/ClientServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -89,6 +90,10 @@
     "JUnit.ClientServiceTest.getClientsTestWithEmptyClientList.executor": "Run",
     "JUnit.ClientServiceTest.getClientsTestWithOneClient.executor": "Run",
     "JUnit.ClientServiceTest.getClientsTestWithRepositoryError.executor": "Run",
+    "JUnit.ClientServiceTest.updateClientTest_CLientNotFound.executor": "Run",
+    "JUnit.ClientServiceTest.updateClientTest_DublicatePhoneNumber.executor": "Run",
+    "JUnit.ClientServiceTest.updateClientTest_HappyPath.executor": "Run",
+    "JUnit.ClientServiceTest.updateClient_WhenFieldIsNull_ShouldNotUpdateField.executor": "Debug",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -154,7 +159,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ClientServiceTest.deleteMultipleClientsTest_ClientHasMultipleMasters" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ClientServiceTest.updateClientTest_CLientNotFound" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TestServer" />
       <extension name="coverage">
         <pattern>
@@ -164,13 +169,13 @@
       </extension>
       <option name="PACKAGE_NAME" value="service" />
       <option name="MAIN_CLASS_NAME" value="service.ClientServiceTest" />
-      <option name="METHOD_NAME" value="deleteMultipleClientsTest_ClientHasMultipleMasters" />
+      <option name="METHOD_NAME" value="updateClientTest_CLientNotFound" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ClientServiceTest.deleteMultipleClientsTest_EmptyIdList" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ClientServiceTest.updateClientTest_DublicatePhoneNumber" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TestServer" />
       <extension name="coverage">
         <pattern>
@@ -180,13 +185,13 @@
       </extension>
       <option name="PACKAGE_NAME" value="service" />
       <option name="MAIN_CLASS_NAME" value="service.ClientServiceTest" />
-      <option name="METHOD_NAME" value="deleteMultipleClientsTest_EmptyIdList" />
+      <option name="METHOD_NAME" value="updateClientTest_DublicatePhoneNumber" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ClientServiceTest.deleteMultipleClientsTest_NoClientsBelongToMaster" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ClientServiceTest.updateClientTest_HappyPath" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TestServer" />
       <extension name="coverage">
         <pattern>
@@ -196,13 +201,13 @@
       </extension>
       <option name="PACKAGE_NAME" value="service" />
       <option name="MAIN_CLASS_NAME" value="service.ClientServiceTest" />
-      <option name="METHOD_NAME" value="deleteMultipleClientsTest_NoClientsBelongToMaster(org.springframework.boot.test.system.CapturedOutput)" />
+      <option name="METHOD_NAME" value="updateClientTest_HappyPath" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ClientServiceTest.deleteMultipleClientsTest_NonExistentIds" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ClientServiceTest.updateClient_WhenFieldIsNull_ShouldNotUpdateField" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TestServer" />
       <extension name="coverage">
         <pattern>
@@ -212,7 +217,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="service" />
       <option name="MAIN_CLASS_NAME" value="service.ClientServiceTest" />
-      <option name="METHOD_NAME" value="deleteMultipleClientsTest_NonExistentIds(org.springframework.boot.test.system.CapturedOutput)" />
+      <option name="METHOD_NAME" value="updateClient_WhenFieldIsNull_ShouldNotUpdateField" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -221,10 +226,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.ClientServiceTest" />
-        <item itemvalue="JUnit.ClientServiceTest.deleteMultipleClientsTest_EmptyIdList" />
-        <item itemvalue="JUnit.ClientServiceTest.deleteMultipleClientsTest_NonExistentIds" />
-        <item itemvalue="JUnit.ClientServiceTest.deleteMultipleClientsTest_ClientHasMultipleMasters" />
-        <item itemvalue="JUnit.ClientServiceTest.deleteMultipleClientsTest_NoClientsBelongToMaster" />
+        <item itemvalue="JUnit.ClientServiceTest.updateClient_WhenFieldIsNull_ShouldNotUpdateField" />
+        <item itemvalue="JUnit.ClientServiceTest.updateClientTest_DublicatePhoneNumber" />
+        <item itemvalue="JUnit.ClientServiceTest.updateClientTest_CLientNotFound" />
+        <item itemvalue="JUnit.ClientServiceTest.updateClientTest_HappyPath" />
       </list>
     </recent_temporary>
   </component>
@@ -439,7 +444,8 @@
       <workItem from="1765711690580" duration="5613000" />
       <workItem from="1767344803923" duration="5311000" />
       <workItem from="1768223652337" duration="11526000" />
-      <workItem from="1768301434114" duration="11520000" />
+      <workItem from="1768301434114" duration="11820000" />
+      <workItem from="1768383662263" duration="15044000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>
@@ -644,7 +650,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768235618211</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="- Добавлены тесты для метода ClientService.deleteMultipleClients">
+      <option name="closed" value="true" />
+      <created>1768314927146</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1768314927146</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -674,7 +688,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Добавил поле PhoneNumber в Client" />
     <MESSAGE value="Добавил классы VisitDay и VisitTime вместо Visit." />
     <MESSAGE value="Реализовал обработку запроса на добавление расписания" />
     <MESSAGE value="Добавил VIsitDay и VisitTime" />
@@ -699,7 +712,8 @@
     <MESSAGE value="- Добавлен тест на создание и сохранение клиента createClientTest() в ClientServiceTest" />
     <MESSAGE value="- Добавлен тест на сохранение клиента с уже существующим номером телефона createClientWithDuplicatePhoneNumberTest() в ClientServiceTest&#10;&#10;- Добавлен тест на обработку ошибки БД при сохранении клиента&#10;createClientWithRepositoryError() в ClientServiceTest" />
     <MESSAGE value="- Добавлен тест на удаление нескольких клиентов" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Добавлен тест на удаление нескольких клиентов" />
+    <MESSAGE value="- Добавлены тесты для метода ClientService.deleteMultipleClients" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Добавлены тесты для метода ClientService.deleteMultipleClients" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
