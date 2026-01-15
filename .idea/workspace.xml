@@ -4,12 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="- Добавлены тесты для метода ClientService.deleteMultipleClients">
+    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="- Добавлены тесты для метода ClientService.updateClient">
+      <change afterPath="$PROJECT_DIR$/src/main/java/DTO/request/LoginRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DTO/response/AuthResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DTO/response/ErrorResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Service/AuthService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/exception/AuthException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/service/AuthServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/RefreshRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/request/RefreshRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/request/CreateClientRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/request/CreateClientRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Service/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Service/ClientService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/ClientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/ClientRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/service/ClientServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/service/ClientServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exception/BusinessException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/exception/BusinessException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exception/ClientDataAccessException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/exception/ClientDataAccessException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exception/ClientSaveException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/exception/ClientSaveException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exception/ResourceNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/exception/ResourceNotFoundException.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,9 +87,11 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "JUnit.AuthServiceTest.loginTest_ValidCredentials.executor": "Run",
     "JUnit.ClientServiceTest.createClientTest.executor": "Run",
     "JUnit.ClientServiceTest.createClientWithDuplicatePhoneNumberTest.executor": "Run",
     "JUnit.ClientServiceTest.createClientWithRepositoryError.executor": "Run",
+    "JUnit.ClientServiceTest.createClientWithRepositoryErrorTest.executor": "Run",
     "JUnit.ClientServiceTest.deleteMultipleClientsTest.executor": "Run",
     "JUnit.ClientServiceTest.deleteMultipleClientsTest_ClientHasMultipleMasters.executor": "Run",
     "JUnit.ClientServiceTest.deleteMultipleClientsTest_EmptyIdList.executor": "Run",
@@ -133,17 +146,33 @@
       <recent name="G:\Моя Java\TestServer\src\main\java\dao" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="DTO.request" />
       <recent name="DTO" />
       <recent name="controllers" />
       <recent name="model" />
       <recent name="Service" />
-      <recent name="Test" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="model" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ClientServiceTest">
+  <component name="RunManager" selected="JUnit.AuthServiceTest.loginTest_ValidCredentials">
+    <configuration name="AuthServiceTest.loginTest_ValidCredentials" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TestServer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="service" />
+      <option name="MAIN_CLASS_NAME" value="service.AuthServiceTest" />
+      <option name="METHOD_NAME" value="loginTest_ValidCredentials" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ClientServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TestServer" />
       <extension name="coverage">
@@ -159,7 +188,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ClientServiceTest.updateClientTest_CLientNotFound" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ClientServiceTest.createClientWithRepositoryErrorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TestServer" />
       <extension name="coverage">
         <pattern>
@@ -169,7 +198,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="service" />
       <option name="MAIN_CLASS_NAME" value="service.ClientServiceTest" />
-      <option name="METHOD_NAME" value="updateClientTest_CLientNotFound" />
+      <option name="METHOD_NAME" value="createClientWithRepositoryErrorTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -186,22 +215,6 @@
       <option name="PACKAGE_NAME" value="service" />
       <option name="MAIN_CLASS_NAME" value="service.ClientServiceTest" />
       <option name="METHOD_NAME" value="updateClientTest_DublicatePhoneNumber" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ClientServiceTest.updateClientTest_HappyPath" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="TestServer" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.ClientServiceTest" />
-      <option name="METHOD_NAME" value="updateClientTest_HappyPath" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -225,11 +238,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.AuthServiceTest.loginTest_ValidCredentials" />
+        <item itemvalue="JUnit.ClientServiceTest.createClientWithRepositoryErrorTest" />
         <item itemvalue="JUnit.ClientServiceTest" />
         <item itemvalue="JUnit.ClientServiceTest.updateClient_WhenFieldIsNull_ShouldNotUpdateField" />
         <item itemvalue="JUnit.ClientServiceTest.updateClientTest_DublicatePhoneNumber" />
-        <item itemvalue="JUnit.ClientServiceTest.updateClientTest_CLientNotFound" />
-        <item itemvalue="JUnit.ClientServiceTest.updateClientTest_HappyPath" />
       </list>
     </recent_temporary>
   </component>
@@ -445,7 +458,8 @@
       <workItem from="1767344803923" duration="5311000" />
       <workItem from="1768223652337" duration="11526000" />
       <workItem from="1768301434114" duration="11820000" />
-      <workItem from="1768383662263" duration="15044000" />
+      <workItem from="1768383662263" duration="15178000" />
+      <workItem from="1768456566944" duration="20549000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>
@@ -658,7 +672,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768314927146</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="- Добавлены тесты для метода ClientService.updateClient">
+      <option name="closed" value="true" />
+      <created>1768399575845</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1768399575845</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -688,7 +710,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Добавил классы VisitDay и VisitTime вместо Visit." />
     <MESSAGE value="Реализовал обработку запроса на добавление расписания" />
     <MESSAGE value="Добавил VIsitDay и VisitTime" />
     <MESSAGE value="Добавил List&lt;VisitDay&gt; visitDays; Изменил Visit; Добавил client в VisitDay" />
@@ -713,7 +734,8 @@
     <MESSAGE value="- Добавлен тест на сохранение клиента с уже существующим номером телефона createClientWithDuplicatePhoneNumberTest() в ClientServiceTest&#10;&#10;- Добавлен тест на обработку ошибки БД при сохранении клиента&#10;createClientWithRepositoryError() в ClientServiceTest" />
     <MESSAGE value="- Добавлен тест на удаление нескольких клиентов" />
     <MESSAGE value="- Добавлены тесты для метода ClientService.deleteMultipleClients" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Добавлены тесты для метода ClientService.deleteMultipleClients" />
+    <MESSAGE value="- Добавлены тесты для метода ClientService.updateClient" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Добавлены тесты для метода ClientService.updateClient" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

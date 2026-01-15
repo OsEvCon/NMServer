@@ -1,13 +1,8 @@
 package exception;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
 /**
  * Исключение при ошибке сохранения клиента
- * Автоматически мапится на HTTP 503 Service Unavailable
  */
-@ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
 public class ClientSaveException extends RuntimeException{
 
     public ClientSaveException(String message){

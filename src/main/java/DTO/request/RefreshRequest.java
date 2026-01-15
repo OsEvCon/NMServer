@@ -1,4 +1,4 @@
-package DTO;
+package DTO.request;
 
 public class RefreshRequest {
     private String refreshToken;

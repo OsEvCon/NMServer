@@ -1,11 +1,15 @@
 package controllers;
 
-import DTO.RefreshRequest;
+import DTO.request.LoginRequest;
+import DTO.request.RefreshRequest;
+import DTO.response.AuthResponse;
+import Service.AuthService;
 import Service.CustomUserDetailsService;
 import Service.JwtUtil;
 import Service.SecretKeyGenerator;
-import com.mysql.cj.util.StringUtils;
+import exception.AuthException;
 import jakarta.annotation.security.PermitAll;
+import lombok.extern.slf4j.Slf4j;
 import model.Master;
 import model.MasterRepository;
 import model.RoleRepository;
@@ -15,19 +19,17 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.crypto.SecretKey;
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@Slf4j
 @RestController()
 @RequestMapping("/auth")
 public class AuthController {
@@ -49,6 +51,9 @@ public class AuthController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    AuthService authService;
+
     @Value("${app.current.version}")
     private String currentVersion;
 
@@ -60,10 +65,16 @@ public class AuthController {
 
     @PermitAll
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Map<String, String> user){
-        System.out.println("запрос login");
+    public ResponseEntity<?> login(@RequestBody @Valid LoginRequest loginRequest) {
+        log.debug("Запрос login пользователя с email : {}",  loginRequest.getUserEmail());
+
+            AuthResponse authResponse = authService.login(loginRequest);
+            return ResponseEntity.ok(authResponse);
+
+        /*
         String userEmail = user.get("email");
         String password = user.get("password");
+
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userEmail, password)
@@ -92,13 +103,14 @@ public class AuthController {
             System.out.println("login error " + e.getMessage());
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("AuthError");
-        }
+        }*/
     }
 
     @PostMapping("/refresh")
     public ResponseEntity<?> refresh(@RequestBody RefreshRequest request) {
         String refreshToken = request.getRefreshToken();
-        System.out.println("Запрос на refreshToken ");
+        log.debug("запрос на refreshToken от пользователя : {}", jwtUtil.extractUserEmail(refreshToken));
+
         if (jwtUtil.validateToken(refreshToken)) {
             String username = jwtUtil.extractUserEmail(refreshToken);
             String newAccessToken = jwtUtil.generateAccessToken(username);
@@ -109,6 +121,7 @@ public class AuthController {
             return ResponseEntity.ok(response);
         } else {
             System.out.println("Запрос на refreshToken не прошел");
+            log.debug("запрос на refreshToken от пользователя ");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid refresh token");
         }
     }

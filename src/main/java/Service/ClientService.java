@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import mapper.ClientMapper;
 import model.*;
+import org.springframework.dao.DataAccessException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +33,7 @@ public class ClientService {
     private final SimpMessagingTemplate messagingTemplate;
     private final ClientMapper clientMapper;
 
+    @Transactional(readOnly = true)
     public List<ClientDTO> getClientsForCurrentMaster() {
         log.info("Получение списка клиентов для текущего мастера");
 
@@ -48,10 +50,11 @@ public class ClientService {
 
     }
 
+    @Transactional
     public ClientDTO createClient(CreateClientRequest request) {
         log.debug("Создание клиента из запроса: {}", request);
 
-        try {
+
             Master master = getCurrentMaster();
 
             boolean phoneExists = clientRepository.existsByMastersContainingAndPhoneNumber(
@@ -63,26 +66,24 @@ public class ClientService {
             }
 
             Client client = clientMapper.toClient(request, master);
-            Client savedClient = clientRepository.save(client);
 
-            ClientDTO result = clientMapper.toDTO(savedClient);
+            try {
+                Client savedClient = clientRepository.save(client);
+                ClientDTO result = clientMapper.toDTO(savedClient);
 
-            messagingTemplate.convertAndSend("/topic/clients.update",
-                    Map.of(
-                            "type", "CREATED",
-                            "client", result
-                    ));
+                messagingTemplate.convertAndSend("/topic/clients.update",
+                        Map.of(
+                                "type", "CREATED",
+                                "client", result
+                        ));
 
-            return result;
-
-        } catch (BusinessException e) {
-            throw e;
-        } catch (Exception e) {
-            log.error("Ошибка сохранения клиента", e);
-            throw new ClientSaveException(e);
-        }
+                return result;
+            } catch (DataAccessException e) {
+                throw new ClientSaveException("Не удалось сохранить клиента",e);
+            }
     }
 
+    @Transactional
     public void deleteMultipleClients(DeleteClientsRequest  request) {
         Master master = getCurrentMaster();
 
