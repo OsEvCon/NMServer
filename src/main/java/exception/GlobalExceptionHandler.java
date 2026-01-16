@@ -107,7 +107,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ErrorResponse> handleBadCredentials(BadCredentialsException e) {
-        log.warn("Invalid login attempt");
+        log.warn("Invalid email or password");
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(new ErrorResponse("INVALID_CREDENTIALS", "Неверный email или пароль"));
     }

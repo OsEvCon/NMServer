@@ -1,7 +1,9 @@
 package Service;
 
 import DTO.request.LoginRequest;
+import DTO.request.RegisterRequest;
 import DTO.response.AuthResponse;
+import DTO.response.RegisterResponse;
 import exception.AuthException;
 import exception.BusinessException;
 import exception.ResourceNotFoundException;
@@ -46,9 +48,6 @@ public class AuthService {
                     new UsernamePasswordAuthenticationToken(userEmail, password)
             );
 
-            // Устанавливаем новый Authentication в SecurityContext
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-
             // Получаем текущий userDetails
             final UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
 
@@ -60,11 +59,14 @@ public class AuthService {
                 throw new BusinessException("У мастера с ID: %s отсутствует secret key".formatted(master.getId()));
             }
 
-            log.debug("Успешный вход пользователя {}", userEmail);
-
             //Формируем токены
             String accessToken = jwtUtil.generateAccessToken(userDetails.getUsername());
             String refreshToken = jwtUtil.generateRefreshToken(userDetails.getUsername());
+
+        log.debug("Успешный вход пользователя {}", userEmail);
+
+        // Устанавливаем новый Authentication в SecurityContext
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
             // Формируем ответ
             return AuthResponse.builder()
@@ -72,5 +74,9 @@ public class AuthService {
                     .refreshToken(refreshToken)
                     .secretKey(master.getSecretKey())
                     .build();
+    }
+
+    public RegisterResponse registerUser(RegisterRequest registerRequest) {
+        return null;
     }
 }

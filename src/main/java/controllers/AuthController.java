@@ -2,7 +2,9 @@ package controllers;
 
 import DTO.request.LoginRequest;
 import DTO.request.RefreshRequest;
+import DTO.request.RegisterRequest;
 import DTO.response.AuthResponse;
+import DTO.response.RegisterResponse;
 import Service.AuthService;
 import Service.CustomUserDetailsService;
 import Service.JwtUtil;
@@ -65,45 +67,10 @@ public class AuthController {
 
     @PermitAll
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody @Valid LoginRequest loginRequest) {
+    public ResponseEntity<AuthResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
         log.debug("Запрос login пользователя с email : {}",  loginRequest.getUserEmail());
-
             AuthResponse authResponse = authService.login(loginRequest);
             return ResponseEntity.ok(authResponse);
-
-        /*
-        String userEmail = user.get("email");
-        String password = user.get("password");
-
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(userEmail, password)
-            );
-            System.out.println("Before setting: " + SecurityContextHolder.getContext().getAuthentication());
-
-            // Устанавливаем новый Authentication в SecurityContext
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-
-            System.out.println("After setting: " + SecurityContextHolder.getContext().getAuthentication());
-
-            final UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
-            Master master = masterRepository.findByEmail(userEmail).get();
-            System.out.println("успешный вход " + userDetails.getUsername());
-
-            String accessToken = jwtUtil.generateAccessToken(userDetails.getUsername());
-            String refreshToken = jwtUtil.generateRefreshToken(userDetails.getUsername());
-
-            Map<String, String> tokensAndSK = new HashMap<>();
-            tokensAndSK.put("accessToken", accessToken);
-            tokensAndSK.put("refreshToken", refreshToken);
-            tokensAndSK.put("secretKey", master.getSecretKey());
-
-            return ResponseEntity.ok(tokensAndSK);
-        } catch (Exception e) {
-            System.out.println("login error " + e.getMessage());
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("AuthError");
-        }*/
     }
 
     @PostMapping("/refresh")
@@ -126,14 +93,21 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/pingServer")
+    @GetMapping("/health")
     public ResponseEntity<Void> healthCheck() {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/registerUser")
-    public ResponseEntity<String> registerUser(@RequestBody Map<String, String> user) {
-        try {
+    @PostMapping("/register")
+    public ResponseEntity<RegisterResponse> registerUser(@RequestBody @Valid RegisterRequest registerRequest) {
+        log.debug("Запрос регистрации от пользователя с email: {}", registerRequest.getEmail());
+
+        RegisterResponse registerResponse = authService.registerUser(registerRequest);
+
+        log.debug("Пользователь с email : {} зарегистрирован", registerRequest.getEmail());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(registerResponse);
+        /*try {
             System.out.println("запрос registerUser");
             String name = user.get("name");
             String email = user.get("email");
@@ -161,10 +135,10 @@ public class AuthController {
             // Обработка других исключений
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Registration failed: " + e.getMessage());
-        }
+        }*/
     }
 
-    @PostMapping("/checkUpdate")
+    @GetMapping("/checkUpdate")
     public ResponseEntity<UpdateResponse> checkUpdate(@RequestParam("version") String clientVersion){
 
         boolean updateNeeded = compareVersions(clientVersion, currentVersion);
