@@ -1,8 +1,8 @@
 package model;
 
 
-import Service.CustomUserDetailsService;
-import Service.JwtRequestFilter;
+import service.CustomUserDetailsService;
+import service.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

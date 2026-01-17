@@ -1,7 +1,7 @@
 package controllers;
 
 import DTO.VisitDTO;
-import Service.SecurityUtils;
+import service.SecurityUtils;
 import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

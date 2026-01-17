@@ -5,14 +5,11 @@ import DTO.request.RefreshRequest;
 import DTO.request.RegisterRequest;
 import DTO.response.AuthResponse;
 import DTO.response.RegisterResponse;
-import Service.AuthService;
-import Service.CustomUserDetailsService;
-import Service.JwtUtil;
-import Service.SecretKeyGenerator;
-import exception.AuthException;
+import service.AuthService;
+import service.CustomUserDetailsService;
+import service.JwtUtil;
 import jakarta.annotation.security.PermitAll;
 import lombok.extern.slf4j.Slf4j;
-import model.Master;
 import model.MasterRepository;
 import model.RoleRepository;
 import model.UpdateResponse;
@@ -25,11 +22,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.crypto.SecretKey;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @Slf4j
 @RestController()
@@ -107,35 +102,6 @@ public class AuthController {
         log.debug("Пользователь с email : {} зарегистрирован", registerRequest.getEmail());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(registerResponse);
-        /*try {
-            System.out.println("запрос registerUser");
-            String name = user.get("name");
-            String email = user.get("email");
-            String password = passwordEncoder.encode(user.get("password"));
-
-            Optional<Master> optionalMaster = masterRepository.findByEmail(email);
-            if (optionalMaster.isPresent()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email already exists");
-            } else {
-                SecretKey secretKey = SecretKeyGenerator.generateKeyFromEmail(email, salt);
-                String stringKey = SecretKeyGenerator.keyToString(secretKey);
-                Master master = new Master();
-                master.setName(name);
-                master.setEmail(email);
-                master.setPassword(password);
-                master.setSecretKey(stringKey);
-                master.getRoles().add(roleRepository.findByName("ROLE_USER").get());
-                masterRepository.save(master);
-
-                // Возвращаем stringKey в теле ответа
-                return ResponseEntity.status(HttpStatus.CREATED).body(stringKey);
-            }
-
-        } catch (Exception e) {
-            // Обработка других исключений
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Registration failed: " + e.getMessage());
-        }*/
     }
 
     @GetMapping("/checkUpdate")

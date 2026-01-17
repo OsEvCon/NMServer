@@ -1,11 +1,11 @@
-package service;
+package serviceTest;
 
 import DTO.ClientDTO;
 import DTO.request.CreateClientRequest;
 import DTO.request.DeleteClientsRequest;
 import DTO.request.UpdateClientRequest;
-import Service.ClientService;
-import Service.SecurityUtils;
+import service.ClientService;
+import service.SecurityUtils;
 import exception.BusinessException;
 import exception.ClientDataAccessException;
 import exception.ClientSaveException;

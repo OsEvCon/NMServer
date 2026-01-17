@@ -1,6 +1,6 @@
 package controllers;
 
-import Service.SecurityUtils;
+import service.SecurityUtils;
 import model.Master;
 import model.MasterRepository;
 import model.Procedure;

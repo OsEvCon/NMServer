@@ -1,4 +1,4 @@
-package Service;
+package service;
 
 import DTO.ClientDTO;
 import DTO.request.CreateClientRequest;

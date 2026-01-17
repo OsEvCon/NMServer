@@ -4,15 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="- Создан класс AuthService для переноса логики из AuthController.&#10;&#10;- Создан GlobalExceptionHandler для глобальной обработки ошибок.&#10;&#10;- Создан AuthServiceTest для тестирования методов класса AuthService">
-      <change afterPath="$PROJECT_DIR$/src/main/java/DTO/request/RegisterRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/DTO/response/RegisterResponse.java" afterDir="false" />
+    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="- Добавлены тесты для AuthService.login&#10;&#10;- Добавлены классы RegisterRequest и RegisterResponse&#10;&#10;- Начат перенос логики регистрации пользователя из AuthController в AuthService">
+      <change afterPath="$PROJECT_DIR$/src/test/java/serviceTest/AuthServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/request/LoginRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/request/LoginRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Service/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Service/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/ClientService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Service/CustomUserDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/CustomUserDetailsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Service/DataInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/DataInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Service/JwtRequestFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/JwtRequestFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Service/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/JwtUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Service/SecretKeyGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/SecretKeyGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Service/SecurityUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/SecurityUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/exception/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/service/AuthServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/service/AuthServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/ClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/ProcedureController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/ProcedureController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/VisitController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/VisitController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/MySpringBootApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/MySpringBootApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/service/AuthServiceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/service/ClientServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/serviceTest/ClientServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,6 +89,8 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "JUnit.AuthServiceTest$Login.executor": "Run",
+    "JUnit.AuthServiceTest$Register.registerTest_ValidCredentials.executor": "Run",
     "JUnit.AuthServiceTest.executor": "Run",
     "JUnit.AuthServiceTest.loginTest_AuthFails.executor": "Run",
     "JUnit.AuthServiceTest.loginTest_DBError.executor": "Run",
@@ -155,34 +167,34 @@
       <recent name="model" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.AuthServiceTest">
-    <configuration name="AuthServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.AuthServiceTest$Register.registerTest_ValidCredentials">
+    <configuration name="AuthServiceTest$Register.registerTest_ValidCredentials" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TestServer" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="service.*" />
+          <option name="PATTERN" value="serviceTest.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.AuthServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="PACKAGE_NAME" value="serviceTest.AuthServiceTest" />
+      <option name="MAIN_CLASS_NAME" value="serviceTest.AuthServiceTest$Register" />
+      <option name="METHOD_NAME" value="registerTest_ValidCredentials" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AuthServiceTest.loginTest_DBError" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="AuthServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TestServer" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="service.*" />
+          <option name="PATTERN" value="serviceTest.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.AuthServiceTest" />
-      <option name="METHOD_NAME" value="loginTest_DBError" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="MAIN_CLASS_NAME" value="serviceTest.AuthServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -191,45 +203,59 @@
       <module name="TestServer" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="service.*" />
+          <option name="PATTERN" value="serviceTest.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.AuthServiceTest" />
+      <option name="MAIN_CLASS_NAME" value="serviceTest.AuthServiceTest" />
       <option name="METHOD_NAME" value="loginTest_EmptyLoginRequest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AuthServiceTest.loginTest_JwtError (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ClientServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TestServer" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="service.*" />
+          <option name="PATTERN" value="serviceTest.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.AuthServiceTest" />
-      <option name="METHOD_NAME" value="loginTest_JwtError(io.jsonwebtoken.JwtException)" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="MAIN_CLASS_NAME" value="serviceTest.ClientServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AuthServiceTest.loginTest_JwtError" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Login" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TestServer" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="service.*" />
+          <option name="PATTERN" value="serviceTest.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.AuthServiceTest" />
-      <option name="METHOD_NAME" value="loginTest_JwtError(java.lang.Class)" />
+      <option name="PACKAGE_NAME" value="service.AuthServiceTest" />
+      <option name="MAIN_CLASS_NAME" value="serviceTest.AuthServiceTest.Login" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Register.registerTest_ValidCredentials" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TestServer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="serviceTest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="service.AuthServiceTest" />
+      <option name="MAIN_CLASS_NAME" value="serviceTest.AuthServiceTest.Register" />
+      <option name="METHOD_NAME" value="registerTest_ValidCredentials" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -237,11 +263,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.AuthServiceTest$Register.registerTest_ValidCredentials" />
         <item itemvalue="JUnit.AuthServiceTest" />
-        <item itemvalue="JUnit.AuthServiceTest.loginTest_EmptyLoginRequest" />
-        <item itemvalue="JUnit.AuthServiceTest.loginTest_JwtError (1)" />
-        <item itemvalue="JUnit.AuthServiceTest.loginTest_JwtError" />
-        <item itemvalue="JUnit.AuthServiceTest.loginTest_DBError" />
+        <item itemvalue="JUnit.AuthServiceTest$Register.registerTest_ValidCredentials" />
+        <item itemvalue="JUnit.ClientServiceTest" />
+        <item itemvalue="JUnit.AuthServiceTest$Login" />
       </list>
     </recent_temporary>
   </component>
@@ -261,6 +287,9 @@
   <component name="SpringBeansView">
     <option name="showImplicitBeans" value="false" />
     <option name="beanDetailsProportion" value="0.3" />
+  </component>
+  <component name="StructureViewState">
+    <option name="selectedTab" value="Logical" />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -460,7 +489,8 @@
       <workItem from="1768383662263" duration="15178000" />
       <workItem from="1768456566944" duration="21193000" />
       <workItem from="1768489192357" duration="4840000" />
-      <workItem from="1768540392237" duration="16745000" />
+      <workItem from="1768540392237" duration="16963000" />
+      <workItem from="1768646972736" duration="15272000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>
@@ -689,7 +719,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768478162864</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="- Добавлены тесты для AuthService.login&#10;&#10;- Добавлены классы RegisterRequest и RegisterResponse&#10;&#10;- Начат перенос логики регистрации пользователя из AuthController в AuthService">
+      <option name="closed" value="true" />
+      <created>1768568084630</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1768568084630</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -719,7 +757,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Добавил VIsitDay и VisitTime" />
     <MESSAGE value="Добавил List&lt;VisitDay&gt; visitDays; Изменил Visit; Добавил client в VisitDay" />
     <MESSAGE value="Удалил Schedule.java, ScheduleRepository.java и сделал необходимые изменения" />
     <MESSAGE value="Исправил сериализацию и десериализацию Client и Visit.I fixed the serialization and deserialization of Client and Visit." />
@@ -744,7 +781,8 @@
     <MESSAGE value="- Добавлены тесты для метода ClientService.deleteMultipleClients" />
     <MESSAGE value="- Добавлены тесты для метода ClientService.updateClient" />
     <MESSAGE value="- Создан класс AuthService для переноса логики из AuthController.&#10;&#10;- Создан GlobalExceptionHandler для глобальной обработки ошибок.&#10;&#10;- Создан AuthServiceTest для тестирования методов класса AuthService" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Создан класс AuthService для переноса логики из AuthController.&#10;&#10;- Создан GlobalExceptionHandler для глобальной обработки ошибок.&#10;&#10;- Создан AuthServiceTest для тестирования методов класса AuthService" />
+    <MESSAGE value="- Добавлены тесты для AuthService.login&#10;&#10;- Добавлены классы RegisterRequest и RegisterResponse&#10;&#10;- Начат перенос логики регистрации пользователя из AuthController в AuthService" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Добавлены тесты для AuthService.login&#10;&#10;- Добавлены классы RegisterRequest и RegisterResponse&#10;&#10;- Начат перенос логики регистрации пользователя из AuthController в AuthService" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -758,7 +796,7 @@
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Service/JwtRequestFilter.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/service/JwtRequestFilter.java</url>
           <line>64</line>
           <option name="timeStamp" value="19" />
         </line-breakpoint>

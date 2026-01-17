@@ -1,4 +1,4 @@
-package Service;
+package service;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

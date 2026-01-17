@@ -1,26 +1,26 @@
-package Service;
+package service;
 
 import DTO.request.LoginRequest;
 import DTO.request.RegisterRequest;
 import DTO.response.AuthResponse;
 import DTO.response.RegisterResponse;
-import exception.AuthException;
 import exception.BusinessException;
 import exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import model.Master;
 import model.MasterRepository;
+import model.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.validation.Valid;
 
 @Service
 @Transactional
@@ -37,7 +37,16 @@ public class AuthService {
     private MasterRepository masterRepository;
 
     @Autowired
+    private RoleRepository  roleRepository;
+
+    @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Value("${app.secretKeySalt}")
+    private String salt;
 
     @Transactional(readOnly = true)
     public AuthResponse login(LoginRequest loginRequest) {
@@ -76,7 +85,40 @@ public class AuthService {
                     .build();
     }
 
+    @Transactional
     public RegisterResponse registerUser(RegisterRequest registerRequest) {
-        return null;
+        log.debug("Регистрация клиента с email: {}", registerRequest.getEmail());
+
+        if (masterRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
+            throw new BusinessException("Пользователь с почтой: %s уже существует".formatted(registerRequest.getEmail()));
+        }
+
+        Master masterForSave = createMasterFromRequest(registerRequest);
+
+        masterRepository.save(masterForSave);
+
+        log.info("Зарегистрирован пользователь с email: {} и id: {}", registerRequest.getEmail(), masterForSave.getId() );
+
+        return new RegisterResponse(
+                masterForSave.getSecretKey(),
+                "Пользователь с почтой: %s зарегистрирован"
+                        .formatted(masterForSave.getEmail())
+        );
+    }
+
+    private Master createMasterFromRequest(RegisterRequest registerRequest) {
+        Master masterForSave = new Master();
+        masterForSave.setName(registerRequest.getUsername());
+        masterForSave.setEmail(registerRequest.getEmail());
+        masterForSave.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        masterForSave.setSecretKey(generateSecretKey(registerRequest.getEmail()));
+        masterForSave.getRoles().add(roleRepository.findByName("ROLE_USER")
+                .orElseThrow(() -> new ResourceNotFoundException("Роль ROLE_USER не найдена"))
+        );
+        return masterForSave;
+    }
+
+    private String generateSecretKey(String userEmail) {
+        return SecretKeyGenerator.keyToString(SecretKeyGenerator.generateKeyFromEmail(userEmail, salt));
     }
 }

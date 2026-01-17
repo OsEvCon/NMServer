@@ -1,6 +1,6 @@
 package model;
 
-import Service.SecurityUtils;
+import service.SecurityUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"Service", "model", "Serializer", "controllers", "mapper"})
+@ComponentScan(basePackages = {"service", "model", "Serializer", "controllers", "mapper"})
 public class MySpringBootApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
