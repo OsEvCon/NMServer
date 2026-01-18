@@ -1,9 +1,12 @@
 package serviceTest;
 
 import DTO.request.LoginRequest;
+import DTO.request.RefreshRequest;
 import DTO.request.RegisterRequest;
 import DTO.response.AuthResponse;
+import DTO.response.RefreshResponse;
 import DTO.response.RegisterResponse;
+import exception.AuthException;
 import exception.BusinessException;
 import exception.ResourceNotFoundException;
 import model.Role;
@@ -55,6 +58,7 @@ public class AuthServiceTest {
     private String password;
     private LoginRequest loginRequest;
     private RegisterRequest registerRequest;
+    private RefreshRequest  refreshRequest;
 
     @Mock
     private ClientService clientService;
@@ -94,6 +98,7 @@ public class AuthServiceTest {
         password = "testPassword";
         loginRequest = new LoginRequest(email, password);
         registerRequest = new RegisterRequest(userName, password, email);
+        refreshRequest = new RefreshRequest("testRefreshToken");
 
         // Инициализация salt перед тестами
         ReflectionTestUtils.setField(authService, "salt", "test-salt-value-12345");
@@ -351,6 +356,114 @@ public class AuthServiceTest {
             assertThatThrownBy(() -> authService.registerUser(registerRequest))
                     .isInstanceOf(DataAccessException.class)
                     .hasMessageContaining("Database connection lost");
+        }
+    }
+
+    @Nested
+    @DisplayName("Refresh Tests")
+    class Refresh {
+
+        /**
+         * Тест на обновление accessToken с валидными данными
+         * Метод должен завершаться без ошибок
+         * Должен формироваться корректный RefreshResponse
+         */
+        @Test
+        void refreshTest_ValidCredentials() {
+
+            when(jwtUtil.validateToken(refreshRequest.getRefreshToken()))
+                    .thenReturn(true);
+
+            when(jwtUtil.isRefreshToken(refreshRequest.getRefreshToken()))
+                    .thenReturn(true);
+
+            when(jwtUtil.extractUserEmail(refreshRequest.getRefreshToken()))
+                    .thenReturn(email);
+
+            when(jwtUtil.generateAccessToken(email))
+                    .thenReturn("testNewAccessToken");
+
+            when(masterRepository.findByEmail(email))
+            .thenReturn(Optional.of(new Master()));
+
+
+            RefreshResponse refreshResponse = authService.refresh(refreshRequest);
+
+            assertThat(refreshResponse.getAccessToken()).isEqualTo("testNewAccessToken");
+            assertThat(refreshResponse.getMessage()).isEqualTo(
+                    "AccessToken для пользователя %s успешно обновлен"
+                    .formatted(email));
+        }
+
+        /**
+         * Тест на обновление AccessToken с не валидным RefreshToken
+         * Должно возникать исключение AuthException("Refresh token не действителен")
+         * Методы jwtUtil и masterRepository не должны вызываться
+         */
+        @Test
+        void refreshTest_InvalidRefreshToken() {
+            when(jwtUtil.validateToken(refreshRequest.getRefreshToken()))
+            .thenReturn(false);
+
+            assertThatThrownBy(() -> authService.refresh(refreshRequest))
+                    .isInstanceOf(AuthException.class)
+                    .hasMessageContaining("Refresh token не действителен");
+
+            verify(jwtUtil, never()).isRefreshToken(refreshRequest.getRefreshToken());
+            verify(jwtUtil, never()).extractUserEmail(refreshRequest.getRefreshToken());
+            verify(masterRepository, never()).findByEmail(email);
+            verify(jwtUtil, never()).generateAccessToken(email);
+        }
+
+        /**
+         * Тест на обновление AccessToken, когда в запросе вместо RefreshToken приходит AccessToken
+         * Должно возникать исключение AuthException("Токен в запросе не является RefreshToken")
+         * Методы jwtUtil и masterRepository не должны вызываться
+         */
+        @Test
+        void refreshTest_NotRefreshToken() {
+            when(jwtUtil.validateToken(refreshRequest.getRefreshToken()))
+                    .thenReturn(true);
+
+            when(jwtUtil.isRefreshToken(refreshRequest.getRefreshToken()))
+                    .thenReturn(false);
+
+            assertThatThrownBy(() -> authService.refresh(refreshRequest))
+                    .isInstanceOf(AuthException.class)
+                    .hasMessageContaining("Токен в запросе не является RefreshToken");
+
+            verify(jwtUtil, never()).extractUserEmail(refreshRequest.getRefreshToken());
+            verify(masterRepository, never()).findByEmail(email);
+            verify(jwtUtil, never()).generateAccessToken(email);
+        }
+
+        /**
+         * Тест на обновление AccessToken от не зарегистрированного пользователя
+         * Должно возникать исключение ResourceNotFoundException("Пользователь %s не найден".formatted(userEmail)
+         * jwtUtil.generateAccessToken(userEmail) не должен вызываться
+         */
+        @Test
+        void refreshTest_NoRegisteredUser() {
+            when(jwtUtil.validateToken(refreshRequest.getRefreshToken()))
+                    .thenReturn(true);
+
+            when(jwtUtil.isRefreshToken(refreshRequest.getRefreshToken()))
+                    .thenReturn(true);
+
+            when(jwtUtil.extractUserEmail(refreshRequest.getRefreshToken()))
+                    .thenReturn(email);
+
+            when(masterRepository.findByEmail(email))
+                    .thenReturn(Optional.empty());
+
+            assertThatThrownBy(() -> authService.refresh(refreshRequest))
+                    .isInstanceOf(ResourceNotFoundException.class)
+                    .hasMessageContaining("Пользователь %s не найден".formatted(email));
+
+            verify(jwtUtil, never()).generateAccessToken(email);
+            verify(jwtUtil, times(1)).validateToken(refreshRequest.getRefreshToken());
+            verify(jwtUtil, times(1)).isRefreshToken(refreshRequest.getRefreshToken());
+            verify(jwtUtil, times(1)).extractUserEmail(refreshRequest.getRefreshToken());
         }
     }
 }

@@ -1,9 +1,12 @@
 package service;
 
 import DTO.request.LoginRequest;
+import DTO.request.RefreshRequest;
 import DTO.request.RegisterRequest;
 import DTO.response.AuthResponse;
+import DTO.response.RefreshResponse;
 import DTO.response.RegisterResponse;
+import exception.AuthException;
 import exception.BusinessException;
 import exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +24,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.validation.Valid;
 
 @Service
 @Transactional
@@ -105,6 +110,32 @@ public class AuthService {
                 "Пользователь с почтой: %s зарегистрирован"
                         .formatted(masterForSave.getEmail())
         );
+    }
+
+    public RefreshResponse refresh(RefreshRequest request) {
+        // Валидация refreshToken
+        if (!jwtUtil.validateToken(request.getRefreshToken())) {
+            log.warn("Refresh token не действителен");
+            throw new AuthException("Refresh token не действителен");
+        }
+
+        if (!jwtUtil.isRefreshToken(request.getRefreshToken())) {
+            log.warn("Токен в запросе не является RefreshToken");
+            throw new AuthException("Токен в запросе не является RefreshToken");
+        }
+
+        String userEmail = jwtUtil.extractUserEmail(request.getRefreshToken());
+        log.debug("Запрос на обновление accessToken от пользователя: {}", userEmail);
+
+        // Проверка, что пользователь существует
+        masterRepository.findByEmail(userEmail)
+                        .orElseThrow(() -> new ResourceNotFoundException("Пользователь %s не найден".formatted(userEmail)));
+
+        String newAccessToken = jwtUtil.generateAccessToken(userEmail);
+
+        return new RefreshResponse(newAccessToken,
+                "AccessToken для пользователя %s успешно обновлен"
+                        .formatted(userEmail));
     }
 
     private Master createMasterFromRequest(RegisterRequest registerRequest) {

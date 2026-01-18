@@ -4,9 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="- перенесена логика регистрации пользователя из AuthController в AuthService&#10;&#10;- Добавлен тест AuthServiceTest.registerTest_ValidCredentials()&#10;&#10;- Пакет src/main/java/Service переименован в src/main/java/service">
+    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="- Добавлены тесты для метода AuthService.registerUser">
+      <change afterPath="$PROJECT_DIR$/src/main/java/DTO/response/RefreshResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/request/RefreshRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/request/RefreshRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/response/AuthResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/response/AuthResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/AuthController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/JwtUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/serviceTest/AuthServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/serviceTest/AuthServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -75,6 +80,10 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "JUnit.AuthServiceTest$Login.executor": "Run",
+    "JUnit.AuthServiceTest$Refresh.refreshTest_InvalidRefreshToken.executor": "Run",
+    "JUnit.AuthServiceTest$Refresh.refreshTest_NoRegisteredUser.executor": "Run",
+    "JUnit.AuthServiceTest$Refresh.refreshTest_NotRefreshToken.executor": "Run",
+    "JUnit.AuthServiceTest$Refresh.refreshTest_ValidCredentials.executor": "Run",
     "JUnit.AuthServiceTest$Register.registerTest_DBError.executor": "Run",
     "JUnit.AuthServiceTest$Register.registerTest_DuplicateEmail.executor": "Run",
     "JUnit.AuthServiceTest$Register.registerTest_NoRole.executor": "Run",
@@ -155,7 +164,71 @@
       <recent name="model" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.AuthServiceTest$Register.registerTest_DBError">
+  <component name="RunManager" selected="JUnit.AuthServiceTest$Refresh.refreshTest_NoRegisteredUser">
+    <configuration name="AuthServiceTest$Refresh.refreshTest_InvalidRefreshToken" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TestServer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="serviceTest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="serviceTest.AuthServiceTest" />
+      <option name="MAIN_CLASS_NAME" value="serviceTest.AuthServiceTest$Refresh" />
+      <option name="METHOD_NAME" value="refreshTest_InvalidRefreshToken" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthServiceTest$Refresh.refreshTest_NoRegisteredUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TestServer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="serviceTest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="serviceTest.AuthServiceTest" />
+      <option name="MAIN_CLASS_NAME" value="serviceTest.AuthServiceTest$Refresh" />
+      <option name="METHOD_NAME" value="refreshTest_NoRegisteredUser" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthServiceTest$Refresh.refreshTest_NotRefreshToken" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TestServer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="serviceTest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="serviceTest.AuthServiceTest" />
+      <option name="MAIN_CLASS_NAME" value="serviceTest.AuthServiceTest$Refresh" />
+      <option name="METHOD_NAME" value="refreshTest_NotRefreshToken" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthServiceTest$Refresh.refreshTest_ValidCredentials" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TestServer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="serviceTest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="serviceTest.AuthServiceTest" />
+      <option name="MAIN_CLASS_NAME" value="serviceTest.AuthServiceTest$Refresh" />
+      <option name="METHOD_NAME" value="refreshTest_ValidCredentials" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="AuthServiceTest$Register.registerTest_DBError" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TestServer" />
       <extension name="coverage">
@@ -172,76 +245,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AuthServiceTest$Register.registerTest_DuplicateEmail" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="TestServer" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="serviceTest.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="serviceTest.AuthServiceTest" />
-      <option name="MAIN_CLASS_NAME" value="serviceTest.AuthServiceTest$Register" />
-      <option name="METHOD_NAME" value="registerTest_DuplicateEmail" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AuthServiceTest$Register.registerTest_NoRole" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="TestServer" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="serviceTest.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="serviceTest.AuthServiceTest" />
-      <option name="MAIN_CLASS_NAME" value="serviceTest.AuthServiceTest$Register" />
-      <option name="METHOD_NAME" value="registerTest_NoRole" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AuthServiceTest$Register.registerTest_ValidCredentials" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="TestServer" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="serviceTest.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="serviceTest.AuthServiceTest" />
-      <option name="MAIN_CLASS_NAME" value="serviceTest.AuthServiceTest$Register" />
-      <option name="METHOD_NAME" value="registerTest_ValidCredentials" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AuthServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="TestServer" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="serviceTest.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="serviceTest.AuthServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.AuthServiceTest$Refresh.refreshTest_NoRegisteredUser" />
+        <item itemvalue="JUnit.AuthServiceTest$Refresh.refreshTest_NotRefreshToken" />
+        <item itemvalue="JUnit.AuthServiceTest$Refresh.refreshTest_InvalidRefreshToken" />
+        <item itemvalue="JUnit.AuthServiceTest$Refresh.refreshTest_ValidCredentials" />
         <item itemvalue="JUnit.AuthServiceTest$Register.registerTest_DBError" />
-        <item itemvalue="JUnit.AuthServiceTest$Register.registerTest_NoRole" />
-        <item itemvalue="JUnit.AuthServiceTest$Register.registerTest_DuplicateEmail" />
-        <item itemvalue="JUnit.AuthServiceTest$Register.registerTest_ValidCredentials" />
-        <item itemvalue="JUnit.AuthServiceTest" />
       </list>
     </recent_temporary>
   </component>
@@ -465,7 +475,7 @@
       <workItem from="1768489192357" duration="4840000" />
       <workItem from="1768540392237" duration="16963000" />
       <workItem from="1768646972736" duration="15351000" />
-      <workItem from="1768721806398" duration="3203000" />
+      <workItem from="1768721806398" duration="11482000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>
@@ -710,7 +720,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768672747310</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="- Добавлены тесты для метода AuthService.registerUser">
+      <option name="closed" value="true" />
+      <created>1768725322882</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1768725322882</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -740,7 +758,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Удалил Schedule.java, ScheduleRepository.java и сделал необходимые изменения" />
     <MESSAGE value="Исправил сериализацию и десериализацию Client и Visit.I fixed the serialization and deserialization of Client and Visit." />
     <MESSAGE value="Доюавил Procedure. Add Procedure" />
     <MESSAGE value="Добавил VisitDao для корректного обновления Visit (были проблемы с @JsonIdentityInfo)" />
@@ -765,7 +782,8 @@
     <MESSAGE value="- Создан класс AuthService для переноса логики из AuthController.&#10;&#10;- Создан GlobalExceptionHandler для глобальной обработки ошибок.&#10;&#10;- Создан AuthServiceTest для тестирования методов класса AuthService" />
     <MESSAGE value="- Добавлены тесты для AuthService.login&#10;&#10;- Добавлены классы RegisterRequest и RegisterResponse&#10;&#10;- Начат перенос логики регистрации пользователя из AuthController в AuthService" />
     <MESSAGE value="- перенесена логика регистрации пользователя из AuthController в AuthService&#10;&#10;- Добавлен тест AuthServiceTest.registerTest_ValidCredentials()&#10;&#10;- Пакет src/main/java/Service переименован в src/main/java/service" />
-    <option name="LAST_COMMIT_MESSAGE" value="- перенесена логика регистрации пользователя из AuthController в AuthService&#10;&#10;- Добавлен тест AuthServiceTest.registerTest_ValidCredentials()&#10;&#10;- Пакет src/main/java/Service переименован в src/main/java/service" />
+    <MESSAGE value="- Добавлены тесты для метода AuthService.registerUser" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Добавлены тесты для метода AuthService.registerUser" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

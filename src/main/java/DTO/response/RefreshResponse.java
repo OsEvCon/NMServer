@@ -1,14 +1,11 @@
 package DTO.response;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@Builder
 @AllArgsConstructor
-public class AuthResponse {
+public class RefreshResponse {
     private String accessToken;
-    private String refreshToken;
-    private String secretKey;
+    private String message;
 }

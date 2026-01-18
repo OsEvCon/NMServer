@@ -1,5 +1,6 @@
 package service;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +27,7 @@ public class JwtUtil {
     public String generateAccessToken(String userEmail) {
         return Jwts.builder()
                 .setSubject(userEmail)
+                .claim("type", "access")
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + accessTokenValidity))
                 .signWith(SignatureAlgorithm.HS256, secretKey)
@@ -35,6 +37,7 @@ public class JwtUtil {
     public String generateRefreshToken(String userEmail) {
         return Jwts.builder()
                 .setSubject(userEmail)
+                .claim("type", "refresh")
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + refreshTokenValidity))
                 .signWith(SignatureAlgorithm.HS256, secretKey)
@@ -55,6 +58,32 @@ public class JwtUtil {
         try {
             final String extractedUsername = extractUserEmail(token);
             return (extractedUsername != null && !isTokenExpired(token));
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean isRefreshToken(String token) {
+        try {
+            Claims claims = Jwts.parser()
+                    .setSigningKey(secretKey)
+                    .parseClaimsJws(token)
+                    .getBody();
+
+            return "refresh".equals(claims.get("type", String.class));
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean isAccessToken(String token) {
+        try {
+            Claims claims = Jwts.parser()
+                    .setSigningKey(secretKey)
+                    .parseClaimsJws(token)
+                    .getBody();
+
+            return "access".equals(claims.get("type", String.class));
         } catch (Exception e) {
             return false;
         }

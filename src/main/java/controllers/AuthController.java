@@ -4,6 +4,7 @@ import DTO.request.LoginRequest;
 import DTO.request.RefreshRequest;
 import DTO.request.RegisterRequest;
 import DTO.response.AuthResponse;
+import DTO.response.RefreshResponse;
 import DTO.response.RegisterResponse;
 import service.AuthService;
 import service.CustomUserDetailsService;
@@ -69,23 +70,12 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<?> refresh(@RequestBody RefreshRequest request) {
-        String refreshToken = request.getRefreshToken();
-        log.debug("запрос на refreshToken от пользователя : {}", jwtUtil.extractUserEmail(refreshToken));
+    public ResponseEntity<RefreshResponse> refresh(@RequestBody @Valid RefreshRequest request) {
+        log.debug("Запрос на обновление accessToken");
 
-        if (jwtUtil.validateToken(refreshToken)) {
-            String username = jwtUtil.extractUserEmail(refreshToken);
-            String newAccessToken = jwtUtil.generateAccessToken(username);
+        RefreshResponse response = authService.refresh(request);
 
-            Map<String, String> response = new HashMap<>();
-            response.put("accessToken", newAccessToken);
-
-            return ResponseEntity.ok(response);
-        } else {
-            System.out.println("Запрос на refreshToken не прошел");
-            log.debug("запрос на refreshToken от пользователя ");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid refresh token");
-        }
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/health")
