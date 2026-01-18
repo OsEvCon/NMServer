@@ -4,6 +4,8 @@ import DTO.request.LoginRequest;
 import DTO.request.RegisterRequest;
 import DTO.response.AuthResponse;
 import DTO.response.RegisterResponse;
+import exception.BusinessException;
+import exception.ResourceNotFoundException;
 import model.Role;
 import model.RoleRepository;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -291,6 +293,64 @@ public class AuthServiceTest {
 
             assertThat(registerResponse.getMessage()).isEqualTo("Пользователь с почтой: testEmail@mail.ru зарегистрирован");
             assertThat(registerResponse.getSecretKey()).isNotNull();
+        }
+
+        /**
+         * Тест регистрации уже существующего пользователя
+         * Должно возникать исключение BusinessException
+         * Метод masterRepository.save не должен вызываться
+         */
+        @Test
+        void registerTest_DuplicateEmail() {
+            when(masterRepository.findByEmail(email))
+                    .thenReturn(Optional.of(new Master()));
+
+            assertThatThrownBy(() -> authService.registerUser(registerRequest))
+                    .isInstanceOf(BusinessException.class)
+                    .hasMessageContaining("Пользователь с почтой: testEmail@mail.ru уже существует");
+
+            verify(masterRepository, never()).save(any());
+        }
+
+        /**
+         * Тест регистрации с отсутствием роли ROLE_USER в БД
+         * Должно возникать исключение ResourceNotFoundException
+         * Метод masterRepository.save не должен вызываться
+         */
+        @Test
+        void registerTest_NoRole() {
+            when(masterRepository.findByEmail(email))
+                    .thenReturn(Optional.empty());
+
+            when(roleRepository.findByName("ROLE_USER"))
+                    .thenReturn(Optional.empty());
+
+            assertThatThrownBy(() -> authService.registerUser(registerRequest))
+                    .isInstanceOf(ResourceNotFoundException.class)
+                    .hasMessageContaining("Роль ROLE_USER не найдена");
+
+            verify(masterRepository, never()).save(any());
+
+        }
+
+        /**
+         * Тест на ошибку БД при сохранении нового пользователя
+         * Метод должен завершаться с исключением
+         */
+        @Test
+        void registerTest_DBError() {
+            when(masterRepository.findByEmail(email))
+                    .thenReturn(Optional.empty());
+
+            when(masterRepository.save(any()))
+                    .thenThrow(new DataAccessException("Database connection lost") {});
+
+            when(roleRepository.findByName("ROLE_USER"))
+                    .thenReturn(Optional.of(new Role("ROLE_USER")));
+
+            assertThatThrownBy(() -> authService.registerUser(registerRequest))
+                    .isInstanceOf(DataAccessException.class)
+                    .hasMessageContaining("Database connection lost");
         }
     }
 }

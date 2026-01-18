@@ -90,6 +90,7 @@ public class AuthService {
         log.debug("Регистрация клиента с email: {}", registerRequest.getEmail());
 
         if (masterRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
+            log.warn("Пользователь с почтой {} уже существует", registerRequest.getEmail());
             throw new BusinessException("Пользователь с почтой: %s уже существует".formatted(registerRequest.getEmail()));
         }
 
