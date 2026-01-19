@@ -9,11 +9,13 @@ import DTO.response.RegisterResponse;
 import exception.AuthException;
 import exception.BusinessException;
 import exception.ResourceNotFoundException;
+import exception.UpdateException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import model.Master;
 import model.MasterRepository;
 import model.RoleRepository;
+import model.UpdateResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,26 +34,22 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @Slf4j
 public class AuthService {
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private CustomUserDetailsService userDetailsService;
-
-    @Autowired
-    private MasterRepository masterRepository;
-
-    @Autowired
-    private RoleRepository  roleRepository;
-
-    @Autowired
-    private JwtUtil jwtUtil;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    // final поля - будут в конструкторе
+    private final AuthenticationManager authenticationManager;
+    private final CustomUserDetailsService userDetailsService;
+    private final MasterRepository masterRepository;
+    private final RoleRepository  roleRepository;
+    private final JwtUtil jwtUtil;
+    private final PasswordEncoder passwordEncoder;
 
     @Value("${app.secretKeySalt}")
     private String salt;
+
+    @Value("${app.current.version}")
+    private String currentVersion;
+
+    @Value("${app.download.url}")
+    private String downloadUrl;
 
     @Transactional(readOnly = true)
     public AuthResponse login(LoginRequest loginRequest) {
@@ -138,6 +136,33 @@ public class AuthService {
                         .formatted(userEmail));
     }
 
+    public UpdateResponse checkUpdate(String clientVersion) {
+        if (clientVersion == null || clientVersion.isBlank()) {
+            throw new UpdateException("Некорректная версия клиента: " +
+                    (clientVersion != null ? clientVersion : "null"));
+        }
+        if (currentVersion == null || currentVersion.isBlank()) {
+            throw new UpdateException("Некорректная текущая версия: " +
+                    (currentVersion != null ? currentVersion : "null"));
+        }
+        if (downloadUrl == null || downloadUrl.isBlank()) {
+            throw new UpdateException("Отсутствует URL для скачивания");
+        }
+
+        boolean updateNeeded = compareVersions(clientVersion, currentVersion);
+
+        UpdateResponse response = new UpdateResponse();
+        response.setUpdateNeeded(updateNeeded);
+
+        if (updateNeeded){
+            response.setLatestVersion(currentVersion);
+            response.setDownloadUrl(downloadUrl);
+            response.setForceUpdate(true);
+        }
+        log.debug("Необходимо обновление: {}", updateNeeded);
+        return response;
+    }
+
     private Master createMasterFromRequest(RegisterRequest registerRequest) {
         Master masterForSave = new Master();
         masterForSave.setName(registerRequest.getUsername());
@@ -152,5 +177,21 @@ public class AuthService {
 
     private String generateSecretKey(String userEmail) {
         return SecretKeyGenerator.keyToString(SecretKeyGenerator.generateKeyFromEmail(userEmail, salt));
+    }
+
+
+    private boolean compareVersions(String clientVersion, String serverVersion) {
+        // Простая реализация сравнения версий (формат X.Y.Z)
+        String[] clientParts = clientVersion.split("\\.");
+        String[] serverParts = serverVersion.split("\\.");
+
+        for (int i = 0; i < Math.max(clientParts.length, serverParts.length); i++) {
+            int clientPart = i < clientParts.length ? Integer.parseInt(clientParts[i]) : 0;
+            int serverPart = i < serverParts.length ? Integer.parseInt(serverParts[i]) : 0;
+
+            if (clientPart < serverPart) return true;
+            if (clientPart > serverPart) return false;
+        }
+        return false;
     }
 }
