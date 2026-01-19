@@ -1,10 +1,12 @@
 package mapper;
 
 import DTO.ClientDTO;
+import DTO.VisitDTO;
 import DTO.request.CreateClientRequest;
 import DTO.request.UpdateClientRequest;
 import model.Client;
 import model.Master;
+import model.Visit;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -24,6 +26,12 @@ public class ClientMapper {
         dto.setPhoneNumber(client.getPhoneNumber());
         dto.setEmail(client.getEmail());
 
+        if (client.getVisits() != null && !client.getVisits().isEmpty()) {
+             dto.setVisitsId(client.getVisits().stream()
+                     .map(Visit::getId)
+                     .toList());
+
+        }
         return dto;
     }
 
