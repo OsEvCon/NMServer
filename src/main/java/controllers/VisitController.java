@@ -1,6 +1,8 @@
 package controllers;
 
 import DTO.VisitDTO;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import service.SecurityUtils;
 import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,31 +11,31 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
+import service.VisitService;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/api/visits")
+@Slf4j
+@RequiredArgsConstructor
 public class VisitController {
     private final VisitRepository visitRepository;
     private final SimpMessagingTemplate messagingTemplate;
     private final MasterRepository masterRepository;
     private final ClientRepository clientRepository;
     private final ProcedureRepository procedureRepository;
-@Autowired
-    public VisitController(VisitRepository visitRepository, SimpMessagingTemplate messagingTemplate, MasterRepository masterRepository, ClientRepository clientRepository, ProcedureRepository procedureRepository) {
-        this.visitRepository = visitRepository;
-        this.messagingTemplate = messagingTemplate;
-    this.masterRepository = masterRepository;
-    this.clientRepository = clientRepository;
-    this.procedureRepository = procedureRepository;
-}
+    private final VisitService visitService;
 
-    @GetMapping("/getVisits")
-    public List<Visit> getVisits(){
-        System.out.println("Запрос визитов от пользователя " + getCurrentMaster().getEmail());
-        return getCurrentMaster().getVisits();
+    @GetMapping()
+    public ResponseEntity<List<VisitDTO>> getVisits(){
+        log.debug("Запрос списка визитов");
+
+        List<VisitDTO> visits = visitService.getVisits();
+
+        return ResponseEntity.ok(visits);
     }
 
     @PostMapping("/createVisitTest")
@@ -83,9 +85,9 @@ public class VisitController {
             } else {
                 visit.setClient(clientRepository.findClientById(visitDTO.getClientId()).get());
             }
-            visit.setVisitDateTime(visitDTO.getLocalDateTime());
+            visit.setVisitDateTime(visitDTO.getVisitDateTime());
             visit.getProcedures().clear();
-            for (Integer i : visitDTO.getProceduresId()){
+            for (Integer i : visitDTO.getProcedures()){
                 Procedure procedure = procedureRepository.findById(i).get();
                 visit.getProcedures().add(procedure);
             }
@@ -129,7 +131,4 @@ public class VisitController {
         }
     }
 
-    private Master getCurrentMaster() {
-        return SecurityUtils.getCurrentMaster();
-    }
 }

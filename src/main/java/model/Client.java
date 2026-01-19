@@ -39,6 +39,7 @@ public class Client {
     @JsonIgnore
     private List<Master> masters = new ArrayList<>();
 
+    @JsonManagedReference("client-visits")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     private List<Visit> visits = new ArrayList<>();
 

@@ -4,11 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="- Перенесена логика метода AuthController.refresh в метод AuthService.refresh.&#10;&#10;- Добавлены тесты для метода AuthService.refresh&#10;&#10;- Добавлены типы для токенов в JwtUtil&#10;&#10;- Добавлен RefreshResponse для формирования ответа на запрос AuthController.refresh">
-      <change afterPath="$PROJECT_DIR$/src/main/java/exception/UpdateException.java" afterDir="false" />
+    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="- Созданы классы ProcedureDTO, VisitService, VisitMapper для корректной передачи DTO в запросах&#10;&#10;- Создан класс VisitDataAccessException для обработки исключений доступа к визитам&#10;&#10;- Логика из метода VisitController.getVisits перенесена в VisitService.getVisits&#10;&#10;- Небольшие изменения в AuthService, Client, ClientController, ClientDTO, ClientMapper, GlobalExceptionHandler, Visit, VisitDTO">
+      <change afterPath="$PROJECT_DIR$/src/main/java/DTO/response/ProcedureDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/exception/VisitDataAccessException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/mapper/VisitMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/VisitService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/ClientDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/ClientDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/VisitDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/VisitDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/ClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/VisitController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/VisitController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Visit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Visit.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/AuthService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -472,7 +480,8 @@
       <workItem from="1768540392237" duration="16963000" />
       <workItem from="1768646972736" duration="15351000" />
       <workItem from="1768721806398" duration="13083000" />
-      <workItem from="1768800577190" duration="7359000" />
+      <workItem from="1768800577190" duration="17956000" />
+      <workItem from="1768830232821" duration="319000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>
@@ -733,7 +742,23 @@
       <option name="project" value="LOCAL" />
       <updated>1768733646614</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="- Перенесена логика метода AuthController.checkUpdate в метод AuthService.checkUpdate&#10;&#10;- Добавлено исключение UpdateException для обработки ошибок обновления">
+      <option name="closed" value="true" />
+      <created>1768808266901</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1768808266901</updated>
+    </task>
+    <task id="LOCAL-00037" summary="- Созданы классы ProcedureDTO, VisitService, VisitMapper для корректной передачи DTO в запросах&#10;&#10;- Создан класс VisitDataAccessException для обработки исключений доступа к визитам&#10;&#10;- Логика из метода VisitController.getVisits перенесена в VisitService.getVisits&#10;&#10;- Небольшие изменения в AuthService, Client, ClientController, ClientDTO, ClientMapper, GlobalExceptionHandler, Visit, VisitDTO">
+      <option name="closed" value="true" />
+      <created>1768818811266</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1768818811266</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -763,8 +788,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Доюавил Procedure. Add Procedure" />
-    <MESSAGE value="Добавил VisitDao для корректного обновления Visit (были проблемы с @JsonIdentityInfo)" />
     <MESSAGE value="Добавил VisitDao для корректного обновления Visit (были проблемы с @JsonIdentityInfo).&#10;I added VisitDao for proper updating of Visit (there were issues with @JsonIdentityInfo)." />
     <MESSAGE value="Перенес шифрование данных с сервера на клиент.&#10;I moved the data encryption from the server to the client." />
     <MESSAGE value="Добавил SpringSecurity. Реализовал регистрацию и вход в систему. Реализовал обработку запросов с помощью JWT токенов.&#10;Added Spring Security. Implemented registration and login functionality. Implemented request handling using JWT tokens." />
@@ -788,7 +811,9 @@
     <MESSAGE value="- перенесена логика регистрации пользователя из AuthController в AuthService&#10;&#10;- Добавлен тест AuthServiceTest.registerTest_ValidCredentials()&#10;&#10;- Пакет src/main/java/Service переименован в src/main/java/service" />
     <MESSAGE value="- Добавлены тесты для метода AuthService.registerUser" />
     <MESSAGE value="- Перенесена логика метода AuthController.refresh в метод AuthService.refresh.&#10;&#10;- Добавлены тесты для метода AuthService.refresh&#10;&#10;- Добавлены типы для токенов в JwtUtil&#10;&#10;- Добавлен RefreshResponse для формирования ответа на запрос AuthController.refresh" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Перенесена логика метода AuthController.refresh в метод AuthService.refresh.&#10;&#10;- Добавлены тесты для метода AuthService.refresh&#10;&#10;- Добавлены типы для токенов в JwtUtil&#10;&#10;- Добавлен RefreshResponse для формирования ответа на запрос AuthController.refresh" />
+    <MESSAGE value="- Перенесена логика метода AuthController.checkUpdate в метод AuthService.checkUpdate&#10;&#10;- Добавлено исключение UpdateException для обработки ошибок обновления" />
+    <MESSAGE value="- Созданы классы ProcedureDTO, VisitService, VisitMapper для корректной передачи DTO в запросах&#10;&#10;- Создан класс VisitDataAccessException для обработки исключений доступа к визитам&#10;&#10;- Логика из метода VisitController.getVisits перенесена в VisitService.getVisits&#10;&#10;- Небольшие изменения в AuthService, Client, ClientController, ClientDTO, ClientMapper, GlobalExceptionHandler, Visit, VisitDTO" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Созданы классы ProcedureDTO, VisitService, VisitMapper для корректной передачи DTO в запросах&#10;&#10;- Создан класс VisitDataAccessException для обработки исключений доступа к визитам&#10;&#10;- Логика из метода VisitController.getVisits перенесена в VisitService.getVisits&#10;&#10;- Небольшие изменения в AuthService, Client, ClientController, ClientDTO, ClientMapper, GlobalExceptionHandler, Visit, VisitDTO" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

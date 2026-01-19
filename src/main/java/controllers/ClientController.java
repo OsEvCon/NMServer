@@ -24,7 +24,6 @@ public class ClientController {
 
     private final ClientService clientService;
 
-
     @GetMapping()
     public ResponseEntity<List<ClientDTO>> getClients() {
         log.info("GET /api/clients - запрос списка клиентов");

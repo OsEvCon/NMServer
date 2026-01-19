@@ -2,14 +2,17 @@ package model;
 
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
-
-import java.text.SimpleDateFormat;
+import lombok.*;
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
+@Getter // Геттеры для всех полей
+@Setter // Сеттеры для всех не-final полей
+@EqualsAndHashCode(onlyExplicitlyIncluded = true) // equals/hashCode ТОЛЬКО для включенных полей
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "visit")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -17,81 +20,29 @@ public class Visit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
+    @EqualsAndHashCode.Include
     private Integer id;
 
     @Column(name = "date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime visitDateTime;
 
-    @ManyToOne
+    @JsonBackReference("client-visits")
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     private Client client;
+
     @JsonBackReference("master-visits")
     @ManyToOne
     @JoinColumn(name = "master_id")
     private Master master;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "visit_procedure",
             joinColumns = @JoinColumn(name = "visit_id"),
             inverseJoinColumns = @JoinColumn(name = "procedure_id")
     )
-    private List<Procedure> procedures;
-
-    public Visit() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    public LocalDateTime getVisitDateTime() {
-        return visitDateTime;
-    }
-
-    public void setVisitDateTime(LocalDateTime visitDateTime) {
-        this.visitDateTime = visitDateTime;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public Master getMaster() {
-        return master;
-    }
-
-    public void setMaster(Master master) {
-        this.master = master;
-    }
-
-    public List<Procedure> getProcedures() {
-        return procedures;
-    }
-
-    public void setProcedures(List<Procedure> procedures) {
-        this.procedures = procedures;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Visit visit = (Visit) o;
-        return Objects.equals(id, visit.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+    @Builder.Default
+    private List<Procedure> procedures = new ArrayList<>();
 }

@@ -46,6 +46,16 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * Исключение при ошибке доступа к данным визитов
+     */
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse>  handleVisitDataAccessException(VisitDataAccessException e) {
+        log.error("Не удалось получить данные визитов. Попробуйте позже.", e);
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body(new ErrorResponse("VISIT_DATA_ACCESS_ERROR",e.getMessage()));
+    }
+
+    /**
      * Исключение при ошибке сохранения клиента
      */
     @ExceptionHandler(ClientSaveException.class)
