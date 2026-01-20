@@ -4,34 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="- Изменена структура OneToMany и ManyToMany связей между сущностями&#10;&#10;-Добавлен метод VisitService.createVisit">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/service/SecurityService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/integration/BaseIntegrationTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/integration/ClientServiceIntegrationTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/application-test.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="- Класс SecurityUtils.java заменен на SecurityService.&#10;&#10;- Добавлены библиотеки для проведения интеграционных тестов&#10;&#10;- Добавлен класс ClientServiceIntegrationTest для интеграционных тестов ClientService&#10;&#10;- Добавлен тест ClientServiceIntegrationTest.createClientTest_shouldCreateClient&#10;&#10;- Обновлены зависимости Spring на более новые">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/request/CreateClientRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/request/CreateClientRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/request/CreateVisitRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/request/CreateVisitRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/request/DeleteClientsRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/request/DeleteClientsRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/request/LoginRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/request/LoginRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/request/RefreshRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/request/RefreshRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/request/RegisterRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/request/RegisterRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/request/UpdateClientRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/request/UpdateClientRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/ClientController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/ProcedureController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/ProcedureController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/VisitController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/VisitController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/exception/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/MySpringBootApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/MySpringBootApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/ClientService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/JwtUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/SecurityUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/VisitService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/VisitService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/serviceTest/AuthServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/serviceTest/AuthServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/serviceTest/ClientServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/serviceTest/ClientServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/integration/ClientServiceIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/integration/ClientServiceIntegrationTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,6 +90,8 @@
     "JUnit.AuthServiceTest.loginTest_JwtError.executor": "Run",
     "JUnit.AuthServiceTest.loginTest_ValidCredentials.executor": "Run",
     "JUnit.AuthServiceTest.loginTest_WrongPassword.executor": "Run",
+    "JUnit.ClientServiceIntegrationTest$CreateClientTests.createClientTest_shouldCreateClient.executor": "Run",
+    "JUnit.ClientServiceIntegrationTest$CreateClientTests.executor": "Run",
     "JUnit.ClientServiceIntegrationTest.contextLoads.executor": "Run",
     "JUnit.ClientServiceIntegrationTest.createClientTest_shouldCreateClient.executor": "Run",
     "JUnit.ClientServiceIntegrationTest.executor": "Run",
@@ -186,7 +163,38 @@
       <recent name="model" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ClientServiceIntegrationTest">
+  <component name="RunManager" selected="JUnit.ClientServiceIntegrationTest$CreateClientTests">
+    <configuration name="ClientServiceIntegrationTest$CreateClientTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TestServer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="integration.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="integration.ClientServiceIntegrationTest" />
+      <option name="MAIN_CLASS_NAME" value="integration.ClientServiceIntegrationTest$CreateClientTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ClientServiceIntegrationTest$CreateClientTests.createClientTest_shouldCreateClient" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TestServer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="integration.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="integration.ClientServiceIntegrationTest" />
+      <option name="MAIN_CLASS_NAME" value="integration.ClientServiceIntegrationTest$CreateClientTests" />
+      <option name="METHOD_NAME" value="createClientTest_shouldCreateClient" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ClientServiceIntegrationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TestServer" />
       <extension name="coverage">
@@ -234,44 +242,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ClientServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="TestServer" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="serviceTest.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="serviceTest" />
-      <option name="MAIN_CLASS_NAME" value="serviceTest.ClientServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ClientServiceTest.createClientTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="TestServer" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="serviceTest.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="serviceTest" />
-      <option name="MAIN_CLASS_NAME" value="serviceTest.ClientServiceTest" />
-      <option name="METHOD_NAME" value="createClientTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ClientServiceIntegrationTest" />
+        <item itemvalue="JUnit.ClientServiceIntegrationTest$CreateClientTests" />
+        <item itemvalue="JUnit.ClientServiceIntegrationTest$CreateClientTests.createClientTest_shouldCreateClient" />
         <item itemvalue="JUnit.ClientServiceIntegrationTest.createClientTest_shouldCreateClient" />
+        <item itemvalue="JUnit.ClientServiceIntegrationTest" />
         <item itemvalue="JUnit.ClientServiceIntegrationTest.contextLoads" />
-        <item itemvalue="JUnit.ClientServiceTest" />
-        <item itemvalue="JUnit.ClientServiceTest.createClientTest" />
       </list>
     </recent_temporary>
   </component>
@@ -502,7 +479,7 @@
       <workItem from="1768838590582" duration="5638000" />
       <workItem from="1768888831288" duration="14475000" />
       <workItem from="1768910559056" duration="1086000" />
-      <workItem from="1768920227182" duration="14945000" />
+      <workItem from="1768920227182" duration="18444000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>
@@ -795,7 +772,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768911640425</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="- Класс SecurityUtils.java заменен на SecurityService.&#10;&#10;- Добавлены библиотеки для проведения интеграционных тестов&#10;&#10;- Добавлен класс ClientServiceIntegrationTest для интеграционных тестов ClientService&#10;&#10;- Добавлен тест ClientServiceIntegrationTest.createClientTest_shouldCreateClient&#10;&#10;- Обновлены зависимости Spring на более новые">
+      <option name="closed" value="true" />
+      <created>1768936251248</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1768936251248</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -825,8 +810,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Перенес шифрование данных с сервера на клиент.&#10;I moved the data encryption from the server to the client." />
-    <MESSAGE value="Добавил SpringSecurity. Реализовал регистрацию и вход в систему. Реализовал обработку запросов с помощью JWT токенов.&#10;Added Spring Security. Implemented registration and login functionality. Implemented request handling using JWT tokens." />
     <MESSAGE value="Добавил обновление клиента и процедуры.&#10;Added update Client and Procedure." />
     <MESSAGE value="- Добавлен WebSocket для отправки сообщений клиенту. &#10;- Добавлены контроллеры для каждой сущности" />
     <MESSAGE value="feat: реализована проверка доступности обновлений&#10;&#10;Добавлен полный цикл проверки обновлений приложения:&#10;- Реализован API-эндпоинт для сравнения версий&#10;- Создана модель данных UpdateResponse&#10;&#10;Функционал скачивания APK пока не реализован.&#10;Будет добавлен в последующих коммитах.&#10;&#10;Примечания:&#10;- Сервер возвращает результат сравнения версий&#10;- Клиент показывает диалог обновления при необходимости&#10;- Кнопка скачивания пока не активна&#10;&#10;feat: implement update availability check mechanism&#10;&#10;Added full workflow for checking application updates:&#10;- Implemented API endpoint for version comparison&#10;- Created UpdateResponse data model&#10;&#10;The actual APK download functionality is not implemented yet.&#10;Will be added in subsequent commits.&#10;&#10;Notes:&#10;- Server returns version comparison result&#10;- Client shows update dialog when needed&#10;- Download button currently does nothing" />
@@ -850,7 +833,9 @@
     <MESSAGE value="- Перенесена логика метода AuthController.checkUpdate в метод AuthService.checkUpdate&#10;&#10;- Добавлено исключение UpdateException для обработки ошибок обновления" />
     <MESSAGE value="- Созданы классы ProcedureDTO, VisitService, VisitMapper для корректной передачи DTO в запросах&#10;&#10;- Создан класс VisitDataAccessException для обработки исключений доступа к визитам&#10;&#10;- Логика из метода VisitController.getVisits перенесена в VisitService.getVisits&#10;&#10;- Небольшие изменения в AuthService, Client, ClientController, ClientDTO, ClientMapper, GlobalExceptionHandler, Visit, VisitDTO" />
     <MESSAGE value="- Изменена структура OneToMany и ManyToMany связей между сущностями&#10;&#10;-Добавлен метод VisitService.createVisit" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Изменена структура OneToMany и ManyToMany связей между сущностями&#10;&#10;-Добавлен метод VisitService.createVisit" />
+    <MESSAGE value="- Класс SecurityUtils.java заменен на SecurityService.&#10;&#10;- Добавлены библиотеки для проведения интеграционных тестов&#10;&#10;- Добавлен класс ClientServiceIntegrationTest для интеграционных тестов ClientService&#10;&#10;- Добавлен тест ClientServiceIntegrationTest.createClientTest_shouldCreateClient" />
+    <MESSAGE value="- Класс SecurityUtils.java заменен на SecurityService.&#10;&#10;- Добавлены библиотеки для проведения интеграционных тестов&#10;&#10;- Добавлен класс ClientServiceIntegrationTest для интеграционных тестов ClientService&#10;&#10;- Добавлен тест ClientServiceIntegrationTest.createClientTest_shouldCreateClient&#10;&#10;- Обновлены зависимости Spring на более новые" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Класс SecurityUtils.java заменен на SecurityService.&#10;&#10;- Добавлены библиотеки для проведения интеграционных тестов&#10;&#10;- Добавлен класс ClientServiceIntegrationTest для интеграционных тестов ClientService&#10;&#10;- Добавлен тест ClientServiceIntegrationTest.createClientTest_shouldCreateClient&#10;&#10;- Обновлены зависимости Spring на более новые" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

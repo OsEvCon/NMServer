@@ -4,6 +4,8 @@ import DTO.ClientDTO;
 import DTO.request.CreateClientRequest;
 import model.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +20,7 @@ import service.SecurityService;
 
 
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -65,26 +68,34 @@ public class ClientServiceIntegrationTest {
         doNothing().when(messagingTemplate).convertAndSend(any(String.class), any(Object.class));
     }
 
+    @Nested
+    @DisplayName("Create Client Tests")
+    class CreateClientTests {
 
-    @Test
-    void createClientTest_shouldCreateClient() {
-        CreateClientRequest request = CreateClientRequest.builder()
-                .name("testClient")
-                .phoneNumber("+71234567890")
-                .email("testClient@mail.ru")
-                .build();
+        @Test
+        void createClientTest_shouldCreateClient() {
+            CreateClientRequest request = CreateClientRequest.builder()
+                    .name("testClient")
+                    .phoneNumber("+71234567890")
+                    .email("testClient@mail.ru")
+                    .build();
 
-        ClientDTO result = clientService.createClient(request);
+            ClientDTO result = clientService.createClient(request);
 
-        assertThat(result).isNotNull();
-        assertThat(result.getName()).isEqualTo("testClient");
-        assertThat(result.getPhoneNumber()).isEqualTo("+71234567890");
-        assertThat(result.getEmail()).isEqualTo("testClient@mail.ru");
+            assertThat(result).isNotNull();
+            assertThat(result.getName()).isEqualTo("testClient");
+            assertThat(result.getPhoneNumber()).isEqualTo("+71234567890");
+            assertThat(result.getEmail()).isEqualTo("testClient@mail.ru");
 
-        //Проверка, что клиент сохранен в БД
-        List<Client> clients = (List<Client>) clientRepository.findAll();
-        assertThat(clients).hasSize(1);
-        assertThat(clients.get(0).getName()).isEqualTo("testClient");
+            //Проверка, что клиент сохранен в БД
+            List<Client> clients = (List<Client>) clientRepository.findAll();
+            assertThat(clients).hasSize(1);
+            assertThat(clients.get(0).getName()).isEqualTo("testClient");
+            Set<Client> masterClients = testMaster.getClients();
+            assertThat(masterClients).hasSize(1);
+            assertThat(masterClients.iterator().next().getName()).isEqualTo("testClient");
+        }
     }
+
 
 }
