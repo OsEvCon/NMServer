@@ -1,7 +1,6 @@
 package mapper;
 
 import DTO.ClientDTO;
-import DTO.VisitDTO;
 import DTO.request.CreateClientRequest;
 import DTO.request.UpdateClientRequest;
 import model.Client;
@@ -38,15 +37,11 @@ public class ClientMapper {
     /**
      * Преобразование CreateRequest -> Client
      */
-    public Client toClient(CreateClientRequest request, Master currentMaster) {
+    public Client toEntity (CreateClientRequest request) {
         Client client = new Client();
         client.setName(request.getName());
         client.setPhoneNumber(request.getPhoneNumber());
         client.setEmail(request.getEmail());
-
-        if (currentMaster != null){
-            client.setMasters(List.of(currentMaster));
-        }
 
         return client;
     }

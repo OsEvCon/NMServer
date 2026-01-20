@@ -1,8 +1,10 @@
 package controllers;
 
 import DTO.VisitDTO;
+import DTO.request.CreateVisitRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import service.SecurityUtils;
 import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 import service.VisitService;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -38,35 +42,19 @@ public class VisitController {
         return ResponseEntity.ok(visits);
     }
 
-    @PostMapping("/createVisitTest")
-    public ResponseEntity<Visit> createVisit(@RequestBody Visit visit){
-        System.out.println("запрос на добавление visit");
-        Master master = getCurrentMaster();
-        if (master != null){
-            visit.setMaster(master);
-            Visit savedVisit = visitRepository.save(visit);
-            master.getVisits().add(savedVisit);
-            masterRepository.save(master);
+    @PostMapping()
+    public ResponseEntity<VisitDTO> createVisit(@RequestBody @Valid CreateVisitRequest request){
+        log.debug("Запрос на создание визита {}", request.getVisitDate());
 
-            // Если клиент присутствует, добавляем его в базу данных
-            if (visit.getClient() != null) {
-                Optional<Client> optionalClient = clientRepository.findClientById(visit.getClient().getId());
-                if (optionalClient.isPresent()) {
-                    Client client = optionalClient.get();
-                    client.getVisits().add(savedVisit);
-                    clientRepository.save(client);
-                }
-            }
+        VisitDTO createdVisit = visitService.createVisit(request);
 
-            messagingTemplate.convertAndSend("/topic/visits.update",
-                    Map.of(
-                            "type", "CREATED",
-                            "visit", savedVisit
-                    ));
-            return ResponseEntity.ok(savedVisit);
-        } else {
-            return ResponseEntity.badRequest().body(visit);
-        }
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(createdVisit.getVisitId())
+                .toUri();
+
+        return ResponseEntity.created(location).body(createdVisit);
     }
 
     @Transactional(
@@ -87,7 +75,7 @@ public class VisitController {
             }
             visit.setVisitDateTime(visitDTO.getVisitDateTime());
             visit.getProcedures().clear();
-            for (Integer i : visitDTO.getProcedures()){
+            for (Integer i : visitDTO.getProceduresId()){
                 Procedure procedure = procedureRepository.findById(i).get();
                 visit.getProcedures().add(procedure);
             }
@@ -131,4 +119,7 @@ public class VisitController {
         }
     }
 
+    private Master getCurrentMaster() {
+        return SecurityUtils.getCurrentMaster();
+    }
 }

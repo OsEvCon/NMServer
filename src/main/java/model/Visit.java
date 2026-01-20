@@ -33,7 +33,7 @@ public class Visit {
     private Client client;
 
     @JsonBackReference("master-visits")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "master_id")
     private Master master;
 
@@ -45,4 +45,17 @@ public class Visit {
     )
     @Builder.Default
     private List<Procedure> procedures = new ArrayList<>();
+
+    public void addProcedure(Procedure procedure) {
+        procedures.add(procedure);
+    }
+
+    public void setVisitDateTime(String visitDateTime) {
+        this.visitDateTime = LocalDateTime.parse(visitDateTime);
+    }
+
+    public void setVisitDateTime(LocalDateTime visitDateTime) {
+        this.visitDateTime = visitDateTime;
+    }
+
 }

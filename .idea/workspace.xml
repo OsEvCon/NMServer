@@ -5,19 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="- Созданы классы ProcedureDTO, VisitService, VisitMapper для корректной передачи DTO в запросах&#10;&#10;- Создан класс VisitDataAccessException для обработки исключений доступа к визитам&#10;&#10;- Логика из метода VisitController.getVisits перенесена в VisitService.getVisits&#10;&#10;- Небольшие изменения в AuthService, Client, ClientController, ClientDTO, ClientMapper, GlobalExceptionHandler, Visit, VisitDTO">
-      <change afterPath="$PROJECT_DIR$/src/main/java/DTO/response/ProcedureDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/exception/VisitDataAccessException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mapper/VisitMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/service/VisitService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DTO/request/CreateVisitRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DTO/response/VisitResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/ClientDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/ClientDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/VisitDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/VisitDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/ClientController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/VisitController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/VisitController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mapper/ClientMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mapper/ClientMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mapper/VisitMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mapper/VisitMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Master.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Master.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/ProcedureRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/ProcedureRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Visit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Visit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/VisitRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/VisitRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/ClientService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/VisitService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/VisitService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/serviceTest/ClientServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/serviceTest/ClientServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -169,23 +170,7 @@
       <recent name="model" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.AuthServiceTest">
-    <configuration name="AuthServiceTest$Refresh.refreshTest_InvalidRefreshToken" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="TestServer" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="serviceTest.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="serviceTest.AuthServiceTest" />
-      <option name="MAIN_CLASS_NAME" value="serviceTest.AuthServiceTest$Refresh" />
-      <option name="METHOD_NAME" value="refreshTest_InvalidRefreshToken" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.ClientServiceTest">
     <configuration name="AuthServiceTest$Refresh.refreshTest_NoRegisteredUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TestServer" />
       <extension name="coverage">
@@ -218,22 +203,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AuthServiceTest$Refresh.refreshTest_ValidCredentials" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="TestServer" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="serviceTest.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="serviceTest.AuthServiceTest" />
-      <option name="MAIN_CLASS_NAME" value="serviceTest.AuthServiceTest$Refresh" />
-      <option name="METHOD_NAME" value="refreshTest_ValidCredentials" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="AuthServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TestServer" />
       <extension name="coverage">
@@ -249,13 +218,44 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ClientServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TestServer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="serviceTest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="serviceTest" />
+      <option name="MAIN_CLASS_NAME" value="serviceTest.ClientServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ClientServiceTest.createClientTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TestServer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="serviceTest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="serviceTest" />
+      <option name="MAIN_CLASS_NAME" value="serviceTest.ClientServiceTest" />
+      <option name="METHOD_NAME" value="createClientTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ClientServiceTest" />
+        <item itemvalue="JUnit.ClientServiceTest.createClientTest" />
         <item itemvalue="JUnit.AuthServiceTest" />
         <item itemvalue="JUnit.AuthServiceTest$Refresh.refreshTest_NoRegisteredUser" />
         <item itemvalue="JUnit.AuthServiceTest$Refresh.refreshTest_NotRefreshToken" />
-        <item itemvalue="JUnit.AuthServiceTest$Refresh.refreshTest_InvalidRefreshToken" />
-        <item itemvalue="JUnit.AuthServiceTest$Refresh.refreshTest_ValidCredentials" />
       </list>
     </recent_temporary>
   </component>
@@ -482,6 +482,10 @@
       <workItem from="1768721806398" duration="13083000" />
       <workItem from="1768800577190" duration="17956000" />
       <workItem from="1768830232821" duration="319000" />
+      <workItem from="1768830567792" duration="270000" />
+      <workItem from="1768838590582" duration="5638000" />
+      <workItem from="1768888831288" duration="14475000" />
+      <workItem from="1768910559056" duration="940000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>
@@ -758,7 +762,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768818811266</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="- Созданы классы ProcedureDTO, VisitService, VisitMapper для корректной передачи DTO в запросах&#10;&#10;- Создан класс VisitDataAccessException для обработки исключений доступа к визитам&#10;&#10;- Логика из метода VisitController.getVisits перенесена в VisitService.getVisits&#10;&#10;- Небольшие изменения в AuthService, Client, ClientController, ClientDTO, ClientMapper, GlobalExceptionHandler, Visit, VisitDTO">
+      <option name="closed" value="true" />
+      <created>1768830669690</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1768830669690</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

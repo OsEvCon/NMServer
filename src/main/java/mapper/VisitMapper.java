@@ -1,6 +1,9 @@
 package mapper;
 
 import DTO.VisitDTO;
+import DTO.request.CreateVisitRequest;
+import model.Client;
+import model.Master;
 import model.Procedure;
 import model.Visit;
 import org.springframework.stereotype.Component;
@@ -36,5 +39,24 @@ public class VisitMapper {
             visitDTOs.add(toDTO(visit));
         }
         return visitDTOs;
+    }
+
+    public Visit toEntity(CreateVisitRequest request, Master currentMaster, Client clientForVisit, List<Procedure> proceduresForVisit) {
+        Visit  visit = new Visit();
+        visit.setVisitDateTime(request.getVisitDate());
+
+        if (currentMaster != null) {
+            currentMaster.addVisit(visit);
+        }
+
+        if (clientForVisit != null) {
+            clientForVisit.addVisit(visit);
+        }
+
+        if (proceduresForVisit != null) {
+            visit.setProcedures(proceduresForVisit);
+        }
+
+        return visit;
     }
 }

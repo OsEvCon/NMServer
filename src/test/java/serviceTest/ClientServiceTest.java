@@ -52,6 +52,9 @@ public class ClientServiceTest {
     @Mock
     ClientMapper clientMapper;
 
+    @Mock
+    MasterRepository masterRepository;
+
     @InjectMocks
     ClientService clientService;
 
@@ -156,12 +159,11 @@ public class ClientServiceTest {
             testClient.setName(request.getName());
             testClient.setPhoneNumber(request.getPhoneNumber());
             testClient.setEmail(request.getEmail());
-            testClient.setMasters(List.of(testMaster));
 
             when(clientRepository.existsByMastersContainingAndPhoneNumber(testMaster, request.getPhoneNumber()))
                     .thenReturn(false);
 
-            when(clientMapper.toClient(request,  testMaster))
+            when(clientMapper.toEntity(request))
                     .thenReturn(testClient);
 
             when(clientRepository.save(testClient)).thenReturn(testClient);
@@ -174,7 +176,7 @@ public class ClientServiceTest {
             verify(clientRepository, times(1))
                     .existsByMastersContainingAndPhoneNumber(testMaster, request.getPhoneNumber());
 
-            verify(clientMapper).toClient(request, testMaster);
+            verify(clientMapper).toEntity(request);
 
             verify(clientRepository, times(1)).save(testClient);
 
@@ -230,7 +232,7 @@ public class ClientServiceTest {
             when(clientRepository.save(any(Client.class)))
                     .thenThrow(new DataAccessException("Database connection lost") {});
 
-            when(clientMapper.toClient(request,  testMaster))
+            when(clientMapper.toEntity(request))
                     .thenReturn(testClient);
 
             assertThatThrownBy(() -> clientService.createClient(request))
@@ -255,7 +257,8 @@ public class ClientServiceTest {
             Map<Client, List<Visit>> clientToVisitsMap = new HashMap<>();
             for(int i = 0; i < 4; i++) {
                 Client client = clientsForRemove.get(i);
-                client.setMasters(new ArrayList<>(List.of(testMaster)));
+                client.setMasters(new HashSet<>(Set.of(testMaster)) {
+                });
                 testMaster.addClient(client);
 
                 List<Visit> visits = client.getVisits();
@@ -460,7 +463,7 @@ public class ClientServiceTest {
         withSecurityUtilsMock(testMaster -> {
             //Создать клиента для обновления
             Client clientForUpdate = getClients(1).get(0);
-            clientForUpdate.setMasters(new ArrayList<>(List.of(testMaster)));
+            clientForUpdate.setMasters(new HashSet<>(Set.of(testMaster)));
 
             //Создать запрос на обновление клиента
             UpdateClientRequest updateClientRequest = new UpdateClientRequest();
@@ -475,7 +478,7 @@ public class ClientServiceTest {
                     .name("UpdatedTestClient0")
                     .phoneNumber("+71234567890")
                     .email("testClient0@mail.ru")
-                    .masters(new  ArrayList<>(List.of(testMaster)))
+                    .masters(new HashSet<>(Set.of(testMaster)))
                     .build();
 
             when(clientRepository.findByIdAndMastersContaining(0, testMaster))

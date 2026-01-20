@@ -3,10 +3,8 @@ import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+
 @Getter // Геттеры для всех полей
 @Setter // Сеттеры для всех не-final полей
 @EqualsAndHashCode(onlyExplicitlyIncluded = true) // equals/hashCode ТОЛЬКО для включенных полей
@@ -35,9 +33,9 @@ public class Client {
     @Column(name = "email")
     private String email;
 
-    @ManyToMany(mappedBy = "clients", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "clients", fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<Master> masters = new ArrayList<>();
+    private Set<Master> masters = new HashSet<>();
 
     @JsonManagedReference("client-visits")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
@@ -45,5 +43,15 @@ public class Client {
 
     public void addMasters(Master... mastersToAdd) {
         Collections.addAll(this.masters, mastersToAdd);
+    }
+
+    public void addVisit(Visit visitToAdd) {
+        visits.add(visitToAdd);
+        visitToAdd.setClient(this);
+    }
+
+    public void removeVisit(Visit visitToRemove) {
+        visits.remove(visitToRemove);
+        visitToRemove.setClient(null);
     }
 }

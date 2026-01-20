@@ -12,10 +12,7 @@ import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Getter
@@ -46,18 +43,17 @@ public class Master {
     @Column
     private String secretKey;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "master_client",
             joinColumns = @JoinColumn(name = "master_id"),
             inverseJoinColumns = @JoinColumn(name = "client_id")
     )
     @JsonIgnoreProperties("masters")
-    private List<Client> clients = new ArrayList<>();
+    private Set<Client> clients = new HashSet<>();
 
     @JsonManagedReference("master-visits")
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "master")
-    @Fetch(FetchMode.SUBSELECT) // Добавляем аннотацию @Fetch с указанием стратегии загрузки
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "master")
     List<Visit> visits = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -84,8 +80,23 @@ public class Master {
 
     public void addClient(Client client) {
         clients.add(client);
+        client.getMasters().add(this);
     }
+
+    public void removeClient(Client client) {
+        clients.remove(client);
+        client.getMasters().remove(this);
+    }
+
     public void addVisit(Visit visit) {
         visits.add(visit);
+        visit.setMaster(this); // просто set!
     }
+
+    public void removeVisit(Visit visit) {
+        visits.remove(visit);
+        visit.setMaster(null);
+    }
+
+
 }

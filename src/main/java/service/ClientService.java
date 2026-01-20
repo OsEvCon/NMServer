@@ -32,6 +32,7 @@ public class ClientService {
     private final VisitRepository visitRepository;
     private final SimpMessagingTemplate messagingTemplate;
     private final ClientMapper clientMapper;
+    private final MasterRepository masterRepository;
 
     @Transactional(readOnly = true)
     public List<ClientDTO> getClientsForCurrentMaster() {
@@ -54,7 +55,6 @@ public class ClientService {
     public ClientDTO createClient(CreateClientRequest request) {
         log.debug("Создание клиента из запроса: {}", request);
 
-
             Master master = getCurrentMaster();
 
             boolean phoneExists = clientRepository.existsByMastersContainingAndPhoneNumber(
@@ -65,10 +65,14 @@ public class ClientService {
                 throw new BusinessException("У вас уже есть клиент с телефоном " + request.getPhoneNumber());
             }
 
-            Client client = clientMapper.toClient(request, master);
+
+            Client client = clientMapper.toEntity(request);
+
+            master.addClient(client);
 
             try {
                 Client savedClient = clientRepository.save(client);
+                masterRepository.save(master);
                 ClientDTO result = clientMapper.toDTO(savedClient);
 
                 messagingTemplate.convertAndSend("/topic/clients.update",
