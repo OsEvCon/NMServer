@@ -7,6 +7,8 @@ import DTO.response.AuthResponse;
 import DTO.response.RefreshResponse;
 import DTO.response.RegisterResponse;
 import jakarta.annotation.security.PermitAll;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import service.AuthService;
@@ -17,9 +19,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
-import javax.validation.constraints.Pattern;
 
 @Slf4j
 @Validated

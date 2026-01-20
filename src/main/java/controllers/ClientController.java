@@ -4,6 +4,7 @@ import DTO.ClientDTO;
 import DTO.request.CreateClientRequest;
 import DTO.request.DeleteClientsRequest;
 import DTO.request.UpdateClientRequest;
+import jakarta.validation.Valid;
 import service.ClientService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 

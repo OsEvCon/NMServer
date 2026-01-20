@@ -2,10 +2,10 @@ package controllers;
 
 import DTO.VisitDTO;
 import DTO.request.CreateVisitRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import service.SecurityUtils;
 import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +13,9 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
+import service.SecurityService;
 import service.VisitService;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +32,7 @@ public class VisitController {
     private final ClientRepository clientRepository;
     private final ProcedureRepository procedureRepository;
     private final VisitService visitService;
+    private final SecurityService  securityService;
 
     @GetMapping()
     public ResponseEntity<List<VisitDTO>> getVisits(){
@@ -95,7 +96,7 @@ public class VisitController {
     public ResponseEntity<List<Visit>> deleteVisits(@RequestBody List<Visit> visits){
         System.out.println("запрос на удаление нескольких визитов");
 
-        Master master = getCurrentMaster();
+        Master master = securityService.getCurrentMasterOrThrow();
         if (master != null){
             //Удаление visits из коллекции мастера
             master.getVisits().removeAll(visits);
@@ -119,7 +120,4 @@ public class VisitController {
         }
     }
 
-    private Master getCurrentMaster() {
-        return SecurityUtils.getCurrentMaster();
-    }
 }

@@ -1,6 +1,5 @@
 package controllers;
 
-import service.SecurityUtils;
 import model.Master;
 import model.MasterRepository;
 import model.Procedure;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import service.SecurityService;
 
 import java.util.List;
 import java.util.Map;
@@ -20,17 +20,19 @@ public class ProcedureController {
     private final MasterRepository masterRepository;
     private final ProcedureRepository procedureRepository;
     private final SimpMessagingTemplate messagingTemplate;
+    private final SecurityService securityService;
 
-    public ProcedureController(MasterRepository masterRepository, ProcedureRepository procedureRepository, SimpMessagingTemplate messagingTemplate) {
+    public ProcedureController(MasterRepository masterRepository, ProcedureRepository procedureRepository, SimpMessagingTemplate messagingTemplate, SecurityService securityService) {
         this.masterRepository = masterRepository;
         this.procedureRepository = procedureRepository;
         this.messagingTemplate = messagingTemplate;
+        this.securityService = securityService;
     }
 
     @GetMapping("/getProcedures")
     public List<Procedure> getProcedures(){
         System.out.println("Запрос процедур");
-        Master master = getCurrentMaster();
+        Master master = securityService.getCurrentMasterOrThrow();
         List<Procedure> result = null;
         if (master != null){
             result = master.getProcedures();
@@ -45,7 +47,7 @@ public class ProcedureController {
         System.out.println("запрос на добавление procedure");
         String result;
 
-        Master master = getCurrentMaster();
+        Master master = securityService.getCurrentMasterOrThrow();
 
         if (master != null){
             Procedure savedProcedure = procedureRepository.save(procedure);
@@ -69,7 +71,7 @@ public class ProcedureController {
         System.out.println("Запрос на удаление процедур");
         String result;
 
-        Master master = getCurrentMaster();
+        Master master = securityService.getCurrentMasterOrThrow();
 
         if (master != null){
             master.getProcedures().removeAll(procedures);
@@ -110,7 +112,4 @@ public class ProcedureController {
         return result;
     }
 
-    private Master getCurrentMaster() {
-        return SecurityUtils.getCurrentMaster();
-    }
 }

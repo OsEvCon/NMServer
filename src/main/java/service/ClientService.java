@@ -33,13 +33,14 @@ public class ClientService {
     private final SimpMessagingTemplate messagingTemplate;
     private final ClientMapper clientMapper;
     private final MasterRepository masterRepository;
+    private final SecurityService securityService;
 
     @Transactional(readOnly = true)
     public List<ClientDTO> getClientsForCurrentMaster() {
         log.info("Получение списка клиентов для текущего мастера");
 
         try {
-            Master master = getCurrentMaster();
+            Master master = securityService.getCurrentMasterOrThrow();
             List<Client> clients = clientRepository.findByMastersContaining(master);
             log.debug("Найдено {} клиентов для мастера с ID:{}",
                     clients.size(), master.getId());
@@ -55,7 +56,7 @@ public class ClientService {
     public ClientDTO createClient(CreateClientRequest request) {
         log.debug("Создание клиента из запроса: {}", request);
 
-            Master master = getCurrentMaster();
+            Master master = securityService.getCurrentMasterOrThrow();
 
             boolean phoneExists = clientRepository.existsByMastersContainingAndPhoneNumber(
                     master, request.getPhoneNumber()
@@ -89,7 +90,7 @@ public class ClientService {
 
     @Transactional
     public void deleteMultipleClients(DeleteClientsRequest  request) {
-        Master master = getCurrentMaster();
+        Master master = securityService.getCurrentMasterOrThrow();
 
         List<Integer> clientIds = request.getClientIds();
 
@@ -117,8 +118,8 @@ public class ClientService {
         detachClientsFromVisits(clientsToDelete);
 
         for (Client client : clientsToDelete) {
-            master.getClients().remove(client);
-            client.getMasters().remove(master);
+            master.removeClient(client);
+            masterRepository.save(master);
 
             if (client.getMasters().isEmpty()) {
                 clientRepository.delete(client);
@@ -141,7 +142,7 @@ public class ClientService {
     public ClientDTO updateClient(Integer clientId, UpdateClientRequest request) {
         log.info("Обновление клиента ID: {} c данными {}", clientId, request);
 
-        Master master = getCurrentMaster();
+        Master master = securityService.getCurrentMasterOrThrow();
         Client client = clientRepository.findByIdAndMastersContaining(clientId, master)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Клиент с ID " + clientId + " не найден или не принадлежит вам"));
@@ -194,7 +195,5 @@ public class ClientService {
         }
     }
 
-    private Master getCurrentMaster() {
-        return SecurityUtils.getCurrentMaster();
-    }
+
 }

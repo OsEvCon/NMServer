@@ -4,20 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="- Созданы классы ProcedureDTO, VisitService, VisitMapper для корректной передачи DTO в запросах&#10;&#10;- Создан класс VisitDataAccessException для обработки исключений доступа к визитам&#10;&#10;- Логика из метода VisitController.getVisits перенесена в VisitService.getVisits&#10;&#10;- Небольшие изменения в AuthService, Client, ClientController, ClientDTO, ClientMapper, GlobalExceptionHandler, Visit, VisitDTO">
-      <change afterPath="$PROJECT_DIR$/src/main/java/DTO/request/CreateVisitRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/DTO/response/VisitResponse.java" afterDir="false" />
+    <list default="true" id="9264d724-fa7b-422b-ab5c-545c9766e059" name="Changes" comment="- Изменена структура OneToMany и ManyToMany связей между сущностями&#10;&#10;-Добавлен метод VisitService.createVisit">
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/SecurityService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/integration/BaseIntegrationTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/integration/ClientServiceIntegrationTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/application-test.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/request/CreateClientRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/request/CreateClientRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/request/CreateVisitRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/request/CreateVisitRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/request/DeleteClientsRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/request/DeleteClientsRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/request/LoginRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/request/LoginRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/request/RefreshRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/request/RefreshRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/request/RegisterRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/request/RegisterRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DTO/request/UpdateClientRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DTO/request/UpdateClientRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/ClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/ProcedureController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/ProcedureController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controllers/VisitController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/VisitController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mapper/ClientMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mapper/ClientMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mapper/VisitMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mapper/VisitMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Master.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Master.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/ProcedureRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/ProcedureRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Visit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Visit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/VisitRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/VisitRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/MySpringBootApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/MySpringBootApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/service/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/ClientService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/JwtUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/SecurityUtils.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/service/VisitService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/VisitService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/serviceTest/AuthServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/serviceTest/AuthServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/serviceTest/ClientServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/serviceTest/ClientServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -83,76 +96,79 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;JUnit.AuthServiceTest$Login.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthServiceTest$Refresh.refreshTest_InvalidRefreshToken.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthServiceTest$Refresh.refreshTest_NoRegisteredUser.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthServiceTest$Refresh.refreshTest_NotRefreshToken.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthServiceTest$Refresh.refreshTest_ValidCredentials.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthServiceTest$Register.registerTest_DBError.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthServiceTest$Register.registerTest_DuplicateEmail.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthServiceTest$Register.registerTest_NoRole.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthServiceTest$Register.registerTest_ValidCredentials.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthServiceTest.loginTest_AuthFails.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthServiceTest.loginTest_DBError.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthServiceTest.loginTest_EmptyLoginRequest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthServiceTest.loginTest_JwtError (1).executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthServiceTest.loginTest_JwtError.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthServiceTest.loginTest_ValidCredentials.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AuthServiceTest.loginTest_WrongPassword.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ClientServiceTest.createClientTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ClientServiceTest.createClientWithDuplicatePhoneNumberTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ClientServiceTest.createClientWithRepositoryError.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ClientServiceTest.createClientWithRepositoryErrorTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ClientServiceTest.deleteMultipleClientsTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ClientServiceTest.deleteMultipleClientsTest_ClientHasMultipleMasters.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ClientServiceTest.deleteMultipleClientsTest_EmptyIdList.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ClientServiceTest.deleteMultipleClientsTest_NoClientsBelongToMaster.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ClientServiceTest.deleteMultipleClientsTest_NonExistentIds.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ClientServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ClientServiceTest.getClientsTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ClientServiceTest.getClientsTestWithClients.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ClientServiceTest.getClientsTestWithEmptyClientList.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ClientServiceTest.getClientsTestWithOneClient.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ClientServiceTest.getClientsTestWithRepositoryError.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ClientServiceTest.updateClientTest_CLientNotFound.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ClientServiceTest.updateClientTest_DublicatePhoneNumber.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ClientServiceTest.updateClientTest_HappyPath.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ClientServiceTest.updateClient_WhenFieldIsNull_ShouldNotUpdateField.executor&quot;: &quot;Debug&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Spring Boot.MySpringBootApplication.executor&quot;: &quot;Run&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;refactoring&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/evgen/IdeaProjects/NMServer&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.3494253&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;a837a37f70a50163098d75ae6053fc62&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JUnit.AuthServiceTest$Login.executor": "Run",
+    "JUnit.AuthServiceTest$Refresh.refreshTest_InvalidRefreshToken.executor": "Run",
+    "JUnit.AuthServiceTest$Refresh.refreshTest_NoRegisteredUser.executor": "Run",
+    "JUnit.AuthServiceTest$Refresh.refreshTest_NotRefreshToken.executor": "Run",
+    "JUnit.AuthServiceTest$Refresh.refreshTest_ValidCredentials.executor": "Run",
+    "JUnit.AuthServiceTest$Register.registerTest_DBError.executor": "Run",
+    "JUnit.AuthServiceTest$Register.registerTest_DuplicateEmail.executor": "Run",
+    "JUnit.AuthServiceTest$Register.registerTest_NoRole.executor": "Run",
+    "JUnit.AuthServiceTest$Register.registerTest_ValidCredentials.executor": "Run",
+    "JUnit.AuthServiceTest.executor": "Run",
+    "JUnit.AuthServiceTest.loginTest_AuthFails.executor": "Run",
+    "JUnit.AuthServiceTest.loginTest_DBError.executor": "Run",
+    "JUnit.AuthServiceTest.loginTest_EmptyLoginRequest.executor": "Run",
+    "JUnit.AuthServiceTest.loginTest_JwtError (1).executor": "Run",
+    "JUnit.AuthServiceTest.loginTest_JwtError.executor": "Run",
+    "JUnit.AuthServiceTest.loginTest_ValidCredentials.executor": "Run",
+    "JUnit.AuthServiceTest.loginTest_WrongPassword.executor": "Run",
+    "JUnit.ClientServiceIntegrationTest.contextLoads.executor": "Run",
+    "JUnit.ClientServiceIntegrationTest.createClientTest_shouldCreateClient.executor": "Run",
+    "JUnit.ClientServiceIntegrationTest.executor": "Run",
+    "JUnit.ClientServiceTest.createClientTest.executor": "Run",
+    "JUnit.ClientServiceTest.createClientWithDuplicatePhoneNumberTest.executor": "Run",
+    "JUnit.ClientServiceTest.createClientWithRepositoryError.executor": "Run",
+    "JUnit.ClientServiceTest.createClientWithRepositoryErrorTest.executor": "Run",
+    "JUnit.ClientServiceTest.deleteMultipleClientsTest.executor": "Run",
+    "JUnit.ClientServiceTest.deleteMultipleClientsTest_ClientHasMultipleMasters.executor": "Run",
+    "JUnit.ClientServiceTest.deleteMultipleClientsTest_EmptyIdList.executor": "Run",
+    "JUnit.ClientServiceTest.deleteMultipleClientsTest_NoClientsBelongToMaster.executor": "Run",
+    "JUnit.ClientServiceTest.deleteMultipleClientsTest_NonExistentIds.executor": "Run",
+    "JUnit.ClientServiceTest.executor": "Run",
+    "JUnit.ClientServiceTest.getClientsTest.executor": "Run",
+    "JUnit.ClientServiceTest.getClientsTestWithClients.executor": "Run",
+    "JUnit.ClientServiceTest.getClientsTestWithEmptyClientList.executor": "Run",
+    "JUnit.ClientServiceTest.getClientsTestWithOneClient.executor": "Run",
+    "JUnit.ClientServiceTest.getClientsTestWithRepositoryError.executor": "Run",
+    "JUnit.ClientServiceTest.updateClientTest_CLientNotFound.executor": "Run",
+    "JUnit.ClientServiceTest.updateClientTest_DublicatePhoneNumber.executor": "Run",
+    "JUnit.ClientServiceTest.updateClientTest_HappyPath.executor": "Run",
+    "JUnit.ClientServiceTest.updateClient_WhenFieldIsNull_ShouldNotUpdateField.executor": "Debug",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.MySpringBootApplication.executor": "Run",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "refactoring",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/evgen/IdeaProjects/NMServer",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.3494253",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "spring.configuration.checksum": "a837a37f70a50163098d75ae6053fc62",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\evgen\IdeaProjects\NMServer\src\main\java\model" />
@@ -170,50 +186,50 @@
       <recent name="model" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ClientServiceTest">
-    <configuration name="AuthServiceTest$Refresh.refreshTest_NoRegisteredUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.ClientServiceIntegrationTest">
+    <configuration name="ClientServiceIntegrationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TestServer" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="serviceTest.*" />
+          <option name="PATTERN" value="integration.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="serviceTest.AuthServiceTest" />
-      <option name="MAIN_CLASS_NAME" value="serviceTest.AuthServiceTest$Refresh" />
-      <option name="METHOD_NAME" value="refreshTest_NoRegisteredUser" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AuthServiceTest$Refresh.refreshTest_NotRefreshToken" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="TestServer" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="serviceTest.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="serviceTest.AuthServiceTest" />
-      <option name="MAIN_CLASS_NAME" value="serviceTest.AuthServiceTest$Refresh" />
-      <option name="METHOD_NAME" value="refreshTest_NotRefreshToken" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AuthServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="TestServer" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="serviceTest.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="serviceTest" />
-      <option name="MAIN_CLASS_NAME" value="serviceTest.AuthServiceTest" />
+      <option name="PACKAGE_NAME" value="integration" />
+      <option name="MAIN_CLASS_NAME" value="integration.ClientServiceIntegrationTest" />
       <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ClientServiceIntegrationTest.contextLoads" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TestServer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="integration.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="integration" />
+      <option name="MAIN_CLASS_NAME" value="integration.ClientServiceIntegrationTest" />
+      <option name="METHOD_NAME" value="contextLoads" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ClientServiceIntegrationTest.createClientTest_shouldCreateClient" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TestServer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="integration.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="integration" />
+      <option name="MAIN_CLASS_NAME" value="integration.ClientServiceIntegrationTest" />
+      <option name="METHOD_NAME" value="createClientTest_shouldCreateClient" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -251,11 +267,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ClientServiceIntegrationTest" />
+        <item itemvalue="JUnit.ClientServiceIntegrationTest.createClientTest_shouldCreateClient" />
+        <item itemvalue="JUnit.ClientServiceIntegrationTest.contextLoads" />
         <item itemvalue="JUnit.ClientServiceTest" />
         <item itemvalue="JUnit.ClientServiceTest.createClientTest" />
-        <item itemvalue="JUnit.AuthServiceTest" />
-        <item itemvalue="JUnit.AuthServiceTest$Refresh.refreshTest_NoRegisteredUser" />
-        <item itemvalue="JUnit.AuthServiceTest$Refresh.refreshTest_NotRefreshToken" />
       </list>
     </recent_temporary>
   </component>
@@ -485,7 +501,8 @@
       <workItem from="1768830567792" duration="270000" />
       <workItem from="1768838590582" duration="5638000" />
       <workItem from="1768888831288" duration="14475000" />
-      <workItem from="1768910559056" duration="940000" />
+      <workItem from="1768910559056" duration="1086000" />
+      <workItem from="1768920227182" duration="14945000" />
     </task>
     <task id="LOCAL-00001" summary="Сделал Rest контроллер. Добавил ClientRepository и VisitRepository.">
       <created>1710502078134</created>
@@ -770,7 +787,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768830669690</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="- Изменена структура OneToMany и ManyToMany связей между сущностями&#10;&#10;-Добавлен метод VisitService.createVisit">
+      <option name="closed" value="true" />
+      <created>1768911640425</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1768911640425</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -800,7 +825,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Добавил VisitDao для корректного обновления Visit (были проблемы с @JsonIdentityInfo).&#10;I added VisitDao for proper updating of Visit (there were issues with @JsonIdentityInfo)." />
     <MESSAGE value="Перенес шифрование данных с сервера на клиент.&#10;I moved the data encryption from the server to the client." />
     <MESSAGE value="Добавил SpringSecurity. Реализовал регистрацию и вход в систему. Реализовал обработку запросов с помощью JWT токенов.&#10;Added Spring Security. Implemented registration and login functionality. Implemented request handling using JWT tokens." />
     <MESSAGE value="Добавил обновление клиента и процедуры.&#10;Added update Client and Procedure." />
@@ -825,7 +849,8 @@
     <MESSAGE value="- Перенесена логика метода AuthController.refresh в метод AuthService.refresh.&#10;&#10;- Добавлены тесты для метода AuthService.refresh&#10;&#10;- Добавлены типы для токенов в JwtUtil&#10;&#10;- Добавлен RefreshResponse для формирования ответа на запрос AuthController.refresh" />
     <MESSAGE value="- Перенесена логика метода AuthController.checkUpdate в метод AuthService.checkUpdate&#10;&#10;- Добавлено исключение UpdateException для обработки ошибок обновления" />
     <MESSAGE value="- Созданы классы ProcedureDTO, VisitService, VisitMapper для корректной передачи DTO в запросах&#10;&#10;- Создан класс VisitDataAccessException для обработки исключений доступа к визитам&#10;&#10;- Логика из метода VisitController.getVisits перенесена в VisitService.getVisits&#10;&#10;- Небольшие изменения в AuthService, Client, ClientController, ClientDTO, ClientMapper, GlobalExceptionHandler, Visit, VisitDTO" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Созданы классы ProcedureDTO, VisitService, VisitMapper для корректной передачи DTO в запросах&#10;&#10;- Создан класс VisitDataAccessException для обработки исключений доступа к визитам&#10;&#10;- Логика из метода VisitController.getVisits перенесена в VisitService.getVisits&#10;&#10;- Небольшие изменения в AuthService, Client, ClientController, ClientDTO, ClientMapper, GlobalExceptionHandler, Visit, VisitDTO" />
+    <MESSAGE value="- Изменена структура OneToMany и ManyToMany связей между сущностями&#10;&#10;-Добавлен метод VisitService.createVisit" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Изменена структура OneToMany и ManyToMany связей между сущностями&#10;&#10;-Добавлен метод VisitService.createVisit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

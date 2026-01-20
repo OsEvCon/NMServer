@@ -12,7 +12,6 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.Valid;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -30,13 +29,14 @@ public class VisitService {
     private final ClientRepository clientRepository;
     private final ProcedureRepository procedureRepository;
     private final SimpMessagingTemplate messagingTemplate;
+    private final SecurityService securityService;
 
     @Transactional(readOnly = true)
     public List<VisitDTO> getVisits() {
         log.info("Получение списка визитов для текущего мастера");
 
         try {
-            Integer masterId = getCurrentMaster().getId();
+            Integer masterId = securityService.getCurrentMasterOrThrow().getId();
 
             List<Visit> visits = visitRepository.findVisitsByMasterId(masterId);
 
@@ -53,7 +53,7 @@ public class VisitService {
         Client clientForVisit = loadClientIfProvided(request.getClientId());
         List<Procedure> proceduresForVisit = loadProceduresIfProvided(request.getProcedureIds());
 
-        Visit visitForCreate = visitMapper.toEntity(request, getCurrentMaster(), clientForVisit, proceduresForVisit);
+        Visit visitForCreate = visitMapper.toEntity(request, securityService.getCurrentMasterOrThrow(), clientForVisit, proceduresForVisit);
 
         Visit savedVisit = visitRepository.save(visitForCreate);
 
@@ -64,10 +64,6 @@ public class VisitService {
                 ));
 
         return visitMapper.toDTO(savedVisit);
-    }
-
-    private Master getCurrentMaster() {
-        return SecurityUtils.getCurrentMaster();
     }
 
     private Client loadClientIfProvided(Integer clientId) {
@@ -96,7 +92,7 @@ public class VisitService {
                     .filter(id -> !foundIds.contains(id))
                     .toList();
 
-            throw new ResourceNotFoundException("Процедуры с ID: %s не найдены у мастера с ID: %s".formatted(missingIds, getCurrentMaster().getId()));
+            throw new ResourceNotFoundException("Процедуры с ID: %s не найдены у мастера с ID: %s".formatted(missingIds, securityService.getCurrentMasterOrThrow().getId()));
         }
 
         return procedureList;

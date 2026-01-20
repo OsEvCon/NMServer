@@ -1,6 +1,5 @@
 package model;
 
-import service.SecurityUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
@@ -13,7 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"service", "model", "Serializer", "controllers", "mapper"})
+@ComponentScan(basePackages = {"service", "model", "controllers", "mapper"})
 public class MySpringBootApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
@@ -28,8 +27,4 @@ public class MySpringBootApplication extends SpringBootServletInitializer {
                 .setDateFormat(new StdDateFormat().withColonInTimeZone(true));
     }
 
-    @Bean
-    public CommandLineRunner initSecurityUtils(MasterRepository masterRepository) {
-        return args -> SecurityUtils.init(masterRepository);
-    }
 }

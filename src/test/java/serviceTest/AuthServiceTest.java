@@ -84,12 +84,12 @@ public class AuthServiceTest {
     @InjectMocks
     AuthService authService;
 
-    @BeforeEach
+   /* @BeforeEach
     void setUpLogging() {
         // Включаем DEBUG для конкретного логгера
         Logger logger = (Logger) LoggerFactory.getLogger(AuthService.class);
         logger.setLevel(Level.DEBUG);
-    }
+    }*/
 
     @BeforeEach
     void setUp() {

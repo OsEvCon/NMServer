@@ -3,9 +3,12 @@ package service;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +21,11 @@ public class JwtUtil {
     private String secretKey;
     private final long accessTokenValidity = 15 * 60 * 1000; // 15 минут
     private final long refreshTokenValidity = 7 * 24 * 60 * 60 * 1000; // 7 дней
+
+    private SecretKey getSecretKey() {
+        // Для версии 0.12.x нужно создавать ключ так
+        return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+    }
 
     public String generateToken(String userEmail) {
         Map<String, Object> claims = new HashMap<>();
@@ -63,12 +71,14 @@ public class JwtUtil {
         }
     }
 
+    // Проверка refresh токена
     public boolean isRefreshToken(String token) {
         try {
             Claims claims = Jwts.parser()
-                    .setSigningKey(secretKey)
-                    .parseClaimsJws(token)
-                    .getBody();
+                    .verifyWith(getSecretKey())
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
 
             return "refresh".equals(claims.get("type", String.class));
         } catch (Exception e) {
@@ -79,9 +89,10 @@ public class JwtUtil {
     public boolean isAccessToken(String token) {
         try {
             Claims claims = Jwts.parser()
-                    .setSigningKey(secretKey)
-                    .parseClaimsJws(token)
-                    .getBody();
+                    .verifyWith(getSecretKey())
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
 
             return "access".equals(claims.get("type", String.class));
         } catch (Exception e) {
@@ -94,14 +105,22 @@ public class JwtUtil {
     }
 
     private Date extractExpiration(String token) {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getExpiration();
+        Claims claims = Jwts.parser()
+                .verifyWith(getSecretKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+
+        return claims.getExpiration();
     }
 
     public String extractUserEmail(String token) {
-        return Jwts.parser()
-                .setSigningKey(secretKey)
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
+        Claims claims = Jwts.parser()
+                .verifyWith(getSecretKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+
+        return claims.getSubject();
     }
 }

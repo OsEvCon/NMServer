@@ -5,7 +5,6 @@ import DTO.request.CreateClientRequest;
 import DTO.request.DeleteClientsRequest;
 import DTO.request.UpdateClientRequest;
 import service.ClientService;
-import service.SecurityUtils;
 import exception.BusinessException;
 import exception.ClientDataAccessException;
 import exception.ClientSaveException;
@@ -27,6 +26,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.Level;
+import service.SecurityService;
 
 
 import java.util.*;
@@ -55,34 +55,44 @@ public class ClientServiceTest {
     @Mock
     MasterRepository masterRepository;
 
+    @Mock
+    SecurityService securityService;
+
+    private Master testMaster;
+
     @InjectMocks
     ClientService clientService;
 
-    @BeforeEach
+   /* @BeforeEach
     void setUpLogging() {
         // Включаем DEBUG для конкретного логгера
         Logger logger = (Logger) LoggerFactory.getLogger(ClientService.class);
         logger.setLevel(Level.DEBUG);
+    }*/
+
+    @BeforeEach
+    void setUp() {
+        testMaster = new Master();
+        testMaster.setId(1);
+        testMaster.setName("testMaster1");
     }
 
     //Тест на пустой список клиентов. Должен возвращать пустой список.
     @Test
     void getClientsTestWithEmptyClientList() {
         //Получение текущего мастера через mock SecurityUtils
-        withSecurityUtilsMock(testMaster -> {
             when(clientRepository.findByMastersContaining(any()))
                     .thenReturn(List.of());
 
             List<ClientDTO> result = clientService.getClientsForCurrentMaster();
 
             assertThat(result.isEmpty());
-        });
     }
 
     //Тест на список с одним клиентом
     @Test
     void getClientsTestWithOneClient() {
-        withSecurityUtilsMock(testMaster -> {
+
             ClientDTO clientDTO1 = ClientDTO.builder().id(1).name("testClient1").build();
 
             when(clientRepository.findByMastersContaining(testMaster))
@@ -98,14 +108,13 @@ public class ClientServiceTest {
 
             assertThat(result.size()).isEqualTo(1);
             assertThat(result).containsExactly(clientDTO1);
-        });
+
     }
 
     //Тест на список с несколькими клиентами. Должен возвращать заданных клиентов в правильном количестве
     @Test
     void getClientsTestWithClients() {
 
-            withSecurityUtilsMock(testMaster -> {
                 ClientDTO clientDTO1 = ClientDTO.builder().id(1).name("testClient1").build();
                 ClientDTO clientDTO2 = ClientDTO.builder().id(2).name("testClient2").build();
 
@@ -122,13 +131,12 @@ public class ClientServiceTest {
 
                 assertThat(result.size()).isEqualTo(2);
                 assertThat(result).containsExactly(clientDTO1, clientDTO2);
-            });
+
     }
 
     //Тест на обработку исключения при ошибке БД
     @Test
     void getClientsTestWithRepositoryError() {
-        withSecurityUtilsMock(testMaster -> {
             when(clientRepository.findByMastersContaining(any()))
                     .thenThrow(new DataAccessException("Database connection lost") {});
 
@@ -139,7 +147,7 @@ public class ClientServiceTest {
                     .hasRootCauseMessage("Database connection lost"); // ← оригинальное сообщение
 
             verify(clientRepository).findByMastersContaining(testMaster);
-        });
+
     }
 
     /**
@@ -147,7 +155,6 @@ public class ClientServiceTest {
      */
     @Test
     void createClientTest() {
-        withSecurityUtilsMock(testMaster -> {
             CreateClientRequest request = CreateClientRequest.builder()
                     .name("testClient")
                     .phoneNumber("+71234567890")
@@ -191,7 +198,6 @@ public class ClientServiceTest {
             assertThat(savedClientDto.getPhoneNumber()).isEqualTo(request.getPhoneNumber());
             assertThat(savedClientDto.getName()).isEqualTo(request.getName());
             assertThat(savedClientDto.getEmail()).isEqualTo(request.getEmail());
-        });
     }
 
     /**
@@ -199,7 +205,6 @@ public class ClientServiceTest {
      */
     @Test
     void createClientWithDuplicatePhoneNumberTest() {
-        withSecurityUtilsMock(testMaster -> {
             CreateClientRequest request = CreateClientRequest.builder()
                     .name("testClient")
                     .phoneNumber("+71234567890")
@@ -211,7 +216,6 @@ public class ClientServiceTest {
             assertThatThrownBy(() -> clientService.createClient(request))
                     .isInstanceOf(BusinessException.class)
                     .hasMessageContaining("У вас уже есть клиент с телефоном ");
-        });
     }
 
     /**
@@ -219,7 +223,7 @@ public class ClientServiceTest {
      */
     @Test
     void createClientWithRepositoryErrorTest() {
-        withSecurityUtilsMock(testMaster -> {
+
             CreateClientRequest request = CreateClientRequest.builder()
                     .name("testClient")
                     .phoneNumber("+71234567890")
@@ -240,7 +244,6 @@ public class ClientServiceTest {
                     .hasMessageContaining("Не удалось сохранить клиента")
                     .hasCauseInstanceOf(DataAccessException.class) // ← причина сохраняется
                     .hasRootCauseMessage("Database connection lost"); // ← оригинальное сообщение
-        });
     }
 
     /**
@@ -248,7 +251,6 @@ public class ClientServiceTest {
      */
     @Test
     void deleteMultipleClientsTest() {
-        withSecurityUtilsMock(testMaster -> {
             DeleteClientsRequest deleteClientsRequest = new DeleteClientsRequest();
             deleteClientsRequest.setClientIds(List.of(0, 1, 2, 3, 4));
 
@@ -301,7 +303,6 @@ public class ClientServiceTest {
 
             // Проверка, что clientRepository.save() не вызывался т.к. клиенты удаляются полностью
             verify(clientRepository, never()).save(any(Client.class));
-        });
     }
 
 
@@ -354,7 +355,7 @@ public class ClientServiceTest {
      */
     @Test
     void deleteMultipleClientsTest_ClientHasMultipleMasters() {
-        withSecurityUtilsMock(testMaster -> {
+
             DeleteClientsRequest deleteClientsRequest = new DeleteClientsRequest();
             deleteClientsRequest.setClientIds(List.of(0, 1, 2, 3, 4));
 
@@ -398,7 +399,6 @@ public class ClientServiceTest {
             clientsForRemove.forEach(client -> {
                 assertThat(client.getMasters()).doesNotContain(testMaster);
             });
-        });
     }
 
     /**
@@ -435,7 +435,7 @@ public class ClientServiceTest {
      */
     @Test
     void deleteMultipleClientsTest_EmptyIdList() {
-        withSecurityUtilsMock(testMaster -> {
+
             // Передать пустой список ID
             DeleteClientsRequest deleteClientsRequest = new DeleteClientsRequest();
             deleteClientsRequest.setClientIds(Collections.emptyList());
@@ -448,7 +448,6 @@ public class ClientServiceTest {
             // Проверка, что в репозитории не было изменений
             verify(clientRepository, never()).save(any());
             verify(clientRepository, never()).delete(any());
-        });
 
     }
 
@@ -460,10 +459,10 @@ public class ClientServiceTest {
      */
     @Test
     void updateClientTest_HappyPath() {
-        withSecurityUtilsMock(testMaster -> {
+
             //Создать клиента для обновления
             Client clientForUpdate = getClients(1).get(0);
-            clientForUpdate.setMasters(new HashSet<>(Set.of(testMaster)));
+            clientForUpdate.setMasters((Set<Master>) new HashSet<>(Set.of(testMaster)));
 
             //Создать запрос на обновление клиента
             UpdateClientRequest updateClientRequest = new UpdateClientRequest();
@@ -478,7 +477,7 @@ public class ClientServiceTest {
                     .name("UpdatedTestClient0")
                     .phoneNumber("+71234567890")
                     .email("testClient0@mail.ru")
-                    .masters(new HashSet<>(Set.of(testMaster)))
+                    .masters((Set<Master>) new HashSet<>(Set.of(testMaster)))
                     .build();
 
             when(clientRepository.findByIdAndMastersContaining(0, testMaster))
@@ -504,7 +503,6 @@ public class ClientServiceTest {
             assertThat(updatedClientDTO.getName()).isEqualTo("UpdatedTestClient0");
             assertThat(updatedClientDTO.getPhoneNumber()).isEqualTo("+71234567890");
             assertThat(updatedClientDTO.getEmail()).isEqualTo("testClient0@mail.ru");
-        });
     }
 
     /**
@@ -513,7 +511,7 @@ public class ClientServiceTest {
      */
     @Test
     void updateClientTest_CLientNotFound() {
-        withSecurityUtilsMock(testMaster -> {
+
             //Создать запрос на обновление клиента
             UpdateClientRequest updateClientRequest = new UpdateClientRequest();
             Integer clientId = 1234;
@@ -531,7 +529,7 @@ public class ClientServiceTest {
 
             //Проверка, что сообщение не отправляется
             verify(simpMessagingTemplate, never()).convertAndSend(anyString(), any(Map.class));
-        });
+
     }
 
     /**
@@ -542,7 +540,7 @@ public class ClientServiceTest {
      */
     @Test
     void updateClientTest_DublicatePhoneNumber() {
-        withSecurityUtilsMock(testMaster -> {
+
             //Создать запрос на обновление клиента
             UpdateClientRequest updateClientRequest = new UpdateClientRequest();
             updateClientRequest.setPhoneNumber("+71234567890");
@@ -567,7 +565,7 @@ public class ClientServiceTest {
 
             //Проверка, что сообщение не отправляется
             verify(simpMessagingTemplate, never()).convertAndSend(anyString(), any(Map.class));
-        });
+
     }
 
     /**
@@ -589,18 +587,4 @@ public class ClientServiceTest {
         return result;
     }
 
-    /**
-     * Метод для тестов с SecurityUtils
-     */
-    private void withSecurityUtilsMock(Consumer<Master> testLogic){
-        try(MockedStatic<SecurityUtils> securityUtilsMockedStatic = Mockito.mockStatic(SecurityUtils.class)) {
-            Master testMaster1 = new Master();
-            testMaster1.setId(1);
-            testMaster1.setName("testMaster1");
-
-            securityUtilsMockedStatic.when(SecurityUtils::getCurrentMaster).thenReturn(testMaster1);
-
-            testLogic.accept(testMaster1);
-        }
-    }
 }
