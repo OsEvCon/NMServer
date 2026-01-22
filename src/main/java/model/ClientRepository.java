@@ -1,5 +1,7 @@
 package model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -33,4 +35,8 @@ public interface ClientRepository extends CrudRepository<Client, Integer> {
             @Param("master") Master master,
             @Param("phoneNumber") String phoneNumber,
             @Param("excludeId") Integer excludeId);
+
+    Optional<Client> findClientByPhoneNumber(@NotBlank(message = "Телефон обязателен")
+                                             @Pattern(regexp = "^\\+?[78][-\\(]?\\d{3}\\)?-?\\d{3}-?\\d{2}-?\\d{2}$",
+            message = "Неверный формат телефона") String phoneNumber);
 }

@@ -25,13 +25,12 @@ public class Master {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     @JsonProperty("id")
-    @EqualsAndHashCode.Include
     private Integer id;
 
     @Column(name = "name")
     private String name;
 
-    @JsonIgnore
+    @EqualsAndHashCode.Include
     @Column(name = "email")
     private String email;
 

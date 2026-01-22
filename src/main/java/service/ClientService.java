@@ -17,10 +17,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Transactional
@@ -58,16 +55,19 @@ public class ClientService {
 
             Master master = securityService.getCurrentMasterOrThrow();
 
-            boolean phoneExists = clientRepository.existsByMastersContainingAndPhoneNumber(
-                    master, request.getPhoneNumber()
-            );
+        Optional<Client> existingClient = clientRepository.findClientByPhoneNumber(request.getPhoneNumber());
+        Client client;
 
-            if (phoneExists) {
+        if (existingClient.isPresent()) {
+            client = existingClient.get();
+
+            if (client.getMasters().contains(master)) {
                 throw new BusinessException("У вас уже есть клиент с телефоном " + request.getPhoneNumber());
             }
 
-
-            Client client = clientMapper.toEntity(request);
+        } else {
+            client = clientMapper.toEntity(request);
+        }
 
             master.addClient(client);
 

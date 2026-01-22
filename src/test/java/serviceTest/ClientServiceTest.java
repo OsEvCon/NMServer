@@ -16,22 +16,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.system.CapturedOutput;
 import org.springframework.boot.test.system.OutputCaptureExtension;
 import org.springframework.dao.DataAccessException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import ch.qos.logback.classic.Logger;
-import ch.qos.logback.classic.Level;
 import service.SecurityService;
 
 
 import java.util.*;
-import java.util.function.Consumer;
-
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -75,12 +68,15 @@ public class ClientServiceTest {
         testMaster = new Master();
         testMaster.setId(1);
         testMaster.setName("testMaster1");
+        testMaster.setEmail("testMaster1@mail.ru");
     }
 
     //Тест на пустой список клиентов. Должен возвращать пустой список.
     @Test
     void getClientsTestWithEmptyClientList() {
-        //Получение текущего мастера через mock SecurityUtils
+        //Получение текущего мастера через mock SecurityService
+        when(securityService.getCurrentMasterOrThrow()).thenReturn(testMaster);
+
             when(clientRepository.findByMastersContaining(any()))
                     .thenReturn(List.of());
 
@@ -94,6 +90,8 @@ public class ClientServiceTest {
     void getClientsTestWithOneClient() {
 
             ClientDTO clientDTO1 = ClientDTO.builder().id(1).name("testClient1").build();
+
+            when(securityService.getCurrentMasterOrThrow()).thenReturn(testMaster);
 
             when(clientRepository.findByMastersContaining(testMaster))
                     .thenReturn(getClients(1));
@@ -124,6 +122,8 @@ public class ClientServiceTest {
                 when(clientMapper.toDTO(getClients(2)))
                         .thenReturn(List.of(clientDTO1, clientDTO2));
 
+                when(securityService.getCurrentMasterOrThrow()).thenReturn(testMaster);
+
                 List<ClientDTO> result = clientService.getClientsForCurrentMaster();
 
                 verify(clientRepository).findByMastersContaining(testMaster);
@@ -139,6 +139,8 @@ public class ClientServiceTest {
     void getClientsTestWithRepositoryError() {
             when(clientRepository.findByMastersContaining(any()))
                     .thenThrow(new DataAccessException("Database connection lost") {});
+
+            when(securityService.getCurrentMasterOrThrow()).thenReturn(testMaster);
 
             assertThatThrownBy(() -> clientService.getClientsForCurrentMaster())
                     .isInstanceOf(ClientDataAccessException.class) // ← сервис должен бросить это
@@ -167,8 +169,7 @@ public class ClientServiceTest {
             testClient.setPhoneNumber(request.getPhoneNumber());
             testClient.setEmail(request.getEmail());
 
-            when(clientRepository.existsByMastersContainingAndPhoneNumber(testMaster, request.getPhoneNumber()))
-                    .thenReturn(false);
+        when(securityService.getCurrentMasterOrThrow()).thenReturn(testMaster);
 
             when(clientMapper.toEntity(request))
                     .thenReturn(testClient);
@@ -178,10 +179,9 @@ public class ClientServiceTest {
             when(clientMapper.toDTO(testClient)).thenReturn(ClientDTO.builder().id(1).name("testClient")
                     .phoneNumber("+71234567890").email("testClient@testMail.com").build());
 
+
             ClientDTO savedClientDto = clientService.createClient(request);
 
-            verify(clientRepository, times(1))
-                    .existsByMastersContainingAndPhoneNumber(testMaster, request.getPhoneNumber());
 
             verify(clientMapper).toEntity(request);
 
@@ -210,8 +210,14 @@ public class ClientServiceTest {
                     .phoneNumber("+71234567890")
                     .build();
 
-            when(clientRepository.existsByMastersContainingAndPhoneNumber(testMaster, request.getPhoneNumber()))
-                    .thenReturn(true);
+        when(securityService.getCurrentMasterOrThrow()).thenReturn(testMaster);
+
+        when(clientRepository.findClientByPhoneNumber("+71234567890"))
+                .thenReturn(Optional.of(Client.builder()
+                        .name("testClient")
+                        .phoneNumber("+71234567890")
+                        .masters(Set.of(testMaster))
+                        .build()));
 
             assertThatThrownBy(() -> clientService.createClient(request))
                     .isInstanceOf(BusinessException.class)
@@ -232,6 +238,8 @@ public class ClientServiceTest {
             Client testClient = new Client();
             testClient.setName(request.getName());
             testClient.setPhoneNumber(request.getPhoneNumber());
+
+            when((securityService.getCurrentMasterOrThrow())).thenReturn(testMaster);
 
             when(clientRepository.save(any(Client.class)))
                     .thenThrow(new DataAccessException("Database connection lost") {});
@@ -269,6 +277,8 @@ public class ClientServiceTest {
                 when(visitRepository.findVisitsByClient(client))
                         .thenReturn(Optional.of(visits));
             }
+
+            when(securityService.getCurrentMasterOrThrow()).thenReturn(testMaster);
 
             when(clientRepository.findAllById(deleteClientsRequest.getClientIds()))
                     .thenReturn(clientsForRemove);
@@ -365,6 +375,7 @@ public class ClientServiceTest {
             Master testMaster2 = new Master();
             testMaster2.setId(2);
             testMaster2.setName("testMaster2");
+            testMaster2.setEmail("testMaster2@mail.ru");
 
             // Добавить клиентам обоих мастеров и обоим мастерам всех клиентов
             for (Client client : clientsForRemove) {
@@ -372,6 +383,8 @@ public class ClientServiceTest {
                 testMaster.addClient(client);
                 testMaster2.addClient(client);
             }
+
+            when(securityService.getCurrentMasterOrThrow()).thenReturn(testMaster);
 
             when(clientRepository.findAllById(deleteClientsRequest.getClientIds()))
                     .thenReturn(clientsForRemove);
@@ -480,6 +493,8 @@ public class ClientServiceTest {
                     .masters((Set<Master>) new HashSet<>(Set.of(testMaster)))
                     .build();
 
+            when(securityService.getCurrentMasterOrThrow()).thenReturn(testMaster);
+
             when(clientRepository.findByIdAndMastersContaining(0, testMaster))
                     .thenReturn(Optional.of(clientForUpdate));
 
@@ -510,11 +525,13 @@ public class ClientServiceTest {
      * Метод должен завершаться с ошибкой ResourceNotFoundException и сообщением.
      */
     @Test
-    void updateClientTest_CLientNotFound() {
+    void updateClientTest_ClientNotFound() {
 
             //Создать запрос на обновление клиента
             UpdateClientRequest updateClientRequest = new UpdateClientRequest();
             Integer clientId = 1234;
+
+        when(securityService.getCurrentMasterOrThrow()).thenReturn(testMaster);
 
             when(clientRepository.findByIdAndMastersContaining(clientId, testMaster))
                     .thenReturn(Optional.empty());
@@ -539,12 +556,14 @@ public class ClientServiceTest {
      * Сообщение не должно отправляться
      */
     @Test
-    void updateClientTest_DublicatePhoneNumber() {
+    void updateClientTest_DuplicatePhoneNumber() {
 
             //Создать запрос на обновление клиента
             UpdateClientRequest updateClientRequest = new UpdateClientRequest();
             updateClientRequest.setPhoneNumber("+71234567890");
             Integer clientId = 1234;
+
+            when(securityService.getCurrentMasterOrThrow()).thenReturn(testMaster);
 
             when(clientRepository.findByIdAndMastersContaining(clientId, testMaster))
                     .thenReturn(Optional.of(Client.builder()
@@ -578,6 +597,7 @@ public class ClientServiceTest {
             Client client = new Client();
             client.setId(i);
             client.setName("testClient" + i);
+            client.setPhoneNumber("+7123456789" + i);
             Visit visit = new Visit();
             visit.setId(i);
             visit.setClient(client);

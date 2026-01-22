@@ -20,13 +20,12 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     @JsonProperty("id")
-    @EqualsAndHashCode.Include
     private Integer id;
 
-    @EqualsAndHashCode.Include
     @Column(name = "name")
     private String name;
 
+    @EqualsAndHashCode.Include
     @Column(name = "phone_number")
     String phoneNumber;
 
@@ -35,10 +34,12 @@ public class Client {
 
     @ManyToMany(mappedBy = "clients", fetch = FetchType.LAZY)
     @JsonIgnore
+    @Builder.Default
     private Set<Master> masters = new HashSet<>();
 
     @JsonManagedReference("client-visits")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
+    @Builder.Default
     private List<Visit> visits = new ArrayList<>();
 
     public void addMasters(Master... mastersToAdd) {
